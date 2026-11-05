@@ -1,0 +1,20 @@
+export PORTABLE_ROOT="${PORTABLE_ROOT:-$(cd -- "$(dirname -- "${BASH_SOURCE[0]}")" && pwd -P)}"
+export TMPDIR="$PORTABLE_ROOT/tmp"
+export XDG_CACHE_HOME="$PORTABLE_ROOT/cache"
+export PIP_CACHE_DIR="$PORTABLE_ROOT/cache/pip"
+export PYTHONDONTWRITEBYTECODE=1
+export PYTHONNOUSERSITE=1
+export MACOSX_DEPLOYMENT_TARGET=15.0
+export CMAKE_BUILD_PARALLEL_LEVEL=4
+export MAKEFLAGS=-j4
+export GOMAXPROCS=4
+export GOCACHE="$PORTABLE_ROOT/cache/go-build"
+export GOPATH="$PORTABLE_ROOT/cache/go"
+export GOMODCACHE="$PORTABLE_ROOT/sources/go-modules"
+export GOTOOLCHAIN=local
+export CC=/usr/bin/clang
+export CXX=/usr/bin/clang++
+export PKG_CONFIG_LIBDIR="$PORTABLE_ROOT/tools/lib/pkgconfig"
+export PATH="$PORTABLE_ROOT/venv/bin:/usr/bin:/bin:/usr/sbin:/sbin"
+export GIT_CEILING_DIRECTORIES="$PORTABLE_ROOT/sources"
+unset PYTHONHOME PYTHONPATH PYTHONSTARTUP DYLD_LIBRARY_PATH DYLD_FRAMEWORK_PATH DYLD_FALLBACK_LIBRARY_PATH DYLD_INSERT_LIBRARIES

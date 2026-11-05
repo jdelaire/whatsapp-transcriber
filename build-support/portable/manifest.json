@@ -1,0 +1,2687 @@
+{
+  "schema_version": 1,
+  "generated_at": "2026-11-05T04:54:37.492213+00:00",
+  "artifact_root": ".",
+  "status": "ready",
+  "scope": "Portable tools and Python build environment only. No project engine has been frozen.",
+  "target": {
+    "platform": "macOS",
+    "architecture": "arm64",
+    "minimum_macos": "15.0",
+    "cpu_baseline": "Apple M1; wacli GOARM64=v8.0; C/C++ -mcpu=apple-m1; whisper armv8.4-a+nosve+noi8mm+nosme",
+    "build_jobs_per_command_maximum": 4
+  },
+  "tools": {
+    "wacli": {
+      "path": "./tools/wacli",
+      "version": "0.25.1",
+      "sha256": "202689202a0537f0705fdab8406f004f2571204cfe95295f848374b1bf3a6334",
+      "architecture": "arm64",
+      "deployment_target": "15.0",
+      "load_command_minimum_macos": [
+        "15.0"
+      ],
+      "dynamic_dependencies": [
+        "/usr/lib/libresolv.9.dylib",
+        "/usr/lib/libSystem.B.dylib",
+        "/System/Library/Frameworks/CoreFoundation.framework/Versions/A/CoreFoundation",
+        "/System/Library/Frameworks/Security.framework/Versions/A/Security"
+      ],
+      "rpaths": []
+    },
+    "whisper-cli": {
+      "path": "./tools/whisper-cli",
+      "version": "1.9.5",
+      "sha256": "624f3623c58627379f47e0f5bcccf091d0f5dbbf861be06051552f6f7f57dc2e",
+      "architecture": "arm64",
+      "deployment_target": "15.0",
+      "load_command_minimum_macos": [
+        "15.0"
+      ],
+      "dynamic_dependencies": [
+        "/System/Library/Frameworks/Accelerate.framework/Versions/A/Accelerate",
+        "/usr/lib/libSystem.B.dylib",
+        "/System/Library/Frameworks/Foundation.framework/Versions/C/Foundation",
+        "/System/Library/Frameworks/Metal.framework/Versions/A/Metal",
+        "/System/Library/Frameworks/MetalKit.framework/Versions/A/MetalKit",
+        "/usr/lib/libc++.1.dylib",
+        "/System/Library/Frameworks/CoreFoundation.framework/Versions/A/CoreFoundation",
+        "/usr/lib/libobjc.A.dylib"
+      ],
+      "rpaths": []
+    },
+    "ffmpeg": {
+      "path": "./tools/ffmpeg",
+      "version": "9.0.2",
+      "sha256": "bb92b04b04c58e92c946cf6143e6ef0ec2b03616fface21d4ef84d76220f3266",
+      "architecture": "arm64",
+      "deployment_target": "15.0",
+      "load_command_minimum_macos": [
+        "15.0"
+      ],
+      "dynamic_dependencies": [
+        "/usr/lib/libSystem.B.dylib"
+      ],
+      "rpaths": []
+    },
+    "ffprobe": {
+      "path": "./tools/ffprobe",
+      "version": "9.0.2",
+      "sha256": "2f8d958248c70b7a82b73e3591ccae6ac3f7dc7ac5e0d1ee35f73bb31f9d02dc",
+      "architecture": "arm64",
+      "deployment_target": "15.0",
+      "load_command_minimum_macos": [
+        "15.0"
+      ],
+      "dynamic_dependencies": [
+        "/usr/lib/libSystem.B.dylib"
+      ],
+      "rpaths": []
+    }
+  },
+  "python": {
+    "version": "3.13.18",
+    "path": "./python/python/bin/python3",
+    "shared_library": "./python/python/lib/libpython3.13.dylib",
+    "venv_path": "./venv",
+    "venv_python": "./venv/bin/python",
+    "pyinstaller_version": "6.22.3",
+    "pyinstaller_command": [
+      "./venv/bin/python",
+      "-m",
+      "PyInstaller"
+    ],
+    "deployment_target": "11.0",
+    "load_command_minimum_macos": [
+      "11.0"
+    ],
+    "distribution": "astral-sh/python-build-standalone official 20261026, install_only, pgo+lto, GIL-enabled",
+    "metadata_path": "./sources/python-build-standalone-full/python/PYTHON.json",
+    "packages": [
+      {
+        "name": "setuptools",
+        "version": "84.2.1",
+        "source_archives": [
+          "setuptools-84.2.1.tar.gz"
+        ]
+      },
+      {
+        "name": "pyinstaller-hooks-contrib",
+        "version": "2026.9",
+        "source_archives": [
+          "pyinstaller_hooks_contrib-2026.9.tar.gz"
+        ]
+      },
+      {
+        "name": "packaging",
+        "version": "26.3",
+        "source_archives": [
+          "packaging-26.3.tar.gz"
+        ]
+      },
+      {
+        "name": "altgraph",
+        "version": "0.17.5",
+        "source_archives": [
+          "altgraph-0.17.5.tar.gz"
+        ]
+      },
+      {
+        "name": "cmake",
+        "version": "4.4.4",
+        "source_archives": [
+          "cmake-4.4.4.tar.gz"
+        ]
+      },
+      {
+        "name": "PGPy",
+        "version": "0.6.0",
+        "source_archives": [
+          "PGPy-0.6.0.tar.gz"
+        ]
+      },
+      {
+        "name": "standard-imghdr",
+        "version": "3.13.0",
+        "source_archives": [
+          "standard_imghdr-3.13.0.tar.gz"
+        ]
+      },
+      {
+        "name": "zstandard",
+        "version": "0.25.0",
+        "source_archives": [
+          "zstandard-0.25.0.tar.gz"
+        ]
+      },
+      {
+        "name": "cryptography",
+        "version": "50.0.2",
+        "source_archives": [
+          "cryptography-50.0.2.tar.gz"
+        ]
+      },
+      {
+        "name": "pycparser",
+        "version": "3.12",
+        "source_archives": [
+          "pycparser-3.12.tar.gz"
+        ]
+      },
+      {
+        "name": "pyinstaller",
+        "version": "6.22.3",
+        "source_archives": [
+          "pyinstaller-6.22.3.tar.gz"
+        ]
+      },
+      {
+        "name": "macholib",
+        "version": "1.16.4",
+        "source_archives": [
+          "macholib-1.16.4.tar.gz"
+        ]
+      },
+      {
+        "name": "cffi",
+        "version": "2.1.1",
+        "source_archives": [
+          "cffi-2.1.1.tar.gz"
+        ]
+      },
+      {
+        "name": "pip",
+        "version": "26.2.2",
+        "source_archives": [
+          "pip-26.2.2.tar.gz"
+        ]
+      },
+      {
+        "name": "pyasn1",
+        "version": "0.6.5",
+        "source_archives": [
+          "pyasn1-0.6.5.tar.gz"
+        ]
+      }
+    ],
+    "offline_wheels": [
+      {
+        "name": "altgraph",
+        "version": "0.17.5",
+        "path": "./downloads/wheels/altgraph-0.17.5-py2.py3-none-any.whl",
+        "sha256": "f3a22400bce1b0c701683820ac4f3b159cd301acab067c51c653e06961600597",
+        "verified_against": "https://pypi.org/pypi/altgraph/0.17.5/json"
+      },
+      {
+        "name": "macholib",
+        "version": "1.16.4",
+        "path": "./downloads/wheels/macholib-1.16.4-py2.py3-none-any.whl",
+        "sha256": "da1a3fa8266e30f0ce7e97c6a54eefaae8edd1e5f86f3eb8b95457cae90265ea",
+        "verified_against": "https://pypi.org/pypi/macholib/1.16.4/json"
+      },
+      {
+        "name": "packaging",
+        "version": "26.3",
+        "path": "./downloads/wheels/packaging-26.3-py3-none-any.whl",
+        "sha256": "d7193f7c8e4e93f444fde0262bf90af30e16fa0ad0ad44cb553c87339b23cd1c",
+        "verified_against": "https://pypi.org/pypi/packaging/26.3/json"
+      },
+      {
+        "name": "pyinstaller",
+        "version": "6.22.3",
+        "path": "./downloads/wheels/pyinstaller-6.22.3-py3-none-macosx_10_13_universal2.whl",
+        "sha256": "052f4a1cd4f81092ccb7a18fe8ebc9ecf832a5917317e39fb3775af4e959b253",
+        "verified_against": "https://pypi.org/pypi/pyinstaller/6.22.3/json"
+      },
+      {
+        "name": "pyinstaller-hooks-contrib",
+        "version": "2026.9",
+        "path": "./downloads/wheels/pyinstaller_hooks_contrib-2026.9-py3-none-any.whl",
+        "sha256": "fb3e67dd64122561724c48ad0366ac9e8c16e638b63bf7d85de03bf3fdbf06c3",
+        "verified_against": "https://pypi.org/pypi/pyinstaller-hooks-contrib/2026.9/json"
+      },
+      {
+        "name": "setuptools",
+        "version": "84.2.1",
+        "path": "./downloads/wheels/setuptools-84.2.1-py3-none-any.whl",
+        "sha256": "ca140b45d5325a9478f880e351484f62fef15f336462e449ca0c03c873d589c2",
+        "verified_against": "https://pypi.org/pypi/setuptools/84.2.1/json"
+      }
+    ],
+    "relocation_note": "The runtime relocates. Recreate a venv after moving it; venv absolute paths are not a portable distribution contract. Verified this with an offline venv beside the relocated runtime.",
+    "frozen_project_engine": false
+  },
+  "whisper_build": {
+    "source_version": "1.9.5",
+    "source_commit": "d1be6fde11ac6e0407606b4e42fe72d34add8037",
+    "source_tree": "6fe2755682242a5c01aba65a22b3c0305d747841",
+    "ggml_version": "0.26.0",
+    "ggml_tree": "f9ac573f5aefe1259135fe0b617fa7ff302fa4a0",
+    "ggml_source": "Vendored in the verified whisper.cpp v1.9.5 tree",
+    "settings": {
+      "BUILD_SHARED_LIBS": "OFF",
+      "GGML_NATIVE": "OFF",
+      "GGML_OPENMP": "OFF",
+      "GGML_BACKEND_DL": "OFF",
+      "GGML_METAL": "ON",
+      "GGML_METAL_EMBED_LIBRARY": "ON",
+      "WHISPER_USE_SYSTEM_GGML": "OFF",
+      "WHISPER_BUILD_IS_DEV": "OFF",
+      "GGML_CPU_ARM_ARCH": "armv8.4-a+nosve+noi8mm+nosme",
+      "GGML_METAL_USE_BF16": "OFF",
+      "GGML_BLAS": "ON",
+      "GGML_BLAS_VENDOR": "Apple"
+    },
+    "metal_embedding": "35 Metal kernel source libraries embedded in __DATA,__ggml_metallib; runtime compilation; no external backend plugins or shader files required",
+    "config_cache": "./build/public-helpers/whisper-CMakeCache.txt",
+    "compile_commands": "./build/public-helpers/whisper-compile_commands.json"
+  },
+  "ffmpeg_build": {
+    "source_version": "9.0.2",
+    "license_reported_by_configure": "LGPL version 2.1 or later",
+    "gpl_enabled": false,
+    "nonfree_enabled": false,
+    "autodetect_enabled": false,
+    "shared_libraries": false,
+    "external_libraries": {
+      "libopus": "1.6.1",
+      "libmp3lame": "3.100"
+    },
+    "video_encoders": [],
+    "video_decoders": [],
+    "video_accelerators": [],
+    "network_protocols": [],
+    "protocols": [
+      "file",
+      "pipe"
+    ],
+    "verified_formats": [
+      "Ogg Opus",
+      "AAC in m4a",
+      "MP3",
+      "WAV",
+      "FLAC",
+      "AIFF"
+    ],
+    "post_m1_simd_disabled": [
+      "i8mm",
+      "sve",
+      "sve2",
+      "sme",
+      "sme_i16i64",
+      "sme2"
+    ],
+    "configuration": "./build/public-helpers/ffmpeg-config.h",
+    "configure_report": "./logs/public-ffmpeg-configure.log",
+    "signature_verification": {
+      "verified": true,
+      "fingerprint": "FCF986EA15E6E293A5644F10B4322F04D67658D8",
+      "sha256": "8c3850283eb25fa026482078a04051e0be17347b09ef81a0849bec15a96e002e"
+    }
+  },
+  "wacli_build": {
+    "staged_from": "/opt/homebrew/Cellar/wacli/0.25.1/bin/wacli",
+    "source_commit": "b7603b697e69be591afa83379ced1e73177604c6",
+    "go_version": "go1.27.3",
+    "GOARM64": "v8.0",
+    "go_buildinfo": "./verification/wacli-go-buildinfo.txt",
+    "source_directory": "./sources/wacli-b7603b697e69be591afa83379ced1e73177604c6",
+    "dependency_inventory": "./sources/go-module-inventory.json",
+    "linked_module_count": 27,
+    "license_details": {
+      "wacli": "MIT",
+      "go.mau.fi/libsignal@v0.2.2": "GPL-3.0",
+      "go.mau.fi/whatsmeow@v0.0.0-20261017175727-b2b1e71d45e2": "MPL-2.0"
+    },
+    "go_module_checksums_matched_binary": true,
+    "account_commands_run": false
+  },
+  "source_archives": {
+    "cpython-3.13.18+20261026-aarch64-apple-darwin-install_only.tar.gz": {
+      "url": "https://github.com/astral-sh/python-build-standalone/releases/download/20261026/cpython-3.13.18%2B20261026-aarch64-apple-darwin-install_only.tar.gz",
+      "sha256": "e5af2fde6a937a0e0c795a0c595c4efb70578d57463a2657c819992b9b9acbac",
+      "upstream_sha256": "sha256:e5af2fde6a937a0e0c795a0c595c4efb70578d57463a2657c819992b9b9acbac",
+      "path": "./downloads/cpython-3.13.18+20261026-aarch64-apple-darwin-install_only.tar.gz"
+    },
+    "whisper.cpp-1.9.5.tar.gz": {
+      "url": "https://codeload.github.com/ggml-org/whisper.cpp/tar.gz/refs/tags/v1.9.5",
+      "sha256": "ff1a9053feb509ff9d7729703355541ae9690073a6b1c40eb692c962e0dc1720",
+      "upstream_sha256": null,
+      "path": "./downloads/whisper.cpp-1.9.5.tar.gz"
+    },
+    "ffmpeg-9.0.2.tar.xz": {
+      "url": "https://ffmpeg.org/releases/ffmpeg-9.0.2.tar.xz",
+      "sha256": "8c3850283eb25fa026482078a04051e0be17347b09ef81a0849bec15a96e002e",
+      "upstream_sha256": null,
+      "path": "./downloads/ffmpeg-9.0.2.tar.xz"
+    },
+    "ffmpeg-9.0.2.tar.xz.asc": {
+      "url": "https://ffmpeg.org/releases/ffmpeg-9.0.2.tar.xz.asc",
+      "sha256": "d617fd94ea354dadd2a8bb16243d37c44e1e9729b06b6ad58fe30bfb0fa943f2",
+      "upstream_sha256": null,
+      "path": "./downloads/ffmpeg-9.0.2.tar.xz.asc"
+    },
+    "ffmpeg-devel.asc": {
+      "url": "https://ffmpeg.org/ffmpeg-devel.asc",
+      "sha256": "397b3becedcd5a98769967ff1ff8501ddc89f8368b8f766e4701377d7dbaabe5",
+      "upstream_sha256": null,
+      "path": "./downloads/ffmpeg-devel.asc"
+    },
+    "wacli-b7603b697e69be591afa83379ced1e73177604c6.tar.gz": {
+      "url": "https://codeload.github.com/openclaw/wacli/tar.gz/b7603b697e69be591afa83379ced1e73177604c6",
+      "sha256": "1a90f24a2ef02232375e06fa58d1997b95f12ab6ecedf3b98590a3a3490645a0",
+      "upstream_sha256": null,
+      "path": "./downloads/wacli-b7603b697e69be591afa83379ced1e73177604c6.tar.gz"
+    },
+    "cpython-3.13.18+20261026-aarch64-apple-darwin-freethreaded+pgo+lto-full.tar.zst": {
+      "url": "https://github.com/astral-sh/python-build-standalone/releases/download/20261026/cpython-3.13.18%2B20261026-aarch64-apple-darwin-freethreaded%2Bpgo%2Blto-full.tar.zst",
+      "sha256": "ed70673c367f8c5dad01f46b36b837d77250fc01a4493740df2d08df56537258",
+      "upstream_sha256": "sha256:ed70673c367f8c5dad01f46b36b837d77250fc01a4493740df2d08df56537258",
+      "path": "./downloads/cpython-3.13.18+20261026-aarch64-apple-darwin-freethreaded+pgo+lto-full.tar.zst"
+    },
+    "opus-1.6.1.tar.gz": {
+      "url": "https://downloads.xiph.org/releases/opus/opus-1.6.1.tar.gz",
+      "sha256": "6ffcb593207be92584df15b32466ed64bbec99109f007c82205f0194572411a1",
+      "upstream_sha256": "6ffcb593207be92584df15b32466ed64bbec99109f007c82205f0194572411a1",
+      "path": "./downloads/opus-1.6.1.tar.gz"
+    },
+    "lame-3.100.tar.gz": {
+      "url": "https://downloads.sourceforge.net/project/lame/lame/3.100/lame-3.100.tar.gz",
+      "sha256": "ddfe36cab873794038ae2c1210557ad34857a4b6bdc515785d1da9e175b1da1e",
+      "upstream_sha256": null,
+      "path": "./downloads/lame-3.100.tar.gz"
+    },
+    "pkgconf-2.5.1.tar.xz": {
+      "url": "https://distfiles.ariadne.space/pkgconf/pkgconf-2.5.1.tar.xz",
+      "sha256": "cd05c9589b9f86ecf044c10a2269822bc9eb001eced2582cfffd658b0a50c243",
+      "upstream_sha256": null,
+      "path": "./downloads/pkgconf-2.5.1.tar.xz"
+    },
+    "cpython-3.13.18+20261026-aarch64-apple-darwin-pgo+lto-full.tar.zst": {
+      "url": "https://github.com/astral-sh/python-build-standalone/releases/download/20261026/cpython-3.13.18%2B20261026-aarch64-apple-darwin-pgo%2Blto-full.tar.zst",
+      "sha256": "5706f1fdf82f7ea10b56a9b9cbadfa5f372010568a9794f19e0af4c48d975f34",
+      "upstream_sha256": "sha256:5706f1fdf82f7ea10b56a9b9cbadfa5f372010568a9794f19e0af4c48d975f34",
+      "path": "./downloads/cpython-3.13.18+20261026-aarch64-apple-darwin-pgo+lto-full.tar.zst"
+    },
+    "pypi-setuptools-84.2.1.json": {
+      "url": "https://pypi.org/pypi/setuptools/84.2.1/json",
+      "sha256": "d75de8ba0d3304a3d74484fb9f340edb87ef02712da4fa02a2ed92e71b0572dd",
+      "upstream_sha256": null,
+      "path": "./downloads/pypi-setuptools-84.2.1.json"
+    },
+    "setuptools-84.2.1.tar.gz": {
+      "url": "https://files.pythonhosted.org/packages/70/b3/c19426f783614d625699a4b247faf628ea9ab1db228674491767b417f9e1/setuptools-84.2.1.tar.gz",
+      "sha256": "3ff8b3b5492a0aa66960f4419365a86b84e013070d4313e4d4a6894f5d64d6bc",
+      "upstream_sha256": "3ff8b3b5492a0aa66960f4419365a86b84e013070d4313e4d4a6894f5d64d6bc",
+      "path": "./downloads/setuptools-84.2.1.tar.gz"
+    },
+    "pypi-pyinstaller-hooks-contrib-2026.9.json": {
+      "url": "https://pypi.org/pypi/pyinstaller-hooks-contrib/2026.9/json",
+      "sha256": "418995b0a9adf050cb4790ac5f5ea56b6c35aab3c01e0c5311077c471223a349",
+      "upstream_sha256": null,
+      "path": "./downloads/pypi-pyinstaller-hooks-contrib-2026.9.json"
+    },
+    "pyinstaller_hooks_contrib-2026.9.tar.gz": {
+      "url": "https://files.pythonhosted.org/packages/96/25/e47c6188228281372be7e9911a93931e01ec8798c02c93abd680b9b9521f/pyinstaller_hooks_contrib-2026.9.tar.gz",
+      "sha256": "2748767901acb5cecd1304652b6c7add5bffcff1d71d01207fe24a5d42942a56",
+      "upstream_sha256": "2748767901acb5cecd1304652b6c7add5bffcff1d71d01207fe24a5d42942a56",
+      "path": "./downloads/pyinstaller_hooks_contrib-2026.9.tar.gz"
+    },
+    "pypi-packaging-26.3.json": {
+      "url": "https://pypi.org/pypi/packaging/26.3/json",
+      "sha256": "4f190d2f0b312b3086058cee64ab4333bf3ce67fb78b4c2bdb43899049b29f4d",
+      "upstream_sha256": null,
+      "path": "./downloads/pypi-packaging-26.3.json"
+    },
+    "packaging-26.3.tar.gz": {
+      "url": "https://files.pythonhosted.org/packages/7d/fa/3944b40b07da9ce895c0e6303a5ab7d53da063554f534556b134a54d6093/packaging-26.3.tar.gz",
+      "sha256": "94edc256424af38762eb31306eed28beb9f0efc50a8837492c9d6fd6004aed79",
+      "upstream_sha256": "94edc256424af38762eb31306eed28beb9f0efc50a8837492c9d6fd6004aed79",
+      "path": "./downloads/packaging-26.3.tar.gz"
+    },
+    "pypi-altgraph-0.17.5.json": {
+      "url": "https://pypi.org/pypi/altgraph/0.17.5/json",
+      "sha256": "378b0103a514bcb2a2fc35f1016e7c53bd94425857f4c36152152810f0316bd5",
+      "upstream_sha256": null,
+      "path": "./downloads/pypi-altgraph-0.17.5.json"
+    },
+    "altgraph-0.17.5.tar.gz": {
+      "url": "https://files.pythonhosted.org/packages/7e/f8/97fdf103f38fed6792a1601dbc16cc8aac56e7459a9fff08c812d8ae177a/altgraph-0.17.5.tar.gz",
+      "sha256": "c87b395dd12fabde9c99573a9749d67da8d29ef9de0125c7f536699b4a9bc9e7",
+      "upstream_sha256": "c87b395dd12fabde9c99573a9749d67da8d29ef9de0125c7f536699b4a9bc9e7",
+      "path": "./downloads/altgraph-0.17.5.tar.gz"
+    },
+    "pypi-cmake-4.4.4.json": {
+      "url": "https://pypi.org/pypi/cmake/4.4.4/json",
+      "sha256": "48631f084ef9b088590db424808b88f103e5bc7cd4df40aab85f1fe4beba3c2a",
+      "upstream_sha256": null,
+      "path": "./downloads/pypi-cmake-4.4.4.json"
+    },
+    "cmake-4.4.4.tar.gz": {
+      "url": "https://files.pythonhosted.org/packages/14/2a/88d51f5fc74358edb89afedeb8154db0d9c0bbd256747bf28de472e4fa5c/cmake-4.4.4.tar.gz",
+      "sha256": "f337d18e33b116cabae9a7a8ff423fc0bc3f389da0acefeb724e1397128dcc34",
+      "upstream_sha256": "f337d18e33b116cabae9a7a8ff423fc0bc3f389da0acefeb724e1397128dcc34",
+      "path": "./downloads/cmake-4.4.4.tar.gz"
+    },
+    "pypi-PGPy-0.6.0.json": {
+      "url": "https://pypi.org/pypi/PGPy/0.6.0/json",
+      "sha256": "d2a8d762a41b9c35424055c86bbef48702332905bf36301c78e176d5e516296d",
+      "upstream_sha256": null,
+      "path": "./downloads/pypi-PGPy-0.6.0.json"
+    },
+    "PGPy-0.6.0.tar.gz": {
+      "url": "https://files.pythonhosted.org/packages/f8/68/5e285ba9465550a48e837b08b27fa99ef238618f6085a1464afaa4dc8426/PGPy-0.6.0.tar.gz",
+      "sha256": "279c2e353f4c3a319f00bd9bd582456e420f8a3ac6de2b4e9731444746828383",
+      "upstream_sha256": "279c2e353f4c3a319f00bd9bd582456e420f8a3ac6de2b4e9731444746828383",
+      "path": "./downloads/PGPy-0.6.0.tar.gz"
+    },
+    "pypi-standard-imghdr-3.13.0.json": {
+      "url": "https://pypi.org/pypi/standard-imghdr/3.13.0/json",
+      "sha256": "98f774c5dc415874d9ae2a978d02ca3cf615b6895baac420d324269a10828605",
+      "upstream_sha256": null,
+      "path": "./downloads/pypi-standard-imghdr-3.13.0.json"
+    },
+    "standard_imghdr-3.13.0.tar.gz": {
+      "url": "https://files.pythonhosted.org/packages/1a/8d/ab2620fbe2e348483c9cb776c3b7b3cc407899291a041d7fa026469b7cd1/standard_imghdr-3.13.0.tar.gz",
+      "sha256": "8d9c68058d882f6fc3542a8d39ef9ff94d2187dc90bd0c851e0902776b7b7a42",
+      "upstream_sha256": "8d9c68058d882f6fc3542a8d39ef9ff94d2187dc90bd0c851e0902776b7b7a42",
+      "path": "./downloads/standard_imghdr-3.13.0.tar.gz"
+    },
+    "pypi-zstandard-0.25.0.json": {
+      "url": "https://pypi.org/pypi/zstandard/0.25.0/json",
+      "sha256": "a9d6f5a97e7a3b5f5125d0c4bac1d5e2c268fd2a5b2148dd8aad511d17240aef",
+      "upstream_sha256": null,
+      "path": "./downloads/pypi-zstandard-0.25.0.json"
+    },
+    "zstandard-0.25.0.tar.gz": {
+      "url": "https://files.pythonhosted.org/packages/fd/aa/3e0508d5a5dd96529cdc5a97011299056e14c6505b678fd58938792794b1/zstandard-0.25.0.tar.gz",
+      "sha256": "7713e1179d162cf5c7906da876ec2ccb9c3a9dcbdffef0cc7f70c3667a205f0b",
+      "upstream_sha256": "7713e1179d162cf5c7906da876ec2ccb9c3a9dcbdffef0cc7f70c3667a205f0b",
+      "path": "./downloads/zstandard-0.25.0.tar.gz"
+    },
+    "pypi-cryptography-50.0.2.json": {
+      "url": "https://pypi.org/pypi/cryptography/50.0.2/json",
+      "sha256": "7423990cc0948676ef47a71ea62a476ece4c76245e6bebd1c3a71f03c4ffc0f4",
+      "upstream_sha256": null,
+      "path": "./downloads/pypi-cryptography-50.0.2.json"
+    },
+    "cryptography-50.0.2.tar.gz": {
+      "url": "https://files.pythonhosted.org/packages/9d/af/182eb91b0df3fe75c4d9f26fe70684569566745f6ba7e5c9c73a862c5252/cryptography-50.0.2.tar.gz",
+      "sha256": "7b46165bb56eb4704e2eaaf86f3c940d19154535d9b0ca7d6d590b04060e00d5",
+      "upstream_sha256": "7b46165bb56eb4704e2eaaf86f3c940d19154535d9b0ca7d6d590b04060e00d5",
+      "path": "./downloads/cryptography-50.0.2.tar.gz"
+    },
+    "pypi-pycparser-3.12.json": {
+      "url": "https://pypi.org/pypi/pycparser/3.12/json",
+      "sha256": "e919b291615d54a2328a0da6128cd9d95601ad04d27cec48eeb75e0d57c3b6ad",
+      "upstream_sha256": null,
+      "path": "./downloads/pypi-pycparser-3.12.json"
+    },
+    "pycparser-3.12.tar.gz": {
+      "url": "https://files.pythonhosted.org/packages/cb/27/eeb9f307bf07060f3d9f9aa0fb8c15b01bdfded0a941e4b2719c7f94cacd/pycparser-3.12.tar.gz",
+      "sha256": "f03387877eab82ce01bbdfd0ba7252ee55a90b1c708d5129e2ce915475cf1db6",
+      "upstream_sha256": "f03387877eab82ce01bbdfd0ba7252ee55a90b1c708d5129e2ce915475cf1db6",
+      "path": "./downloads/pycparser-3.12.tar.gz"
+    },
+    "pypi-pyinstaller-6.22.3.json": {
+      "url": "https://pypi.org/pypi/pyinstaller/6.22.3/json",
+      "sha256": "f31cd317e95e6fd2490694eed5e34437968260789dc704745cd16cdde60de4a7",
+      "upstream_sha256": null,
+      "path": "./downloads/pypi-pyinstaller-6.22.3.json"
+    },
+    "pyinstaller-6.22.3.tar.gz": {
+      "url": "https://files.pythonhosted.org/packages/63/41/f90302845945abd4ed647933ff5ee7c6ac93983187be67f897b6cb613331/pyinstaller-6.22.3.tar.gz",
+      "sha256": "05eb2f5615503e72939a7224d68b4aff572c6b0438ee4a17d0a4b481f399362d",
+      "upstream_sha256": "05eb2f5615503e72939a7224d68b4aff572c6b0438ee4a17d0a4b481f399362d",
+      "path": "./downloads/pyinstaller-6.22.3.tar.gz"
+    },
+    "pypi-macholib-1.16.4.json": {
+      "url": "https://pypi.org/pypi/macholib/1.16.4/json",
+      "sha256": "5c6ffd1fbe725fd9aca47f4653e0335c6e04b5e02c154be8cee69605d88ba69f",
+      "upstream_sha256": null,
+      "path": "./downloads/pypi-macholib-1.16.4.json"
+    },
+    "macholib-1.16.4.tar.gz": {
+      "url": "https://files.pythonhosted.org/packages/10/2f/97589876ea967487978071c9042518d28b958d87b17dceb7cdc1d881f963/macholib-1.16.4.tar.gz",
+      "sha256": "f408c93ab2e995cd2c46e34fe328b130404be143469e41bc366c807448979362",
+      "upstream_sha256": "f408c93ab2e995cd2c46e34fe328b130404be143469e41bc366c807448979362",
+      "path": "./downloads/macholib-1.16.4.tar.gz"
+    },
+    "pypi-cffi-2.1.1.json": {
+      "url": "https://pypi.org/pypi/cffi/2.1.1/json",
+      "sha256": "2255e530e3f80593a354e3d84a29966924d0e10309d1e3a6d50f845ab7d8df66",
+      "upstream_sha256": null,
+      "path": "./downloads/pypi-cffi-2.1.1.json"
+    },
+    "cffi-2.1.1.tar.gz": {
+      "url": "https://files.pythonhosted.org/packages/9e/ef/008a1939e372c06329a3fce4279c02f328488f3526744906eeec3da7ad5f/cffi-2.1.1.tar.gz",
+      "sha256": "dd31f52ea1086513bb9df30f8fcee9b8918323ae067a3d5b78bc826a000712be",
+      "upstream_sha256": "dd31f52ea1086513bb9df30f8fcee9b8918323ae067a3d5b78bc826a000712be",
+      "path": "./downloads/cffi-2.1.1.tar.gz"
+    },
+    "pypi-pip-26.2.2.json": {
+      "url": "https://pypi.org/pypi/pip/26.2.2/json",
+      "sha256": "d0b07879e414dc3347bf20a492a9e8a15cfb1962e3cae3843b93453d9940f5f9",
+      "upstream_sha256": null,
+      "path": "./downloads/pypi-pip-26.2.2.json"
+    },
+    "pip-26.2.2.tar.gz": {
+      "url": "https://files.pythonhosted.org/packages/fa/e8/0842d757e483e895e670f655084cfe8b8c72580c6769a76b30b2789a0608/pip-26.2.2.tar.gz",
+      "sha256": "3a8e5c800492787f33a4114ef54444546c340df428974ebba17e0fd47e11af2f",
+      "upstream_sha256": "3a8e5c800492787f33a4114ef54444546c340df428974ebba17e0fd47e11af2f",
+      "path": "./downloads/pip-26.2.2.tar.gz"
+    },
+    "pypi-pyasn1-0.6.5.json": {
+      "url": "https://pypi.org/pypi/pyasn1/0.6.5/json",
+      "sha256": "140e8b5c4cad5e5551b1244f4c096f5e32f0ec404cce5be294c5996b8befbbf9",
+      "upstream_sha256": null,
+      "path": "./downloads/pypi-pyasn1-0.6.5.json"
+    },
+    "pyasn1-0.6.5.tar.gz": {
+      "url": "https://files.pythonhosted.org/packages/88/7e/3c0da41061a2021cac7cd524fd57092adbe5b515e8bf9005702e366802e2/pyasn1-0.6.5.tar.gz",
+      "sha256": "6b11616a6bcf3a40e635f082bb232fa57b5e0dd7f517bd7ddd69ec3794508a47",
+      "upstream_sha256": "6b11616a6bcf3a40e635f082bb232fa57b5e0dd7f517bd7ddd69ec3794508a47",
+      "path": "./downloads/pyasn1-0.6.5.tar.gz"
+    },
+    "python-build-standalone-20261026.tar.gz": {
+      "url": "https://codeload.github.com/astral-sh/python-build-standalone/tar.gz/refs/tags/20261026",
+      "sha256": "68de4af184e78f6338a91ddb48570da92cbdc24138ff44527d58a1e23a4e86e9",
+      "upstream_sha256": null,
+      "path": "./downloads/python-build-standalone-20261026.tar.gz"
+    },
+    "go-releases.json": {
+      "url": "https://go.dev/dl/?mode=json&include=all",
+      "sha256": "6b83804b8dd2d6052bb93cc03e4aba2ddee834f82c15f7bf8faacf5f91825950",
+      "upstream_sha256": null,
+      "path": "./downloads/go-releases.json"
+    },
+    "go1.27.3.src.tar.gz": {
+      "url": "https://go.dev/dl/go1.27.3.src.tar.gz",
+      "sha256": "6e7749035cf360f06b2575d162ea79df9fda8ef671889e5c375f8e50777f26bb",
+      "upstream_sha256": "6e7749035cf360f06b2575d162ea79df9fda8ef671889e5c375f8e50777f26bb",
+      "path": "./downloads/go1.27.3.src.tar.gz"
+    },
+    "Python-3.13.18.tar.xz": {
+      "url": "https://www.python.org/ftp/python/3.13.18/Python-3.13.18.tar.xz",
+      "sha256": "abb0102e6d4ae027509bcb82327d9dd85515b44a3ba8ad538cfc5e9847029f68",
+      "upstream_sha256": "abb0102e6d4ae027509bcb82327d9dd85515b44a3ba8ad538cfc5e9847029f68",
+      "path": "./downloads/Python-3.13.18.tar.xz"
+    },
+    "bzip2-1.0.8.tar.gz": {
+      "url": "https://astral-sh.github.io/mirror/files/bzip2-1.0.8.tar.gz",
+      "sha256": "ab5a03176ee106d3f0fa90e381da478ddae405918153cca248e682cd0c4a2269",
+      "upstream_sha256": "ab5a03176ee106d3f0fa90e381da478ddae405918153cca248e682cd0c4a2269",
+      "path": "./downloads/bzip2-1.0.8.tar.gz"
+    },
+    "expat-2.9.0.tar.xz": {
+      "url": "https://github.com/libexpat/libexpat/releases/download/R_2_9_0/expat-2.9.0.tar.xz",
+      "sha256": "1e6371862cc31999b368c3b89b49994f0677e1bab5f1b2b85ae3741f5d803051",
+      "upstream_sha256": "1e6371862cc31999b368c3b89b49994f0677e1bab5f1b2b85ae3741f5d803051",
+      "path": "./downloads/expat-2.9.0.tar.xz"
+    },
+    "libffi-3.8.0.tar.gz": {
+      "url": "https://github.com/libffi/libffi/releases/download/v3.8.0/libffi-3.8.0.tar.gz",
+      "sha256": "7da3e2d9a171eb0a038f592ecad3ff2bb2550f3496d87b3b29ad0cf4430c0db4",
+      "upstream_sha256": "7da3e2d9a171eb0a038f592ecad3ff2bb2550f3496d87b3b29ad0cf4430c0db4",
+      "path": "./downloads/libffi-3.8.0.tar.gz"
+    },
+    "mpdecimal-4.0.0.tar.gz": {
+      "url": "https://astral-sh.github.io/mirror/files/mpdecimal-4.0.0.tar.gz",
+      "sha256": "942445c3245b22730fd41a67a7c5c231d11cb1b9936b9c0f76334fb7d0b4468c",
+      "upstream_sha256": "942445c3245b22730fd41a67a7c5c231d11cb1b9936b9c0f76334fb7d0b4468c",
+      "path": "./downloads/mpdecimal-4.0.0.tar.gz"
+    },
+    "openssl-3.5.9.tar.gz": {
+      "url": "https://github.com/openssl/openssl/releases/download/openssl-3.5.9/openssl-3.5.9.tar.gz",
+      "sha256": "603f5602e2eef00d77fbd429d34dcd5822bb301757a1bc9cdb24c670f1eb859a",
+      "upstream_sha256": "603f5602e2eef00d77fbd429d34dcd5822bb301757a1bc9cdb24c670f1eb859a",
+      "path": "./downloads/openssl-3.5.9.tar.gz"
+    },
+    "sqlite-autoconf-3530100.tar.gz": {
+      "url": "https://www.sqlite.org/2026/sqlite-autoconf-3530100.tar.gz",
+      "sha256": "83e6b2020a034e9a7ad4a72feea59e1ad52f162e09cbd26735a3ffb98359fc4f",
+      "upstream_sha256": "83e6b2020a034e9a7ad4a72feea59e1ad52f162e09cbd26735a3ffb98359fc4f",
+      "path": "./downloads/sqlite-autoconf-3530100.tar.gz"
+    },
+    "xz-5.8.4.tar.gz": {
+      "url": "https://github.com/tukaani-project/xz/releases/download/v5.8.4/xz-5.8.4.tar.gz",
+      "sha256": "0014c7886930454fe8bd4228665b51af55eeae560ea135c9c4cd33f55b2591d9",
+      "upstream_sha256": "0014c7886930454fe8bd4228665b51af55eeae560ea135c9c4cd33f55b2591d9",
+      "path": "./downloads/xz-5.8.4.tar.gz"
+    },
+    "tcl9.0.4-src.tar.gz": {
+      "url": "https://prdownloads.sourceforge.net/tcl/tcl9.0.4-src.tar.gz",
+      "sha256": "d0aed49230bc02a65c1e0229e65f34590a4b037ec40d546f32573b467f7551ea",
+      "upstream_sha256": "d0aed49230bc02a65c1e0229e65f34590a4b037ec40d546f32573b467f7551ea",
+      "path": "./downloads/tcl9.0.4-src.tar.gz"
+    },
+    "tk9.0.4-src.tar.gz": {
+      "url": "https://prdownloads.sourceforge.net/tcl/tk9.0.4-src.tar.gz",
+      "sha256": "d7a146d2917eb8b5cc95276dbf0e3d03c7464d2b19c1675357857c989301dbb4",
+      "upstream_sha256": "d7a146d2917eb8b5cc95276dbf0e3d03c7464d2b19c1675357857c989301dbb4",
+      "path": "./downloads/tk9.0.4-src.tar.gz"
+    },
+    "zlib-1.3.2.tar.gz": {
+      "url": "https://github.com/madler/zlib/releases/download/v1.3.2/zlib-1.3.2.tar.gz",
+      "sha256": "bb329a0a2cd0274d05519d61c667c062e06990d72e125ee2dfa8de64f0119d16",
+      "upstream_sha256": "bb329a0a2cd0274d05519d61c667c062e06990d72e125ee2dfa8de64f0119d16",
+      "path": "./downloads/zlib-1.3.2.tar.gz"
+    },
+    "zlib-ng-2.2.4.tar.gz": {
+      "url": "https://github.com/python/cpython-source-deps/archive/refs/tags/zlib-ng-2.2.4.tar.gz",
+      "sha256": "00bbd88709bc416cb96160ab61d3e1c8f76e106799af7328d0fe434dc7dd5004",
+      "upstream_sha256": "00bbd88709bc416cb96160ab61d3e1c8f76e106799af7328d0fe434dc7dd5004",
+      "path": "./downloads/zlib-ng-2.2.4.tar.gz"
+    },
+    "libuuid-1.0.3.tar.gz": {
+      "url": "https://sourceforge.net/projects/libuuid/files/libuuid-1.0.3.tar.gz",
+      "sha256": "46af3275291091009ad7f1b899de3d0cea0252737550e7919d17237997db5644",
+      "upstream_sha256": "46af3275291091009ad7f1b899de3d0cea0252737550e7919d17237997db5644",
+      "path": "./downloads/libuuid-1.0.3.tar.gz"
+    },
+    "whisper-root-tree.json": {
+      "url": "https://api.github.com/repos/ggml-org/whisper.cpp/git/trees/6fe2755682242a5c01aba65a22b3c0305d747841",
+      "sha256": "66a13cb316c0361258a62c50258dada80cc38284c00c2f6e29fc44e2be69409a",
+      "upstream_sha256": null,
+      "path": "./downloads/whisper-root-tree.json"
+    }
+  },
+  "corresponding_source_archive_inventory": [
+    {
+      "path": "./sources/cpython-dependencies/Python-3.13.18.tar.xz",
+      "sha256": "abb0102e6d4ae027509bcb82327d9dd85515b44a3ba8ad538cfc5e9847029f68"
+    },
+    {
+      "path": "./sources/cpython-dependencies/bzip2-1.0.8.tar.gz",
+      "sha256": "ab5a03176ee106d3f0fa90e381da478ddae405918153cca248e682cd0c4a2269"
+    },
+    {
+      "path": "./sources/cpython-dependencies/expat-2.9.0.tar.xz",
+      "sha256": "1e6371862cc31999b368c3b89b49994f0677e1bab5f1b2b85ae3741f5d803051"
+    },
+    {
+      "path": "./sources/cpython-dependencies/libffi-3.8.0.tar.gz",
+      "sha256": "7da3e2d9a171eb0a038f592ecad3ff2bb2550f3496d87b3b29ad0cf4430c0db4"
+    },
+    {
+      "path": "./sources/cpython-dependencies/libuuid-1.0.3.tar.gz",
+      "sha256": "46af3275291091009ad7f1b899de3d0cea0252737550e7919d17237997db5644"
+    },
+    {
+      "path": "./sources/cpython-dependencies/mpdecimal-4.0.0.tar.gz",
+      "sha256": "942445c3245b22730fd41a67a7c5c231d11cb1b9936b9c0f76334fb7d0b4468c"
+    },
+    {
+      "path": "./sources/cpython-dependencies/openssl-3.5.9.tar.gz",
+      "sha256": "603f5602e2eef00d77fbd429d34dcd5822bb301757a1bc9cdb24c670f1eb859a"
+    },
+    {
+      "path": "./sources/cpython-dependencies/sqlite-autoconf-3530100.tar.gz",
+      "sha256": "83e6b2020a034e9a7ad4a72feea59e1ad52f162e09cbd26735a3ffb98359fc4f"
+    },
+    {
+      "path": "./sources/cpython-dependencies/tcl9.0.4-src.tar.gz",
+      "sha256": "d0aed49230bc02a65c1e0229e65f34590a4b037ec40d546f32573b467f7551ea"
+    },
+    {
+      "path": "./sources/cpython-dependencies/tk9.0.4-src.tar.gz",
+      "sha256": "d7a146d2917eb8b5cc95276dbf0e3d03c7464d2b19c1675357857c989301dbb4"
+    },
+    {
+      "path": "./sources/cpython-dependencies/xz-5.8.4.tar.gz",
+      "sha256": "0014c7886930454fe8bd4228665b51af55eeae560ea135c9c4cd33f55b2591d9"
+    },
+    {
+      "path": "./sources/cpython-dependencies/zlib-1.3.2.tar.gz",
+      "sha256": "bb329a0a2cd0274d05519d61c667c062e06990d72e125ee2dfa8de64f0119d16"
+    },
+    {
+      "path": "./sources/cpython-dependencies/zlib-ng-2.2.4.tar.gz",
+      "sha256": "00bbd88709bc416cb96160ab61d3e1c8f76e106799af7328d0fe434dc7dd5004"
+    },
+    {
+      "path": "./sources/go/lib/fips140/v1.0.0-c2097c7c.zip",
+      "sha256": "daf3614e0406f67ae6323c902db3f953a1effb199142362a039e7526dfb9368b"
+    },
+    {
+      "path": "./sources/go/lib/fips140/v1.26.0.zip",
+      "sha256": "9b28f847fdf1db4a36cb2b2f8ec09443c039383f085630a03ecfaddf6db7ea23"
+    },
+    {
+      "path": "./sources/go/lib/time/zoneinfo.zip",
+      "sha256": "b2d18a7c8fa8142097a48c99609fb3c92db5ee98bc740294e57eab8ae9f94779"
+    },
+    {
+      "path": "./sources/go/src/archive/zip/testdata/comment-truncated.zip",
+      "sha256": "898b98f14b279d1a79c9e9d3e15d92f7ec630bb6990226ecb693a80c4bf0696c"
+    },
+    {
+      "path": "./sources/go/src/archive/zip/testdata/crc32-not-streamed.zip",
+      "sha256": "bbf109e827cd301e67ef3b08082db8e0bacd9d7fe7e517278bf41821d3207898"
+    },
+    {
+      "path": "./sources/go/src/archive/zip/testdata/dd.zip",
+      "sha256": "dcec917ea7852418f21c2b8fe67c8355fd6ff0e875c5bc3718e1b8684a064171"
+    },
+    {
+      "path": "./sources/go/src/archive/zip/testdata/dupdir.zip",
+      "sha256": "80a6fbb7eb70527702bb1312d0ecf41c282b5c6910e47abe93858ce296cfbc93"
+    },
+    {
+      "path": "./sources/go/src/archive/zip/testdata/go-with-datadesc-sig.zip",
+      "sha256": "6be41a66578438afdda77edfaec1857ca553fa091dc31a2bd7db0d8a3a3e9a30"
+    },
+    {
+      "path": "./sources/go/src/archive/zip/testdata/readme.zip",
+      "sha256": "9ee76aa8a1c2ce04924b43424bf9d1b3138f812a80d6239f06f1133876f50d40"
+    },
+    {
+      "path": "./sources/go/src/archive/zip/testdata/subdir.zip",
+      "sha256": "d57eff008fa79aab7d863c5e003d2bc35a5f734a9eac8b62289b9c6c395bb71f"
+    },
+    {
+      "path": "./sources/go/src/archive/zip/testdata/symlink.zip",
+      "sha256": "c871234a8d0c8787eacb357e53245d6663803fef1750518204a1aa97ec321f62"
+    },
+    {
+      "path": "./sources/go/src/archive/zip/testdata/test-badbase.zip",
+      "sha256": "d11fa637a1153619ed3443401942d242238519feb24233bc1965a693b5f0d326"
+    },
+    {
+      "path": "./sources/go/src/archive/zip/testdata/test-baddirsz.zip",
+      "sha256": "60452121e8533c13ae22ce41a2539278049ffb63a08e1fea3d7239b7e627e55a"
+    },
+    {
+      "path": "./sources/go/src/archive/zip/testdata/test-prefix.zip",
+      "sha256": "d88728cfbbc295b8e146bde1e21fd4514ea60cc9909eb9ddb7537b0d448bfcea"
+    },
+    {
+      "path": "./sources/go/src/archive/zip/testdata/test-trailing-junk.zip",
+      "sha256": "acb77caa34accd11067629705ceb3d7cb01868134ae56fca3f9c6348dbd585d4"
+    },
+    {
+      "path": "./sources/go/src/archive/zip/testdata/test.zip",
+      "sha256": "e36d2ee9fbc41f7fe0b2717dc4b1fdc1978c9396dd28f3398b1f3a1a29dc146c"
+    },
+    {
+      "path": "./sources/go/src/archive/zip/testdata/time-22738.zip",
+      "sha256": "ffecd2607b24eb31a12d3d94b8cf951c48b2e17c66b19d71150fb98da0a727e3"
+    },
+    {
+      "path": "./sources/go/src/archive/zip/testdata/time-7zip.zip",
+      "sha256": "12e1b7b71a0943547acca38516aef5d89d2466c79dae5279a915389b7beace4d"
+    },
+    {
+      "path": "./sources/go/src/archive/zip/testdata/time-go.zip",
+      "sha256": "45c2b43fd74e27b3a511a2f3f31de08651689366e4344ff5e4a644b3be35f4b9"
+    },
+    {
+      "path": "./sources/go/src/archive/zip/testdata/time-infozip.zip",
+      "sha256": "0e129eb30eeda61f7bec57f7708047750e4cf6add713a289d4b879b394459846"
+    },
+    {
+      "path": "./sources/go/src/archive/zip/testdata/time-osx.zip",
+      "sha256": "c374ae7910a6b6b8499c0bb7757474456450c994bf39dbe4d9a1ab8361f50856"
+    },
+    {
+      "path": "./sources/go/src/archive/zip/testdata/time-win7.zip",
+      "sha256": "28774f00d29804f65a6af708a125d9b56ea20a98b1681ae4ab0e001474710e2a"
+    },
+    {
+      "path": "./sources/go/src/archive/zip/testdata/time-winrar.zip",
+      "sha256": "058b9c059e88fcd17d8e8bee4239f31073969c8affa4993498dbb7e5c1508518"
+    },
+    {
+      "path": "./sources/go/src/archive/zip/testdata/time-winzip.zip",
+      "sha256": "b1ae5e20dc1608e8fda463f6d19c667f1dd2ce290981565528a1e11ac7452bfa"
+    },
+    {
+      "path": "./sources/go/src/archive/zip/testdata/unix.zip",
+      "sha256": "ae84fe91799e805724d20949195c4476aa4e7c124a9229c79987a4f7e0cdb178"
+    },
+    {
+      "path": "./sources/go/src/archive/zip/testdata/utf8-7zip.zip",
+      "sha256": "fda31b416bcacec89be0a8e1a9fe8f16b07b1761b34285a073f3cdde25209c4e"
+    },
+    {
+      "path": "./sources/go/src/archive/zip/testdata/utf8-infozip.zip",
+      "sha256": "d73791c790a2e4593a207d5e9ef7a5fdcb937db571be85747421b951655c98f6"
+    },
+    {
+      "path": "./sources/go/src/archive/zip/testdata/utf8-osx.zip",
+      "sha256": "5da98564f0188c6ea25c5a681adac2bcf402a22b7e16bfdf087034be9e8b17a5"
+    },
+    {
+      "path": "./sources/go/src/archive/zip/testdata/utf8-winrar.zip",
+      "sha256": "f41036f0d011ae1c98de383360b1e26eb41f216cea17ab909f8fcf027ba20791"
+    },
+    {
+      "path": "./sources/go/src/archive/zip/testdata/utf8-winzip.zip",
+      "sha256": "f04b2fca5ebaac681e7ca1f859bc0a1abe4193800255a449b2a3a871dc3f64a0"
+    },
+    {
+      "path": "./sources/go/src/archive/zip/testdata/winxp.zip",
+      "sha256": "d60fd70a6de4cc16363b5a424bcf703f5345f01c6a0595f5246ae12822bf719d"
+    },
+    {
+      "path": "./sources/go/src/archive/zip/testdata/zip64-2.zip",
+      "sha256": "941bf893b024dcb2269684357b6df18ca747ce873d6bdc626796572bf3a3f9e3"
+    },
+    {
+      "path": "./sources/go/src/archive/zip/testdata/zip64.zip",
+      "sha256": "d1a659d5a2d292682a17d789834d97b97650b6a8d188799ac1166fd85ace7dbd"
+    },
+    {
+      "path": "./sources/go/src/html/template/testdata/fs.zip",
+      "sha256": "af5e3cb635c27b492ead712c3eadba4d672398099559680e8176776918ffaf7b"
+    },
+    {
+      "path": "./sources/go-modules/cache/download/filippo.io/edwards25519/@v/v1.2.0.zip",
+      "sha256": "98f2d3ca9b88daa031b0fb2fb521b7ea386af1fed61b6f445a20bef7fa381c17"
+    },
+    {
+      "path": "./sources/go-modules/cache/download/github.com/beeper/argo-go/@v/v1.1.2.zip",
+      "sha256": "173138aa3a4c9d4a9e6358b1040fdf76b34a90403027fbba67bc7a2b2370e9a3"
+    },
+    {
+      "path": "./sources/go-modules/cache/download/github.com/coder/websocket/@v/v1.8.15.zip",
+      "sha256": "4f1d890bc5131f335737bbb6241e3958758c8774b3e6d1c905f713f604af6209"
+    },
+    {
+      "path": "./sources/go-modules/cache/download/github.com/elliotchance/orderedmap/v3/@v/v3.1.1.zip",
+      "sha256": "de4b5f881d9eb0217a4ab5bf1f97ffc53856984a86a526df34eda95535d436d0"
+    },
+    {
+      "path": "./sources/go-modules/cache/download/github.com/google/uuid/@v/v1.6.0.zip",
+      "sha256": "d0f02f377217f42702e259684e06441edbf5140dddcc34ba9bea56038b38a6ed"
+    },
+    {
+      "path": "./sources/go-modules/cache/download/github.com/mattn/go-colorable/@v/v0.1.16.zip",
+      "sha256": "1b43236db9dc34e69edf02373e3ba86c058cc34c672f3e3610425cadcf6efd57"
+    },
+    {
+      "path": "./sources/go-modules/cache/download/github.com/mattn/go-isatty/@v/v0.0.24.zip",
+      "sha256": "4fcffec0bae0ad4af7bf96e2497a817d85de64af19ffe31d82bda362148234b8"
+    },
+    {
+      "path": "./sources/go-modules/cache/download/github.com/mattn/go-sqlite3/@v/v1.14.52.zip",
+      "sha256": "ebd1fef8e9434fbdc2c94e35b9991df62d472c00170f57fc4f75daa69f658a1b"
+    },
+    {
+      "path": "./sources/go-modules/cache/download/github.com/mdp/qrterminal/v3/@v/v3.2.1.zip",
+      "sha256": "0ac6b3190b4cef0921d2accd9113346b2051329c30441cd10b430e0b16abe494"
+    },
+    {
+      "path": "./sources/go-modules/cache/download/github.com/petermattis/goid/@v/v0.0.0-20260918085751-abfca077860b.zip",
+      "sha256": "990b657ec13e973d5e14aa18c93e7cc009415a6efbbfb66ea5e16c1154df28d8"
+    },
+    {
+      "path": "./sources/go-modules/cache/download/github.com/rs/zerolog/@v/v1.35.1.zip",
+      "sha256": "91ae94de887e861afc3c9aff30a0ec3b7563c1d330fe2f619dd16b1b51684d2f"
+    },
+    {
+      "path": "./sources/go-modules/cache/download/github.com/spf13/cobra/@v/v1.10.2.zip",
+      "sha256": "a00aae6fcd631e0fde52c98604452ff70e1b73c3b8a560d68db15aff5e26872d"
+    },
+    {
+      "path": "./sources/go-modules/cache/download/github.com/spf13/pflag/@v/v1.0.10.zip",
+      "sha256": "a246b8c9d3daa87d6c634cdfee1bdf7fa53d5817eeef4fa0c6da43edd12de4ca"
+    },
+    {
+      "path": "./sources/go-modules/cache/download/github.com/vektah/gqlparser/v2/@v/v2.5.64.zip",
+      "sha256": "2bbe0e723f6ca822530bb183e5c9c632105e1da02fe69b2bae468f67a9447900"
+    },
+    {
+      "path": "./sources/go-modules/cache/download/go.mau.fi/libsignal/@v/v0.2.2.zip",
+      "sha256": "12b60a71250f3996749acb2ba454a34d360801ef314d3e32c7dbb4da240a807b"
+    },
+    {
+      "path": "./sources/go-modules/cache/download/go.mau.fi/util/@v/v0.11.0.zip",
+      "sha256": "f22df85f53d6dc2b4397de215343662a70c3110033d4f12e12f7453c441bff02"
+    },
+    {
+      "path": "./sources/go-modules/cache/download/go.mau.fi/whatsmeow/@v/v0.0.0-20261017175727-b2b1e71d45e2.zip",
+      "sha256": "8018b5ace338bf5bb5e1b9523e727cd246ed4a28bfe658c9a21538a7e8f14b49"
+    },
+    {
+      "path": "./sources/go-modules/cache/download/golang.org/x/crypto/@v/v0.58.0.zip",
+      "sha256": "b0a45594cda20ddb4264d84aeff9b588b8570bf6a2833c51a0b821734a298d95"
+    },
+    {
+      "path": "./sources/go-modules/cache/download/golang.org/x/exp/@v/v0.0.0-20261014143641-f0251eb4aa3e.zip",
+      "sha256": "59f56c3ee46a87131794a9ccd90d9f6430702377e76bdeed0b5a726ab0dce59e"
+    },
+    {
+      "path": "./sources/go-modules/cache/download/golang.org/x/net/@v/v0.61.0.zip",
+      "sha256": "f6843a98d608298e48a6ca287292c9a6fae066284050ce174d5ffb781c9b3dcf"
+    },
+    {
+      "path": "./sources/go-modules/cache/download/golang.org/x/sync/@v/v0.24.0.zip",
+      "sha256": "ca3fcf3ea8259e75891f7947e1a816a5b89402c542d45d8bbbd9e061b0c58019"
+    },
+    {
+      "path": "./sources/go-modules/cache/download/golang.org/x/sys/@v/v0.49.0.zip",
+      "sha256": "e73a06591ca0d7016ce3ccb45c36a8ed7128468aecc1a357f94d815c760c6b31"
+    },
+    {
+      "path": "./sources/go-modules/cache/download/golang.org/x/term/@v/v0.47.0.zip",
+      "sha256": "d990d5ab94dfa41ba980645b721bba7490064337a01bb03e6cacace70e8df0bf"
+    },
+    {
+      "path": "./sources/go-modules/cache/download/golang.org/x/text/@v/v0.43.0.zip",
+      "sha256": "b75131f628f6e2e4892fd638d33127e952a5027775e0162b94ba069cb4e13863"
+    },
+    {
+      "path": "./sources/go-modules/cache/download/google.golang.org/protobuf/@v/v1.36.12.zip",
+      "sha256": "68f8a3174aff42950fd9bd02c11b45c6986eb8060508d124d1c3dd6bf86b9be6"
+    },
+    {
+      "path": "./sources/go-modules/cache/download/gopkg.in/yaml.v3/@v/v3.0.1.zip",
+      "sha256": "aab8fbc4e6300ea08e6afe1caea18a21c90c79f489f52c53e2f20431f1a9a015"
+    },
+    {
+      "path": "./sources/go-modules/cache/download/rsc.io/qr/@v/v0.2.0.zip",
+      "sha256": "8eb213702cd69a31bf7ce2783a0e82d0fa80dfb98178bfb0201f79452a4067c9"
+    },
+    {
+      "path": "./sources/python-build-standalone-full/python/install/lib/python3.13/test/archivetestdata/testtar.tar.xz",
+      "sha256": "89e0326292b96a5700582a37ebf3d8ba60f1d136772b5cd15b2c2ae653fda188"
+    },
+    {
+      "path": "./sources/python-build-standalone-full/python/install/lib/python3.13/test/archivetestdata/zip_cp437_header.zip",
+      "sha256": "e2cdb56febb5106607bf5f9b92b2b7a9516814e7650139cfe46f6b36bfcfa327"
+    },
+    {
+      "path": "./sources/python-build-standalone-full/python/install/lib/python3.13/test/archivetestdata/zipdir.zip",
+      "sha256": "19cb87050b0fb410da3b88df752c2e1bdaeec77ac052b04febef31a68823cfcb"
+    },
+    {
+      "path": "./sources/python-build-standalone-full/python/install/lib/python3.13/test/archivetestdata/zipdir_backslash.zip",
+      "sha256": "afdfa1f139c91c2b486f3a4a931bef18e08883fc5f5c81975f5bd19cf92e6d1f"
+    },
+    {
+      "path": "./sources/python-build-standalone-full/python/install/lib/python3.13/test/certdata/distrusted.zip",
+      "sha256": "8a9874e20b8583e80e9d7d6c82ea566c22d50458a93bfef6400d70dde132a053"
+    },
+    {
+      "path": "./sources/python-build-standalone-full/python/install/lib/python3.13/test/test_importlib/namespace_pkgs/missing_directory.zip",
+      "sha256": "2507eab0cb7a594b25fb2fc1c6a0b0f27af53d1980ba358d4e0c1b1dc32a9e63"
+    },
+    {
+      "path": "./sources/python-build-standalone-full/python/install/lib/python3.13/test/test_importlib/namespace_pkgs/nested_portion1.zip",
+      "sha256": "9d6e1c27870cb53512a2e29ab03e61c25188ebed57e933ee5ce4e749d72c0a87"
+    },
+    {
+      "path": "./sources/python-build-standalone-full/python/install/lib/python3.13/test/test_importlib/namespace_pkgs/top_level_portion1.zip",
+      "sha256": "42376ede22fbd49cd23ecb7fcd690206b53e5304c1c75fcf36358ab8acdda62a"
+    },
+    {
+      "path": "./sources/python-packages/PGPy-0.6.0.tar.gz",
+      "sha256": "279c2e353f4c3a319f00bd9bd582456e420f8a3ac6de2b4e9731444746828383"
+    },
+    {
+      "path": "./sources/python-packages/altgraph-0.17.5.tar.gz",
+      "sha256": "c87b395dd12fabde9c99573a9749d67da8d29ef9de0125c7f536699b4a9bc9e7"
+    },
+    {
+      "path": "./sources/python-packages/cffi-2.1.1.tar.gz",
+      "sha256": "dd31f52ea1086513bb9df30f8fcee9b8918323ae067a3d5b78bc826a000712be"
+    },
+    {
+      "path": "./sources/python-packages/cmake-4.4.4.tar.gz",
+      "sha256": "f337d18e33b116cabae9a7a8ff423fc0bc3f389da0acefeb724e1397128dcc34"
+    },
+    {
+      "path": "./sources/python-packages/cryptography-50.0.2.tar.gz",
+      "sha256": "7b46165bb56eb4704e2eaaf86f3c940d19154535d9b0ca7d6d590b04060e00d5"
+    },
+    {
+      "path": "./sources/python-packages/macholib-1.16.4.tar.gz",
+      "sha256": "f408c93ab2e995cd2c46e34fe328b130404be143469e41bc366c807448979362"
+    },
+    {
+      "path": "./sources/python-packages/packaging-26.3.tar.gz",
+      "sha256": "94edc256424af38762eb31306eed28beb9f0efc50a8837492c9d6fd6004aed79"
+    },
+    {
+      "path": "./sources/python-packages/pip-26.2.2.tar.gz",
+      "sha256": "3a8e5c800492787f33a4114ef54444546c340df428974ebba17e0fd47e11af2f"
+    },
+    {
+      "path": "./sources/python-packages/pyasn1-0.6.5.tar.gz",
+      "sha256": "6b11616a6bcf3a40e635f082bb232fa57b5e0dd7f517bd7ddd69ec3794508a47"
+    },
+    {
+      "path": "./sources/python-packages/pycparser-3.12.tar.gz",
+      "sha256": "f03387877eab82ce01bbdfd0ba7252ee55a90b1c708d5129e2ce915475cf1db6"
+    },
+    {
+      "path": "./sources/python-packages/pyinstaller-6.22.3.tar.gz",
+      "sha256": "05eb2f5615503e72939a7224d68b4aff572c6b0438ee4a17d0a4b481f399362d"
+    },
+    {
+      "path": "./sources/python-packages/pyinstaller_hooks_contrib-2026.9.tar.gz",
+      "sha256": "2748767901acb5cecd1304652b6c7add5bffcff1d71d01207fe24a5d42942a56"
+    },
+    {
+      "path": "./sources/python-packages/setuptools-84.2.1.tar.gz",
+      "sha256": "3ff8b3b5492a0aa66960f4419365a86b84e013070d4313e4d4a6894f5d64d6bc"
+    },
+    {
+      "path": "./sources/python-packages/standard_imghdr-3.13.0.tar.gz",
+      "sha256": "8d9c68058d882f6fc3542a8d39ef9ff94d2187dc90bd0c851e0902776b7b7a42"
+    },
+    {
+      "path": "./sources/python-packages/zstandard-0.25.0.tar.gz",
+      "sha256": "7713e1179d162cf5c7906da876ec2ccb9c3a9dcbdffef0cc7f70c3667a205f0b"
+    }
+  ],
+  "cpython_dependency_versions": {
+    "cpython-3.13": {
+      "url": "https://www.python.org/ftp/python/3.13.18/Python-3.13.18.tar.xz",
+      "size": 23243936,
+      "sha256": "abb0102e6d4ae027509bcb82327d9dd85515b44a3ba8ad538cfc5e9847029f68",
+      "version": "3.13.18",
+      "licenses": [
+        "Python-2.0",
+        "CNRI-Python"
+      ],
+      "license_file": "LICENSE.cpython.txt",
+      "python_tag": "cp313"
+    },
+    "bzip2": {
+      "upstream_url": "https://sourceware.org/pub/bzip2/bzip2-1.0.8.tar.gz",
+      "url": "https://astral-sh.github.io/mirror/files/bzip2-1.0.8.tar.gz",
+      "size": 810029,
+      "sha256": "ab5a03176ee106d3f0fa90e381da478ddae405918153cca248e682cd0c4a2269",
+      "version": "1.0.8",
+      "library_names": [
+        "bz2"
+      ],
+      "licenses": [
+        "bzip2-1.0.6"
+      ],
+      "license_file": "LICENSE.bzip2.txt"
+    },
+    "expat": {
+      "url": "https://github.com/libexpat/libexpat/releases/download/R_2_9_0/expat-2.9.0.tar.xz",
+      "size": 534052,
+      "sha256": "1e6371862cc31999b368c3b89b49994f0677e1bab5f1b2b85ae3741f5d803051",
+      "version": "2.9.0",
+      "library_names": [
+        "expat"
+      ],
+      "licenses": [
+        "MIT"
+      ],
+      "license_file": "LICENSE.expat.txt"
+    },
+    "libffi": {
+      "url": "https://github.com/libffi/libffi/releases/download/v3.8.0/libffi-3.8.0.tar.gz",
+      "size": 1581626,
+      "sha256": "7da3e2d9a171eb0a038f592ecad3ff2bb2550f3496d87b3b29ad0cf4430c0db4",
+      "version": "3.8.0",
+      "library_names": [
+        "ffi"
+      ],
+      "licenses": [
+        "MIT"
+      ],
+      "license_file": "LICENSE.libffi.txt"
+    },
+    "mpdecimal": {
+      "upstream_url": "https://www.bytereef.org/software/mpdecimal/releases/mpdecimal-4.0.0.tar.gz",
+      "url": "https://astral-sh.github.io/mirror/files/mpdecimal-4.0.0.tar.gz",
+      "size": 315325,
+      "sha256": "942445c3245b22730fd41a67a7c5c231d11cb1b9936b9c0f76334fb7d0b4468c",
+      "version": "4.0.0",
+      "library_names": [
+        "mpdec"
+      ],
+      "licenses": [
+        "BSD-2-Clause"
+      ],
+      "license_file": "LICENSE.mpdecimal.txt"
+    },
+    "openssl-3.5": {
+      "_comment": "Remember to update OPENSSL_VERSION_INFO in pythonbuild/disttests/ whenever upgrading.",
+      "url": "https://github.com/openssl/openssl/releases/download/openssl-3.5.9/openssl-3.5.9.tar.gz",
+      "size": 53279637,
+      "sha256": "603f5602e2eef00d77fbd429d34dcd5822bb301757a1bc9cdb24c670f1eb859a",
+      "version": "3.5.9",
+      "library_names": [
+        "crypto",
+        "ssl"
+      ],
+      "licenses": [
+        "Apache-2.0"
+      ],
+      "license_file": "LICENSE.openssl-3.txt"
+    },
+    "sqlite": {
+      "_comment": "Remember to update pythonbuild/disttests/ when version changed.",
+      "url": "https://www.sqlite.org/2026/sqlite-autoconf-3530100.tar.gz",
+      "size": 3275272,
+      "sha256": "83e6b2020a034e9a7ad4a72feea59e1ad52f162e09cbd26735a3ffb98359fc4f",
+      "version": "3530100",
+      "actual_version": "3.53.1.0",
+      "library_names": [
+        "sqlite3"
+      ],
+      "licenses": [],
+      "license_file": "LICENSE.sqlite.txt",
+      "license_public_domain": true
+    },
+    "xz": {
+      "_comment": "IMPORTANT: xz 5.6.0 was released with a backdoor (CVE-2024-3094). This has been resolved. Be cautious before taking any xz upgrades given this past behavior. liblzma is licensed as 0BSD. Other parts of code have different licenses. But we only use liblzma.",
+      "url": "https://github.com/tukaani-project/xz/releases/download/v5.8.4/xz-5.8.4.tar.gz",
+      "size": 2799797,
+      "sha256": "0014c7886930454fe8bd4228665b51af55eeae560ea135c9c4cd33f55b2591d9",
+      "version": "5.8.4",
+      "library_names": [
+        "lzma"
+      ],
+      "licenses": [
+        "0BSD"
+      ],
+      "license_file": "LICENSE.liblzma.txt"
+    },
+    "tcl": {
+      "url": "https://prdownloads.sourceforge.net/tcl/tcl9.0.4-src.tar.gz",
+      "size": 11866337,
+      "sha256": "d0aed49230bc02a65c1e0229e65f34590a4b037ec40d546f32573b467f7551ea",
+      "version": "9.0.4",
+      "library_names": [
+        "tcl9.0"
+      ],
+      "licenses": [
+        "TCL"
+      ],
+      "license_file": "LICENSE.tcl.txt"
+    },
+    "tk": {
+      "url": "https://prdownloads.sourceforge.net/tcl/tk9.0.4-src.tar.gz",
+      "size": 4613019,
+      "sha256": "d7a146d2917eb8b5cc95276dbf0e3d03c7464d2b19c1675357857c989301dbb4",
+      "version": "9.0.4",
+      "library_names": [
+        "tk9.0"
+      ],
+      "licenses": [
+        "TCL"
+      ],
+      "license_file": "LICENSE.tcl.txt"
+    },
+    "zlib": {
+      "url": "https://github.com/madler/zlib/releases/download/v1.3.2/zlib-1.3.2.tar.gz",
+      "size": 1502830,
+      "sha256": "bb329a0a2cd0274d05519d61c667c062e06990d72e125ee2dfa8de64f0119d16",
+      "version": "1.3.2",
+      "library_names": [
+        "z"
+      ],
+      "licenses": [
+        "Zlib"
+      ],
+      "license_file": "LICENSE.zlib.txt"
+    },
+    "zlib-ng": {
+      "url": "https://github.com/python/cpython-source-deps/archive/refs/tags/zlib-ng-2.2.4.tar.gz",
+      "size": 2415819,
+      "sha256": "00bbd88709bc416cb96160ab61d3e1c8f76e106799af7328d0fe434dc7dd5004",
+      "version": "2.2.4",
+      "library_names": [
+        "z"
+      ],
+      "licenses": [
+        "Zlib"
+      ],
+      "license_file": "LICENSE.zlib-ng.txt"
+    },
+    "uuid": {
+      "url": "https://sourceforge.net/projects/libuuid/files/libuuid-1.0.3.tar.gz",
+      "size": 318256,
+      "sha256": "46af3275291091009ad7f1b899de3d0cea0252737550e7919d17237997db5644",
+      "version": "1.0.3",
+      "library_names": [
+        "uuid"
+      ],
+      "licenses": [
+        "BSD-3-Clause"
+      ],
+      "license_file": "LICENSE.libuuid.txt"
+    }
+  },
+  "licenses": {
+    "directory": "./licenses",
+    "file_count": 330,
+    "files": [
+      {
+        "path": "./licenses/cpython/LICENSE.bdb.txt",
+        "sha256": "3bdff06e69991c94664f2ef5c5f8096f60b7dbec071756ea6cc26b445e06ec5b"
+      },
+      {
+        "path": "./licenses/cpython/LICENSE.bzip2.txt",
+        "sha256": "1f38bbc7caacafd65169276d759c0d88c991b753b643ce35d0e45ea1971dd441"
+      },
+      {
+        "path": "./licenses/cpython/LICENSE.cpython.txt",
+        "sha256": "86e61415828a8b5b06ec8d024e6f086ce155a8b85fd0c419c0ba4dc004e74fdd"
+      },
+      {
+        "path": "./licenses/cpython/LICENSE.expat.txt",
+        "sha256": "122f2c27000472a201d337b9b31f7eb2b52d091b02857061a8880371612d9534"
+      },
+      {
+        "path": "./licenses/cpython/LICENSE.libX11.txt",
+        "sha256": "2daec087a88e7c9b8082557cdeebad5bbb8155a4137472f0b22e269cd99d0c1e"
+      },
+      {
+        "path": "./licenses/cpython/LICENSE.libXau.txt",
+        "sha256": "56abe29bb1d9806a9e04fa9f80fed2c0f18027594df3f098148d814aef6bddfa"
+      },
+      {
+        "path": "./licenses/cpython/LICENSE.libedit.txt",
+        "sha256": "29cea33c32bbc9785142386377915612a2fa786482c46843383384aded2e09b1"
+      },
+      {
+        "path": "./licenses/cpython/LICENSE.libffi.txt",
+        "sha256": "deaf3a42effb551a5b140fa9afefed183a27f1341c6d1bf430d106a5e6931fc0"
+      },
+      {
+        "path": "./licenses/cpython/LICENSE.liblzma.txt",
+        "sha256": "9a4062de0a2c388a98cf35a35d348b62fa97c838a71c3c28ee1a2d7d0a565b02"
+      },
+      {
+        "path": "./licenses/cpython/LICENSE.libuuid.txt",
+        "sha256": "122ee1f7e258f2c3c0e538a75c037684f420454bf3850ddc74ce750bbf5fe86b"
+      },
+      {
+        "path": "./licenses/cpython/LICENSE.libxcb.txt",
+        "sha256": "c5ffbfeaa501071ceeb97b7de2c0d703fdaa35de01c0fb6cbac1c28453a3e9fd"
+      },
+      {
+        "path": "./licenses/cpython/LICENSE.mpdecimal.txt",
+        "sha256": "669512af7219f58be03a398766d7c9da11a3b3df9d3f05cb74c5ceca25c8da3b"
+      },
+      {
+        "path": "./licenses/cpython/LICENSE.ncurses.txt",
+        "sha256": "87a4c4442337b8968ef956031c406b74f9cb7149b7ba87311bdaba534816201c"
+      },
+      {
+        "path": "./licenses/cpython/LICENSE.openssl-3.txt",
+        "sha256": "7d5450cb2d142651b8afa315b5f238efc805dad827d91ba367d8516bc9d49e7a"
+      },
+      {
+        "path": "./licenses/cpython/LICENSE.sqlite.txt",
+        "sha256": "38bef3d28b24f145ea293bd3b6eb4b20396982abc8303128fb493986ea5bc719"
+      },
+      {
+        "path": "./licenses/cpython/LICENSE.tcl.txt",
+        "sha256": "c0a69a2bfd757361ec7e6143973b103c90409316b49e9c88db26ad6388e79f16"
+      },
+      {
+        "path": "./licenses/cpython/LICENSE.tix.txt",
+        "sha256": "3ac5cdd0bef6c43ce34c6a7ced452081d9e5a0bf94082b9f9147d23ec9e214f5"
+      },
+      {
+        "path": "./licenses/cpython/LICENSE.zlib-ng.txt",
+        "sha256": "6c9f0d975b41afaa34d22f55bb8986ce69e5cb7ad327cb2b28820cd425edf5ee"
+      },
+      {
+        "path": "./licenses/cpython/LICENSE.zlib.txt",
+        "sha256": "818922b2620f12801a12bf78e399644a30990e66824abd8ca8ec24d451d6f92c"
+      },
+      {
+        "path": "./licenses/cpython/LICENSE.zstd.txt",
+        "sha256": "7055266497633c9025b777c78eb7235af13922117480ed5c674677adc381c9d8"
+      },
+      {
+        "path": "./licenses/cpython-dependencies/Python-3.13.18.tar.xz/Python-3.13.18/Doc/copyright.rst",
+        "sha256": "2f455e3bd119869bf01369ab852d87d11c9e67e5351a7ebc64ab2c0af344aff6"
+      },
+      {
+        "path": "./licenses/cpython-dependencies/Python-3.13.18.tar.xz/Python-3.13.18/Doc/license.rst",
+        "sha256": "952ac05720d7f1dcb63589b35eb0931b1442eb250230a4ad31198eddf0ad6abc"
+      },
+      {
+        "path": "./licenses/cpython-dependencies/Python-3.13.18.tar.xz/Python-3.13.18/LICENSE",
+        "sha256": "78b12c3a81360b357002334f0e70ea0e92eebf7a9b358805c03c48484945f3bb"
+      },
+      {
+        "path": "./licenses/cpython-dependencies/Python-3.13.18.tar.xz/Python-3.13.18/Mac/BuildScript/resources/License.rtf",
+        "sha256": "ab6df6040a4e24babad38f98454eb3263722fa6a1c441bfaa271798efbe55f27"
+      },
+      {
+        "path": "./licenses/cpython-dependencies/Python-3.13.18.tar.xz/Python-3.13.18/Modules/expat/COPYING",
+        "sha256": "31b15de82aa19a845156169a17a5488bf597e561b2c318d159ed583139b25e87"
+      },
+      {
+        "path": "./licenses/cpython-dependencies/Python-3.13.18.tar.xz/Python-3.13.18/Tools/msi/bundle/bootstrap/LICENSE.txt",
+        "sha256": "cb95daf98edda8e08a242e1060691b6941f0911692bf468a3f9c5e4b58c09b8f"
+      },
+      {
+        "path": "./licenses/cpython-dependencies/bzip2-1.0.8.tar.gz/bzip2-1.0.8/LICENSE",
+        "sha256": "c6dbbf828498be844a89eaa3b84adbab3199e342eb5cb2ed2f0d4ba7ec0f38a3"
+      },
+      {
+        "path": "./licenses/cpython-dependencies/expat-2.9.0.tar.xz/expat-2.9.0/COPYING",
+        "sha256": "31b15de82aa19a845156169a17a5488bf597e561b2c318d159ed583139b25e87"
+      },
+      {
+        "path": "./licenses/cpython-dependencies/libffi-3.8.0.tar.gz/libffi-3.8.0/LICENSE",
+        "sha256": "17b64dc60f3b6897a60f971e288b973f655c2edcdf08b25f3c3dd5549857881c"
+      },
+      {
+        "path": "./licenses/cpython-dependencies/libffi-3.8.0.tar.gz/libffi-3.8.0/LICENSE-BUILDTOOLS",
+        "sha256": "e67978cd18816c0cb7d29aaaacde7b7447402c2fb321a051698890a8eaedda94"
+      },
+      {
+        "path": "./licenses/cpython-dependencies/libuuid-1.0.3.tar.gz/libuuid-1.0.3/COPYING",
+        "sha256": "18a4a3931b5b703202793f7ec14b07639dd6b502162049f66250aa6445032ae3"
+      },
+      {
+        "path": "./licenses/cpython-dependencies/mpdecimal-4.0.0.tar.gz/mpdecimal-4.0.0/COPYRIGHT.txt",
+        "sha256": "2713324211652ce4a60e6e21e54f9dc3004299e591b0933a352f1a89c5fb53c2"
+      },
+      {
+        "path": "./licenses/cpython-dependencies/mpdecimal-4.0.0.tar.gz/mpdecimal-4.0.0/doc/COPYRIGHT.txt",
+        "sha256": "25329ef0e2a8823b88786a39f168304a65a3138f720ab39ffc1e9fbee67b74a9"
+      },
+      {
+        "path": "./licenses/cpython-dependencies/openssl-3.5.9.tar.gz/openssl-3.5.9/LICENSE.txt",
+        "sha256": "7d5450cb2d142651b8afa315b5f238efc805dad827d91ba367d8516bc9d49e7a"
+      },
+      {
+        "path": "./licenses/cpython-dependencies/openssl-3.5.9.tar.gz/openssl-3.5.9/external/perl/Text-Template-1.56/LICENSE",
+        "sha256": "9837f05336ef3cbacb6a96e1672a0426d81ad01191f214b8d48e22ca62338181"
+      },
+      {
+        "path": "./licenses/cpython-dependencies/openssl-3.5.9.tar.gz/openssl-3.5.9/util/perl/OpenSSL/copyright.pm",
+        "sha256": "04213b69dbebc8ba0dd8a6216af1d9422f9b63619c1cf2f1d8aa107b83bbb608"
+      },
+      {
+        "path": "./licenses/cpython-dependencies/sqlite-autoconf-3530100.tar.gz/sqlite-autoconf-3530100/autosetup/LICENSE",
+        "sha256": "679b9208e67df09977456d1d2ae4d885b9badf02c47b45a28cf95ee27c14cb18"
+      },
+      {
+        "path": "./licenses/cpython-dependencies/sqlite-autoconf-3530100.tar.gz/sqlite-autoconf-3530100/tea/license.terms",
+        "sha256": "66e056b6e8687f32af30d5187611b98b12a8f46f07aaf62f43585f276e8f0ac9"
+      },
+      {
+        "path": "./licenses/cpython-dependencies/tcl9.0.4-src.tar.gz/tcl9.0.4/compat/license.terms",
+        "sha256": "c0a69a2bfd757361ec7e6143973b103c90409316b49e9c88db26ad6388e79f16"
+      },
+      {
+        "path": "./licenses/cpython-dependencies/tcl9.0.4-src.tar.gz/tcl9.0.4/compat/zlib/LICENSE",
+        "sha256": "e32ff4e00d9d94930537635291da39e7e612703334bf6fde8c7f1686fe8a45a2"
+      },
+      {
+        "path": "./licenses/cpython-dependencies/tcl9.0.4-src.tar.gz/tcl9.0.4/compat/zlib/contrib/minizip/LICENSE.Info-Zip",
+        "sha256": "fc686023047ce5ce3a18a9b8a777156f0e475929d3de06bac279f3c025d2b2ca"
+      },
+      {
+        "path": "./licenses/cpython-dependencies/tcl9.0.4-src.tar.gz/tcl9.0.4/doc/license.terms",
+        "sha256": "c0a69a2bfd757361ec7e6143973b103c90409316b49e9c88db26ad6388e79f16"
+      },
+      {
+        "path": "./licenses/cpython-dependencies/tcl9.0.4-src.tar.gz/tcl9.0.4/library/license.terms",
+        "sha256": "c0a69a2bfd757361ec7e6143973b103c90409316b49e9c88db26ad6388e79f16"
+      },
+      {
+        "path": "./licenses/cpython-dependencies/tcl9.0.4-src.tar.gz/tcl9.0.4/libtommath/LICENSE",
+        "sha256": "2fa64b163659f41965c9815882a8296d3d03ff546b76153e11445f9bdecf955a"
+      },
+      {
+        "path": "./licenses/cpython-dependencies/tcl9.0.4-src.tar.gz/tcl9.0.4/license.terms",
+        "sha256": "c0a69a2bfd757361ec7e6143973b103c90409316b49e9c88db26ad6388e79f16"
+      },
+      {
+        "path": "./licenses/cpython-dependencies/tcl9.0.4-src.tar.gz/tcl9.0.4/macosx/license.terms",
+        "sha256": "c0a69a2bfd757361ec7e6143973b103c90409316b49e9c88db26ad6388e79f16"
+      },
+      {
+        "path": "./licenses/cpython-dependencies/tcl9.0.4-src.tar.gz/tcl9.0.4/pkgs/itcl4.3.8/doc/license.terms",
+        "sha256": "ad02cfa25db921ee30a1ab68d30e2ad8bf2e174c394237eb55ddd6968ded8032"
+      },
+      {
+        "path": "./licenses/cpython-dependencies/tcl9.0.4-src.tar.gz/tcl9.0.4/pkgs/itcl4.3.8/license.terms",
+        "sha256": "b61edfaeead97546bc62b1f205b046f2e440b83bfc517bc0932b93bc3d505865"
+      },
+      {
+        "path": "./licenses/cpython-dependencies/tcl9.0.4-src.tar.gz/tcl9.0.4/pkgs/sqlite3.53.0/license.terms",
+        "sha256": "66e056b6e8687f32af30d5187611b98b12a8f46f07aaf62f43585f276e8f0ac9"
+      },
+      {
+        "path": "./licenses/cpython-dependencies/tcl9.0.4-src.tar.gz/tcl9.0.4/pkgs/tdbc1.1.13/license.terms",
+        "sha256": "fafd6456aa4b7c80c190df86de5bdfab82c8c227a0c348662432c75ceeb2238d"
+      },
+      {
+        "path": "./licenses/cpython-dependencies/tcl9.0.4-src.tar.gz/tcl9.0.4/pkgs/tdbcmysql1.1.13/license.terms",
+        "sha256": "fafd6456aa4b7c80c190df86de5bdfab82c8c227a0c348662432c75ceeb2238d"
+      },
+      {
+        "path": "./licenses/cpython-dependencies/tcl9.0.4-src.tar.gz/tcl9.0.4/pkgs/tdbcodbc1.1.13/license.terms",
+        "sha256": "fafd6456aa4b7c80c190df86de5bdfab82c8c227a0c348662432c75ceeb2238d"
+      },
+      {
+        "path": "./licenses/cpython-dependencies/tcl9.0.4-src.tar.gz/tcl9.0.4/pkgs/tdbcpostgres1.1.13/license.terms",
+        "sha256": "d3aa1cf53b96e69469d46c62bceeebadaa3ecb9699b73962bb207246f4288a08"
+      },
+      {
+        "path": "./licenses/cpython-dependencies/tcl9.0.4-src.tar.gz/tcl9.0.4/pkgs/tdbcsqlite3-1.1.13/license.terms",
+        "sha256": "37186e29fd02702179f7c5e9fc630840429319281fcf5a282caaf7fcb0a1c7f4"
+      },
+      {
+        "path": "./licenses/cpython-dependencies/tcl9.0.4-src.tar.gz/tcl9.0.4/pkgs/thread3.0.6/license.terms",
+        "sha256": "0a03981c40f7813ce6ddbdfce9882020bcfd696ea044b21ef07619ed9b86abae"
+      },
+      {
+        "path": "./licenses/cpython-dependencies/tcl9.0.4-src.tar.gz/tcl9.0.4/tests/license.terms",
+        "sha256": "c0a69a2bfd757361ec7e6143973b103c90409316b49e9c88db26ad6388e79f16"
+      },
+      {
+        "path": "./licenses/cpython-dependencies/tcl9.0.4-src.tar.gz/tcl9.0.4/tests/zipfiles/LICENSE-libzip",
+        "sha256": "01c022eca6d566e2e8792fd0f091a28653b2a608319922bcd4de91c49d1438e1"
+      },
+      {
+        "path": "./licenses/cpython-dependencies/tcl9.0.4-src.tar.gz/tcl9.0.4/win/license.terms",
+        "sha256": "c0a69a2bfd757361ec7e6143973b103c90409316b49e9c88db26ad6388e79f16"
+      },
+      {
+        "path": "./licenses/cpython-dependencies/tk9.0.4-src.tar.gz/tk9.0.4/doc/license.terms",
+        "sha256": "2cde822b93ca16ae535c954b7dfe658b4ad10df2a193628d1b358f1765e8b198"
+      },
+      {
+        "path": "./licenses/cpython-dependencies/tk9.0.4-src.tar.gz/tk9.0.4/library/demos/license.terms",
+        "sha256": "2cde822b93ca16ae535c954b7dfe658b4ad10df2a193628d1b358f1765e8b198"
+      },
+      {
+        "path": "./licenses/cpython-dependencies/tk9.0.4-src.tar.gz/tk9.0.4/library/license.terms",
+        "sha256": "2cde822b93ca16ae535c954b7dfe658b4ad10df2a193628d1b358f1765e8b198"
+      },
+      {
+        "path": "./licenses/cpython-dependencies/tk9.0.4-src.tar.gz/tk9.0.4/license.terms",
+        "sha256": "2cde822b93ca16ae535c954b7dfe658b4ad10df2a193628d1b358f1765e8b198"
+      },
+      {
+        "path": "./licenses/cpython-dependencies/tk9.0.4-src.tar.gz/tk9.0.4/macosx/license.terms",
+        "sha256": "2cde822b93ca16ae535c954b7dfe658b4ad10df2a193628d1b358f1765e8b198"
+      },
+      {
+        "path": "./licenses/cpython-dependencies/tk9.0.4-src.tar.gz/tk9.0.4/tests/license.terms",
+        "sha256": "2cde822b93ca16ae535c954b7dfe658b4ad10df2a193628d1b358f1765e8b198"
+      },
+      {
+        "path": "./licenses/cpython-dependencies/tk9.0.4-src.tar.gz/tk9.0.4/unix/license.terms",
+        "sha256": "2cde822b93ca16ae535c954b7dfe658b4ad10df2a193628d1b358f1765e8b198"
+      },
+      {
+        "path": "./licenses/cpython-dependencies/tk9.0.4-src.tar.gz/tk9.0.4/win/license.terms",
+        "sha256": "2cde822b93ca16ae535c954b7dfe658b4ad10df2a193628d1b358f1765e8b198"
+      },
+      {
+        "path": "./licenses/cpython-dependencies/tk9.0.4-src.tar.gz/tk9.0.4/xlib/X11/license.terms",
+        "sha256": "2cde822b93ca16ae535c954b7dfe658b4ad10df2a193628d1b358f1765e8b198"
+      },
+      {
+        "path": "./licenses/cpython-dependencies/tk9.0.4-src.tar.gz/tk9.0.4/xlib/license.terms",
+        "sha256": "2cde822b93ca16ae535c954b7dfe658b4ad10df2a193628d1b358f1765e8b198"
+      },
+      {
+        "path": "./licenses/cpython-dependencies/xz-5.8.4.tar.gz/xz-5.8.4/COPYING",
+        "sha256": "616a3ad264ce29b8f1cb97e53037b139d406899ca8d1f799651e17bfa09830b8"
+      },
+      {
+        "path": "./licenses/cpython-dependencies/xz-5.8.4.tar.gz/xz-5.8.4/COPYING.0BSD",
+        "sha256": "0b01625d853911cd0e2e088dcfb743261034a091bb379246cb25a14cc4c74bf1"
+      },
+      {
+        "path": "./licenses/cpython-dependencies/xz-5.8.4.tar.gz/xz-5.8.4/COPYING.GPLv2",
+        "sha256": "edaef632cbb643e4e7a221717a6c441a4c1a7c918e6e4d56debc3d8739b233f6"
+      },
+      {
+        "path": "./licenses/cpython-dependencies/xz-5.8.4.tar.gz/xz-5.8.4/COPYING.GPLv3",
+        "sha256": "3972dc9744f6499f0f9b2dbf76696f2ae7ad8af9b23dde66d6af86c9dfb36986"
+      },
+      {
+        "path": "./licenses/cpython-dependencies/xz-5.8.4.tar.gz/xz-5.8.4/COPYING.LGPLv2.1",
+        "sha256": "20e50fe7aae3e56378ebf0417d9de904f55a0e61e4df315333e632a4d3555d95"
+      },
+      {
+        "path": "./licenses/cpython-dependencies/xz-5.8.4.tar.gz/xz-5.8.4/build-aux/license-check.sh",
+        "sha256": "2b3fa1d23cb2ab084f3d919908159473cc0e1eed059d106e2a2857c0ec8af98a"
+      },
+      {
+        "path": "./licenses/cpython-dependencies/zlib-1.3.2.tar.gz/zlib-1.3.2/LICENSE",
+        "sha256": "e32ff4e00d9d94930537635291da39e7e612703334bf6fde8c7f1686fe8a45a2"
+      },
+      {
+        "path": "./licenses/cpython-dependencies/zlib-1.3.2.tar.gz/zlib-1.3.2/contrib/minizip/LICENSE.Info-Zip",
+        "sha256": "fc686023047ce5ce3a18a9b8a777156f0e475929d3de06bac279f3c025d2b2ca"
+      },
+      {
+        "path": "./licenses/cpython-dependencies/zlib-ng-2.2.4.tar.gz/cpython-source-deps-zlib-ng-2.2.4/LICENSE.md",
+        "sha256": "6c9f0d975b41afaa34d22f55bb8986ce69e5cb7ad327cb2b28820cd425edf5ee"
+      },
+      {
+        "path": "./licenses/ffmpeg/COPYING.GPLv2",
+        "sha256": "8177f97513213526df2cf6184d8ff986c675afb514d4e68a404010521b880643"
+      },
+      {
+        "path": "./licenses/ffmpeg/COPYING.GPLv3",
+        "sha256": "8ceb4b9ee5adedde47b31e975c1d90c73ad27b6b165a1dcd80c7c545eb65b903"
+      },
+      {
+        "path": "./licenses/ffmpeg/COPYING.LGPLv2.1",
+        "sha256": "246041b6ecf9bc32d718a62c57877c78b5eb397b6467e74ed7ae2626ab189c30"
+      },
+      {
+        "path": "./licenses/ffmpeg/COPYING.LGPLv3",
+        "sha256": "da7eabb7bafdf7d3ae5e9f223aa5bdc1eece45ac569dc21b3b037520b4464768"
+      },
+      {
+        "path": "./licenses/ffmpeg/LICENSE.md",
+        "sha256": "2e1d16c72fd74e12063776371da757322f8b77589386532f4fd8634bde7de1af"
+      },
+      {
+        "path": "./licenses/ffmpeg/tests/checkasm/ext/LICENSE",
+        "sha256": "a2dc8194271e5989c0622531c645a7b41af5da92eeb2531e4f2a3ec31023bc52"
+      },
+      {
+        "path": "./licenses/ffmpeg/tests/checkasm/ext/src/html_data/LICENSE",
+        "sha256": "0fd2c601fb2ead2add56807b7e32664da8d973b9835a422464f210bfea997a52"
+      },
+      {
+        "path": "./licenses/go/LICENSE",
+        "sha256": "911f8f5782931320f5b8d1160a76365b83aea6447ee6c04fa6d5591467db9dad"
+      },
+      {
+        "path": "./licenses/go/PATENTS",
+        "sha256": "96f408bfae65bf137fc2525d3ecb030271c50c1e90799f87abf8846d8dd505cc"
+      },
+      {
+        "path": "./licenses/go/src/cmd/compile/internal/ssa/_gen/vendor/golang.org/x/tools/LICENSE",
+        "sha256": "911f8f5782931320f5b8d1160a76365b83aea6447ee6c04fa6d5591467db9dad"
+      },
+      {
+        "path": "./licenses/go/src/cmd/compile/internal/ssa/_gen/vendor/golang.org/x/tools/PATENTS",
+        "sha256": "96f408bfae65bf137fc2525d3ecb030271c50c1e90799f87abf8846d8dd505cc"
+      },
+      {
+        "path": "./licenses/go/src/cmd/vendor/github.com/google/pprof/LICENSE",
+        "sha256": "cfc7749b96f63bd31c3c42b5c471bf756814053e847c10f3eb003417bc523d30"
+      },
+      {
+        "path": "./licenses/go/src/cmd/vendor/github.com/google/pprof/third_party/svgpan/LICENSE",
+        "sha256": "154c946c17de61ca71d28e13673d76a5798e6e25995a7397fbae157afc8f62b4"
+      },
+      {
+        "path": "./licenses/go/src/cmd/vendor/github.com/ianlancetaylor/demangle/LICENSE",
+        "sha256": "b73277f7730993ef8e7f80aed83e5309762fed4d77eced982abb2c00657c074d"
+      },
+      {
+        "path": "./licenses/go/src/cmd/vendor/golang.org/x/arch/LICENSE",
+        "sha256": "8cda009bd927676a95ee7ce2dae921442ac4d9584d041b56ecfcba6839032f0b"
+      },
+      {
+        "path": "./licenses/go/src/cmd/vendor/golang.org/x/arch/PATENTS",
+        "sha256": "96f408bfae65bf137fc2525d3ecb030271c50c1e90799f87abf8846d8dd505cc"
+      },
+      {
+        "path": "./licenses/go/src/cmd/vendor/golang.org/x/build/LICENSE",
+        "sha256": "911f8f5782931320f5b8d1160a76365b83aea6447ee6c04fa6d5591467db9dad"
+      },
+      {
+        "path": "./licenses/go/src/cmd/vendor/golang.org/x/build/PATENTS",
+        "sha256": "96f408bfae65bf137fc2525d3ecb030271c50c1e90799f87abf8846d8dd505cc"
+      },
+      {
+        "path": "./licenses/go/src/cmd/vendor/golang.org/x/mod/LICENSE",
+        "sha256": "911f8f5782931320f5b8d1160a76365b83aea6447ee6c04fa6d5591467db9dad"
+      },
+      {
+        "path": "./licenses/go/src/cmd/vendor/golang.org/x/mod/PATENTS",
+        "sha256": "96f408bfae65bf137fc2525d3ecb030271c50c1e90799f87abf8846d8dd505cc"
+      },
+      {
+        "path": "./licenses/go/src/cmd/vendor/golang.org/x/sync/LICENSE",
+        "sha256": "911f8f5782931320f5b8d1160a76365b83aea6447ee6c04fa6d5591467db9dad"
+      },
+      {
+        "path": "./licenses/go/src/cmd/vendor/golang.org/x/sync/PATENTS",
+        "sha256": "96f408bfae65bf137fc2525d3ecb030271c50c1e90799f87abf8846d8dd505cc"
+      },
+      {
+        "path": "./licenses/go/src/cmd/vendor/golang.org/x/sys/LICENSE",
+        "sha256": "911f8f5782931320f5b8d1160a76365b83aea6447ee6c04fa6d5591467db9dad"
+      },
+      {
+        "path": "./licenses/go/src/cmd/vendor/golang.org/x/sys/PATENTS",
+        "sha256": "96f408bfae65bf137fc2525d3ecb030271c50c1e90799f87abf8846d8dd505cc"
+      },
+      {
+        "path": "./licenses/go/src/cmd/vendor/golang.org/x/telemetry/LICENSE",
+        "sha256": "911f8f5782931320f5b8d1160a76365b83aea6447ee6c04fa6d5591467db9dad"
+      },
+      {
+        "path": "./licenses/go/src/cmd/vendor/golang.org/x/telemetry/PATENTS",
+        "sha256": "96f408bfae65bf137fc2525d3ecb030271c50c1e90799f87abf8846d8dd505cc"
+      },
+      {
+        "path": "./licenses/go/src/cmd/vendor/golang.org/x/term/LICENSE",
+        "sha256": "911f8f5782931320f5b8d1160a76365b83aea6447ee6c04fa6d5591467db9dad"
+      },
+      {
+        "path": "./licenses/go/src/cmd/vendor/golang.org/x/term/PATENTS",
+        "sha256": "96f408bfae65bf137fc2525d3ecb030271c50c1e90799f87abf8846d8dd505cc"
+      },
+      {
+        "path": "./licenses/go/src/cmd/vendor/golang.org/x/text/LICENSE",
+        "sha256": "911f8f5782931320f5b8d1160a76365b83aea6447ee6c04fa6d5591467db9dad"
+      },
+      {
+        "path": "./licenses/go/src/cmd/vendor/golang.org/x/text/PATENTS",
+        "sha256": "96f408bfae65bf137fc2525d3ecb030271c50c1e90799f87abf8846d8dd505cc"
+      },
+      {
+        "path": "./licenses/go/src/cmd/vendor/golang.org/x/tools/LICENSE",
+        "sha256": "911f8f5782931320f5b8d1160a76365b83aea6447ee6c04fa6d5591467db9dad"
+      },
+      {
+        "path": "./licenses/go/src/cmd/vendor/golang.org/x/tools/PATENTS",
+        "sha256": "96f408bfae65bf137fc2525d3ecb030271c50c1e90799f87abf8846d8dd505cc"
+      },
+      {
+        "path": "./licenses/go/src/cmd/vendor/rsc.io/markdown/LICENSE",
+        "sha256": "2d36597f7117c38b006835ae7f537487207d8ec407aa9d9980794b2030cbc067"
+      },
+      {
+        "path": "./licenses/go/src/crypto/internal/boring/LICENSE",
+        "sha256": "56210f826b8f0fbac3160dfe55c97f4019eb6cdda3963b5a0eab8a8bdb62360e"
+      },
+      {
+        "path": "./licenses/go/src/runtime/testdata/testgoroutineleakprofile/goker/LICENSE",
+        "sha256": "f99df8ae6da6de047ed002d9dbe8682d9a19c88e9a7473abdadf3ac206621a85"
+      },
+      {
+        "path": "./licenses/go/src/vendor/golang.org/x/crypto/LICENSE",
+        "sha256": "911f8f5782931320f5b8d1160a76365b83aea6447ee6c04fa6d5591467db9dad"
+      },
+      {
+        "path": "./licenses/go/src/vendor/golang.org/x/crypto/PATENTS",
+        "sha256": "96f408bfae65bf137fc2525d3ecb030271c50c1e90799f87abf8846d8dd505cc"
+      },
+      {
+        "path": "./licenses/go/src/vendor/golang.org/x/net/LICENSE",
+        "sha256": "911f8f5782931320f5b8d1160a76365b83aea6447ee6c04fa6d5591467db9dad"
+      },
+      {
+        "path": "./licenses/go/src/vendor/golang.org/x/net/PATENTS",
+        "sha256": "96f408bfae65bf137fc2525d3ecb030271c50c1e90799f87abf8846d8dd505cc"
+      },
+      {
+        "path": "./licenses/go/src/vendor/golang.org/x/sys/LICENSE",
+        "sha256": "911f8f5782931320f5b8d1160a76365b83aea6447ee6c04fa6d5591467db9dad"
+      },
+      {
+        "path": "./licenses/go/src/vendor/golang.org/x/sys/PATENTS",
+        "sha256": "96f408bfae65bf137fc2525d3ecb030271c50c1e90799f87abf8846d8dd505cc"
+      },
+      {
+        "path": "./licenses/go/src/vendor/golang.org/x/text/LICENSE",
+        "sha256": "911f8f5782931320f5b8d1160a76365b83aea6447ee6c04fa6d5591467db9dad"
+      },
+      {
+        "path": "./licenses/go/src/vendor/golang.org/x/text/PATENTS",
+        "sha256": "96f408bfae65bf137fc2525d3ecb030271c50c1e90799f87abf8846d8dd505cc"
+      },
+      {
+        "path": "./licenses/lame/COPYING",
+        "sha256": "bfe4a52dc4645385f356a8e83cc54216a293e3b6f1cb4f79f5fc0277abf937fd"
+      },
+      {
+        "path": "./licenses/lame/LICENSE",
+        "sha256": "7a40cbd8818c57e5285e83c772a459a996d1662c824a879836b97b473c07cae4"
+      },
+      {
+        "path": "./licenses/lame/debian/copyright",
+        "sha256": "1f27f9f698183275bd615c1140b7bf6e498750e9280597c6eb39790e54ae809b"
+      },
+      {
+        "path": "./licenses/opus/COPYING",
+        "sha256": "01e1167d54a096d123cf6dfbbeb19587278845c6481d2d66d545669846079551"
+      },
+      {
+        "path": "./licenses/pkgconf/COPYING",
+        "sha256": "07ee94b50a41ee3fc4e13a9b9c60b26fc28488494c465639f7e5f07a3952ec04"
+      },
+      {
+        "path": "./licenses/python-build-standalone/LICENSE",
+        "sha256": "1f256ecad192880510e84ad60474eab7589218784b9a50bc7ceee34c2b91f1d5"
+      },
+      {
+        "path": "./licenses/python-build-standalone/LICENSE.bdb.txt",
+        "sha256": "3bdff06e69991c94664f2ef5c5f8096f60b7dbec071756ea6cc26b445e06ec5b"
+      },
+      {
+        "path": "./licenses/python-build-standalone/LICENSE.bzip2.txt",
+        "sha256": "1f38bbc7caacafd65169276d759c0d88c991b753b643ce35d0e45ea1971dd441"
+      },
+      {
+        "path": "./licenses/python-build-standalone/LICENSE.cpython.txt",
+        "sha256": "86e61415828a8b5b06ec8d024e6f086ce155a8b85fd0c419c0ba4dc004e74fdd"
+      },
+      {
+        "path": "./licenses/python-build-standalone/LICENSE.expat.txt",
+        "sha256": "122f2c27000472a201d337b9b31f7eb2b52d091b02857061a8880371612d9534"
+      },
+      {
+        "path": "./licenses/python-build-standalone/LICENSE.libX11.txt",
+        "sha256": "2daec087a88e7c9b8082557cdeebad5bbb8155a4137472f0b22e269cd99d0c1e"
+      },
+      {
+        "path": "./licenses/python-build-standalone/LICENSE.libXau.txt",
+        "sha256": "56abe29bb1d9806a9e04fa9f80fed2c0f18027594df3f098148d814aef6bddfa"
+      },
+      {
+        "path": "./licenses/python-build-standalone/LICENSE.libedit.txt",
+        "sha256": "29cea33c32bbc9785142386377915612a2fa786482c46843383384aded2e09b1"
+      },
+      {
+        "path": "./licenses/python-build-standalone/LICENSE.libffi.txt",
+        "sha256": "deaf3a42effb551a5b140fa9afefed183a27f1341c6d1bf430d106a5e6931fc0"
+      },
+      {
+        "path": "./licenses/python-build-standalone/LICENSE.liblzma.txt",
+        "sha256": "9a4062de0a2c388a98cf35a35d348b62fa97c838a71c3c28ee1a2d7d0a565b02"
+      },
+      {
+        "path": "./licenses/python-build-standalone/LICENSE.libuuid.txt",
+        "sha256": "122ee1f7e258f2c3c0e538a75c037684f420454bf3850ddc74ce750bbf5fe86b"
+      },
+      {
+        "path": "./licenses/python-build-standalone/LICENSE.libxcb.txt",
+        "sha256": "c5ffbfeaa501071ceeb97b7de2c0d703fdaa35de01c0fb6cbac1c28453a3e9fd"
+      },
+      {
+        "path": "./licenses/python-build-standalone/LICENSE.mpdecimal.txt",
+        "sha256": "669512af7219f58be03a398766d7c9da11a3b3df9d3f05cb74c5ceca25c8da3b"
+      },
+      {
+        "path": "./licenses/python-build-standalone/LICENSE.ncurses.txt",
+        "sha256": "87a4c4442337b8968ef956031c406b74f9cb7149b7ba87311bdaba534816201c"
+      },
+      {
+        "path": "./licenses/python-build-standalone/LICENSE.openssl-3.txt",
+        "sha256": "7d5450cb2d142651b8afa315b5f238efc805dad827d91ba367d8516bc9d49e7a"
+      },
+      {
+        "path": "./licenses/python-build-standalone/LICENSE.sqlite.txt",
+        "sha256": "38bef3d28b24f145ea293bd3b6eb4b20396982abc8303128fb493986ea5bc719"
+      },
+      {
+        "path": "./licenses/python-build-standalone/LICENSE.tcl.txt",
+        "sha256": "c0a69a2bfd757361ec7e6143973b103c90409316b49e9c88db26ad6388e79f16"
+      },
+      {
+        "path": "./licenses/python-build-standalone/LICENSE.tix.txt",
+        "sha256": "3ac5cdd0bef6c43ce34c6a7ced452081d9e5a0bf94082b9f9147d23ec9e214f5"
+      },
+      {
+        "path": "./licenses/python-build-standalone/LICENSE.zlib-ng.txt",
+        "sha256": "6c9f0d975b41afaa34d22f55bb8986ce69e5cb7ad327cb2b28820cd425edf5ee"
+      },
+      {
+        "path": "./licenses/python-build-standalone/LICENSE.zlib.txt",
+        "sha256": "818922b2620f12801a12bf78e399644a30990e66824abd8ca8ec24d451d6f92c"
+      },
+      {
+        "path": "./licenses/python-build-standalone/LICENSE.zstd.txt",
+        "sha256": "7055266497633c9025b777c78eb7235af13922117480ed5c674677adc381c9d8"
+      },
+      {
+        "path": "./licenses/python-packages/PGPy/0.6.0/pgpy-0.6.0.dist-info/licenses/LICENSE",
+        "sha256": "021fd07226df09efb35190d5e419d0bda811df2975194c64f4773a9a01b08167"
+      },
+      {
+        "path": "./licenses/python-packages/PGPy-0.6.0.tar.gz/PGPy-0.6.0/LICENSE",
+        "sha256": "021fd07226df09efb35190d5e419d0bda811df2975194c64f4773a9a01b08167"
+      },
+      {
+        "path": "./licenses/python-packages/altgraph/0.17.5/altgraph-0.17.5.dist-info/LICENSE",
+        "sha256": "6c194d6db0c64d45535d10c95142b9b0cda7b7dcc7f1ddee302b3d536f3dbe46"
+      },
+      {
+        "path": "./licenses/python-packages/altgraph-0.17.5.tar.gz/altgraph-0.17.5/LICENSE",
+        "sha256": "6c194d6db0c64d45535d10c95142b9b0cda7b7dcc7f1ddee302b3d536f3dbe46"
+      },
+      {
+        "path": "./licenses/python-packages/altgraph-0.17.5.tar.gz/altgraph-0.17.5/doc/license.rst",
+        "sha256": "c6071929fa693cf77461fdfcba69b98ffc76e2600d264adb09d04abd45c8b2c5"
+      },
+      {
+        "path": "./licenses/python-packages/cffi/2.1.1/cffi-2.1.1.dist-info/licenses/LICENSE",
+        "sha256": "5ba24ddc57067f9249add644c3afc41a5d6dc37e23433ef759d95df370b0af63"
+      },
+      {
+        "path": "./licenses/python-packages/cffi-2.1.1.tar.gz/cffi-2.1.1/LICENSE",
+        "sha256": "5ba24ddc57067f9249add644c3afc41a5d6dc37e23433ef759d95df370b0af63"
+      },
+      {
+        "path": "./licenses/python-packages/cmake/4.4.4/cmake/data/doc/cmake/LICENSE.rst",
+        "sha256": "4382e7c1879ac90e3f101a395d23846fa4dbcaa1eed7265b43681e348754825d"
+      },
+      {
+        "path": "./licenses/python-packages/cmake/4.4.4/cmake/data/doc/cmake/cmcppdap/NOTICE",
+        "sha256": "3103ac74433b12f1728cc0e09babe67620c5e3ab15d79d222b49d5d226681a6c"
+      },
+      {
+        "path": "./licenses/python-packages/cmake/4.4.4/cmake/data/doc/cmake/cmlibarchive/COPYING",
+        "sha256": "30e556b3959e3985d66efefec5eaac51d4995053caa1d3cffe6eb916f146f229"
+      },
+      {
+        "path": "./licenses/python-packages/cmake/4.4.4/cmake/data/doc/cmake/cmliblzma/COPYING",
+        "sha256": "ee3b35b82f7bb0ba5fd9f13ca34ebbe757a59c05bfde5ab9d50ff4188ed33396"
+      },
+      {
+        "path": "./licenses/python-packages/cmake/4.4.4/cmake/data/doc/cmake/cmlibrhash/COPYING",
+        "sha256": "953e55838353335148c90b5a38a4894292680b1d4c37228ffddddbf18ce54bf5"
+      },
+      {
+        "path": "./licenses/python-packages/cmake/4.4.4/cmake/data/doc/cmake/cmlibuv/LICENSE",
+        "sha256": "16de0c32b265cb7d46a6d3bd614f259dd4d693a5e26b3407b04aae8d73041f0c"
+      },
+      {
+        "path": "./licenses/python-packages/cmake/4.4.4/cmake/data/doc/cmake/cmsys/Copyright.txt",
+        "sha256": "7aa92ae0b86f73f81947d177639556fe7f8ea42a74762ecdf563e3daf7106a40"
+      },
+      {
+        "path": "./licenses/python-packages/cmake/4.4.4/cmake/data/doc/cmake/cmzstd/LICENSE",
+        "sha256": "7055266497633c9025b777c78eb7235af13922117480ed5c674677adc381c9d8"
+      },
+      {
+        "path": "./licenses/python-packages/cmake/4.4.4/cmake-4.4.4.dist-info/licenses/AUTHORS.rst",
+        "sha256": "9cbfc78a28479dd1ef553021f5841c295d89669f3be2e60d1824bdddd997a1b1"
+      },
+      {
+        "path": "./licenses/python-packages/cryptography/50.0.2/cryptography-50.0.2.dist-info/licenses/LICENSE",
+        "sha256": "3e0c7c091a948b82533ba98fd7cbb40432d6f1a9acbf85f5922d2f99a93ae6bb"
+      },
+      {
+        "path": "./licenses/python-packages/cryptography/50.0.2/cryptography-50.0.2.dist-info/licenses/LICENSE.APACHE",
+        "sha256": "aac73b3148f6d1d7111dbca32099f68d26c644c6813ae1e4f05f6579aa2663fe"
+      },
+      {
+        "path": "./licenses/python-packages/cryptography/50.0.2/cryptography-50.0.2.dist-info/licenses/LICENSE.BSD",
+        "sha256": "602c4c7482de6479dd2e9793cda275e5e63d773dacd1eca689232ab7008fb4fb"
+      },
+      {
+        "path": "./licenses/python-packages/cryptography-50.0.2.tar.gz/cryptography-50.0.2/LICENSE",
+        "sha256": "3e0c7c091a948b82533ba98fd7cbb40432d6f1a9acbf85f5922d2f99a93ae6bb"
+      },
+      {
+        "path": "./licenses/python-packages/cryptography-50.0.2.tar.gz/cryptography-50.0.2/LICENSE.APACHE",
+        "sha256": "aac73b3148f6d1d7111dbca32099f68d26c644c6813ae1e4f05f6579aa2663fe"
+      },
+      {
+        "path": "./licenses/python-packages/cryptography-50.0.2.tar.gz/cryptography-50.0.2/LICENSE.BSD",
+        "sha256": "602c4c7482de6479dd2e9793cda275e5e63d773dacd1eca689232ab7008fb4fb"
+      },
+      {
+        "path": "./licenses/python-packages/macholib/1.16.4/macholib-1.16.4.dist-info/LICENSE",
+        "sha256": "47082ab2bc0184123ec9f10fdf80c70723ee68f07d44382e17615c2a6ba70b09"
+      },
+      {
+        "path": "./licenses/python-packages/macholib-1.16.4.tar.gz/macholib-1.16.4/LICENSE",
+        "sha256": "47082ab2bc0184123ec9f10fdf80c70723ee68f07d44382e17615c2a6ba70b09"
+      },
+      {
+        "path": "./licenses/python-packages/macholib-1.16.4.tar.gz/macholib-1.16.4/doc/license.rst",
+        "sha256": "3cb611a7fd48198155d13edd88fff64ea74c3707bca976dfd547c02ef647eecc"
+      },
+      {
+        "path": "./licenses/python-packages/packaging/26.3/packaging-26.3.dist-info/licenses/LICENSE",
+        "sha256": "cad1ef5bd340d73e074ba614d26f7deaca5c7940c3d8c34852e65c4909686c48"
+      },
+      {
+        "path": "./licenses/python-packages/packaging/26.3/packaging-26.3.dist-info/licenses/LICENSE.APACHE",
+        "sha256": "0d542e0c8804e39aa7f37eb00da5a762149dc682d7829451287e11b938e94594"
+      },
+      {
+        "path": "./licenses/python-packages/packaging/26.3/packaging-26.3.dist-info/licenses/LICENSE.BSD",
+        "sha256": "b70e7e9b742f1cc6f948b34c16aa39ffece94196364bc88ff0d2180f0028fac5"
+      },
+      {
+        "path": "./licenses/python-packages/packaging-26.3.tar.gz/packaging-26.3/LICENSE",
+        "sha256": "cad1ef5bd340d73e074ba614d26f7deaca5c7940c3d8c34852e65c4909686c48"
+      },
+      {
+        "path": "./licenses/python-packages/packaging-26.3.tar.gz/packaging-26.3/LICENSE.APACHE",
+        "sha256": "0d542e0c8804e39aa7f37eb00da5a762149dc682d7829451287e11b938e94594"
+      },
+      {
+        "path": "./licenses/python-packages/packaging-26.3.tar.gz/packaging-26.3/LICENSE.BSD",
+        "sha256": "b70e7e9b742f1cc6f948b34c16aa39ffece94196364bc88ff0d2180f0028fac5"
+      },
+      {
+        "path": "./licenses/python-packages/pip/26.2.2/pip/_vendor/cachecontrol/LICENSE.txt",
+        "sha256": "86eeee87be2a43f3ff1f56496f451f69243926f025fedbb033666c304c4c161b"
+      },
+      {
+        "path": "./licenses/python-packages/pip/26.2.2/pip/_vendor/certifi/LICENSE",
+        "sha256": "e93716da6b9c0d5a4a1df60fe695b370f0695603d21f6f83f053e42cfc10caf7"
+      },
+      {
+        "path": "./licenses/python-packages/pip/26.2.2/pip/_vendor/distlib/LICENSE.txt",
+        "sha256": "808e10c8a6ab8deb149ff9b3fb19f447a808094606d712a9ca57fead3552599d"
+      },
+      {
+        "path": "./licenses/python-packages/pip/26.2.2/pip/_vendor/distro/LICENSE",
+        "sha256": "cb5e8e7e5f4a3988e1063c142c60dc2df75605f4c46515e776e3aca6df976e14"
+      },
+      {
+        "path": "./licenses/python-packages/pip/26.2.2/pip/_vendor/idna/LICENSE.md",
+        "sha256": "1a9a4f0e3d479a27240ddd59a9137a66ab4a0f9dfdc8ca6188cc0bfd85187f04"
+      },
+      {
+        "path": "./licenses/python-packages/pip/26.2.2/pip/_vendor/msgpack/COPYING",
+        "sha256": "492dedba85da5872f78e6091bcd1fea474d660d35acb4dee964b8aab3f007427"
+      },
+      {
+        "path": "./licenses/python-packages/pip/26.2.2/pip/_vendor/packaging/LICENSE",
+        "sha256": "cad1ef5bd340d73e074ba614d26f7deaca5c7940c3d8c34852e65c4909686c48"
+      },
+      {
+        "path": "./licenses/python-packages/pip/26.2.2/pip/_vendor/packaging/LICENSE.APACHE",
+        "sha256": "0d542e0c8804e39aa7f37eb00da5a762149dc682d7829451287e11b938e94594"
+      },
+      {
+        "path": "./licenses/python-packages/pip/26.2.2/pip/_vendor/packaging/LICENSE.BSD",
+        "sha256": "b70e7e9b742f1cc6f948b34c16aa39ffece94196364bc88ff0d2180f0028fac5"
+      },
+      {
+        "path": "./licenses/python-packages/pip/26.2.2/pip/_vendor/pkg_resources/LICENSE",
+        "sha256": "86da0f01aeae46348a3c3d465195dc1ceccde79f79e87769a64b8da04b2a4741"
+      },
+      {
+        "path": "./licenses/python-packages/pip/26.2.2/pip/_vendor/platformdirs/LICENSE",
+        "sha256": "29e0fd62e929850e86eb28c3fdccf0cefdf4fa94879011cffb3d0d4bed6d4db6"
+      },
+      {
+        "path": "./licenses/python-packages/pip/26.2.2/pip/_vendor/pygments/LICENSE",
+        "sha256": "a9d66f1d526df02e29dce73436d34e56e8632f46c275bbdffc70569e882f9f17"
+      },
+      {
+        "path": "./licenses/python-packages/pip/26.2.2/pip/_vendor/pyproject_hooks/LICENSE",
+        "sha256": "1b22b049b5267d6dfc23a67bf4a84d8ec04b9fdfb1a51d360e42b4342c8b4154"
+      },
+      {
+        "path": "./licenses/python-packages/pip/26.2.2/pip/_vendor/requests/LICENSE",
+        "sha256": "09e8a9bcec8067104652c168685ab0931e7868f9c8284b66f5ae6edae5f1130b"
+      },
+      {
+        "path": "./licenses/python-packages/pip/26.2.2/pip/_vendor/resolvelib/LICENSE",
+        "sha256": "f388fd38cad13112c1dc0f669bbe80e7f84541edbafb72f3030d2ca7642c3c9d"
+      },
+      {
+        "path": "./licenses/python-packages/pip/26.2.2/pip/_vendor/rich/LICENSE",
+        "sha256": "deed7c17a4318158190a3ea239cc879a5a50271cebb98ae7025f48fbe58dca15"
+      },
+      {
+        "path": "./licenses/python-packages/pip/26.2.2/pip/_vendor/tomli/LICENSE",
+        "sha256": "b80816b0d530b8accb4c2211783790984a6e3b61922c2b5ee92f3372ab2742fe"
+      },
+      {
+        "path": "./licenses/python-packages/pip/26.2.2/pip/_vendor/tomli_w/LICENSE",
+        "sha256": "b80816b0d530b8accb4c2211783790984a6e3b61922c2b5ee92f3372ab2742fe"
+      },
+      {
+        "path": "./licenses/python-packages/pip/26.2.2/pip/_vendor/truststore/LICENSE",
+        "sha256": "33be7b7e8fa4fd19b1760e1a8ed8a668bdab852c91b692dd41424bcb725a9fca"
+      },
+      {
+        "path": "./licenses/python-packages/pip/26.2.2/pip/_vendor/urllib3/LICENSE.txt",
+        "sha256": "130e3a64d5fdd5d096a752694634a7d9df284469de86e5732100268041e3d686"
+      },
+      {
+        "path": "./licenses/python-packages/pip/26.2.2/pip-26.2.2.dist-info/licenses/AUTHORS.txt",
+        "sha256": "4eb1fb1705e2def898e81bcba19c3aac80620d27ba3569d6a6df7b4629d1b5c2"
+      },
+      {
+        "path": "./licenses/python-packages/pip/26.2.2/pip-26.2.2.dist-info/licenses/LICENSE.txt",
+        "sha256": "634300a669d49aeae65b12c6c48c924c51a4cdf3d1ff086dc3456dc8bcaa2104"
+      },
+      {
+        "path": "./licenses/python-packages/pip/26.2.2/pip-26.2.2.dist-info/licenses/src/pip/_vendor/cachecontrol/LICENSE.txt",
+        "sha256": "86eeee87be2a43f3ff1f56496f451f69243926f025fedbb033666c304c4c161b"
+      },
+      {
+        "path": "./licenses/python-packages/pip/26.2.2/pip-26.2.2.dist-info/licenses/src/pip/_vendor/certifi/LICENSE",
+        "sha256": "e93716da6b9c0d5a4a1df60fe695b370f0695603d21f6f83f053e42cfc10caf7"
+      },
+      {
+        "path": "./licenses/python-packages/pip/26.2.2/pip-26.2.2.dist-info/licenses/src/pip/_vendor/distlib/LICENSE.txt",
+        "sha256": "808e10c8a6ab8deb149ff9b3fb19f447a808094606d712a9ca57fead3552599d"
+      },
+      {
+        "path": "./licenses/python-packages/pip/26.2.2/pip-26.2.2.dist-info/licenses/src/pip/_vendor/distro/LICENSE",
+        "sha256": "cb5e8e7e5f4a3988e1063c142c60dc2df75605f4c46515e776e3aca6df976e14"
+      },
+      {
+        "path": "./licenses/python-packages/pip/26.2.2/pip-26.2.2.dist-info/licenses/src/pip/_vendor/idna/LICENSE.md",
+        "sha256": "1a9a4f0e3d479a27240ddd59a9137a66ab4a0f9dfdc8ca6188cc0bfd85187f04"
+      },
+      {
+        "path": "./licenses/python-packages/pip/26.2.2/pip-26.2.2.dist-info/licenses/src/pip/_vendor/msgpack/COPYING",
+        "sha256": "492dedba85da5872f78e6091bcd1fea474d660d35acb4dee964b8aab3f007427"
+      },
+      {
+        "path": "./licenses/python-packages/pip/26.2.2/pip-26.2.2.dist-info/licenses/src/pip/_vendor/packaging/LICENSE",
+        "sha256": "cad1ef5bd340d73e074ba614d26f7deaca5c7940c3d8c34852e65c4909686c48"
+      },
+      {
+        "path": "./licenses/python-packages/pip/26.2.2/pip-26.2.2.dist-info/licenses/src/pip/_vendor/packaging/LICENSE.APACHE",
+        "sha256": "0d542e0c8804e39aa7f37eb00da5a762149dc682d7829451287e11b938e94594"
+      },
+      {
+        "path": "./licenses/python-packages/pip/26.2.2/pip-26.2.2.dist-info/licenses/src/pip/_vendor/packaging/LICENSE.BSD",
+        "sha256": "b70e7e9b742f1cc6f948b34c16aa39ffece94196364bc88ff0d2180f0028fac5"
+      },
+      {
+        "path": "./licenses/python-packages/pip/26.2.2/pip-26.2.2.dist-info/licenses/src/pip/_vendor/pkg_resources/LICENSE",
+        "sha256": "86da0f01aeae46348a3c3d465195dc1ceccde79f79e87769a64b8da04b2a4741"
+      },
+      {
+        "path": "./licenses/python-packages/pip/26.2.2/pip-26.2.2.dist-info/licenses/src/pip/_vendor/platformdirs/LICENSE",
+        "sha256": "29e0fd62e929850e86eb28c3fdccf0cefdf4fa94879011cffb3d0d4bed6d4db6"
+      },
+      {
+        "path": "./licenses/python-packages/pip/26.2.2/pip-26.2.2.dist-info/licenses/src/pip/_vendor/pygments/LICENSE",
+        "sha256": "a9d66f1d526df02e29dce73436d34e56e8632f46c275bbdffc70569e882f9f17"
+      },
+      {
+        "path": "./licenses/python-packages/pip/26.2.2/pip-26.2.2.dist-info/licenses/src/pip/_vendor/pyproject_hooks/LICENSE",
+        "sha256": "1b22b049b5267d6dfc23a67bf4a84d8ec04b9fdfb1a51d360e42b4342c8b4154"
+      },
+      {
+        "path": "./licenses/python-packages/pip/26.2.2/pip-26.2.2.dist-info/licenses/src/pip/_vendor/requests/LICENSE",
+        "sha256": "09e8a9bcec8067104652c168685ab0931e7868f9c8284b66f5ae6edae5f1130b"
+      },
+      {
+        "path": "./licenses/python-packages/pip/26.2.2/pip-26.2.2.dist-info/licenses/src/pip/_vendor/resolvelib/LICENSE",
+        "sha256": "f388fd38cad13112c1dc0f669bbe80e7f84541edbafb72f3030d2ca7642c3c9d"
+      },
+      {
+        "path": "./licenses/python-packages/pip/26.2.2/pip-26.2.2.dist-info/licenses/src/pip/_vendor/rich/LICENSE",
+        "sha256": "deed7c17a4318158190a3ea239cc879a5a50271cebb98ae7025f48fbe58dca15"
+      },
+      {
+        "path": "./licenses/python-packages/pip/26.2.2/pip-26.2.2.dist-info/licenses/src/pip/_vendor/tomli/LICENSE",
+        "sha256": "b80816b0d530b8accb4c2211783790984a6e3b61922c2b5ee92f3372ab2742fe"
+      },
+      {
+        "path": "./licenses/python-packages/pip/26.2.2/pip-26.2.2.dist-info/licenses/src/pip/_vendor/tomli_w/LICENSE",
+        "sha256": "b80816b0d530b8accb4c2211783790984a6e3b61922c2b5ee92f3372ab2742fe"
+      },
+      {
+        "path": "./licenses/python-packages/pip/26.2.2/pip-26.2.2.dist-info/licenses/src/pip/_vendor/truststore/LICENSE",
+        "sha256": "33be7b7e8fa4fd19b1760e1a8ed8a668bdab852c91b692dd41424bcb725a9fca"
+      },
+      {
+        "path": "./licenses/python-packages/pip/26.2.2/pip-26.2.2.dist-info/licenses/src/pip/_vendor/urllib3/LICENSE.txt",
+        "sha256": "130e3a64d5fdd5d096a752694634a7d9df284469de86e5732100268041e3d686"
+      },
+      {
+        "path": "./licenses/python-packages/pip-26.2.2.tar.gz/pip-26.2.2/LICENSE.txt",
+        "sha256": "634300a669d49aeae65b12c6c48c924c51a4cdf3d1ff086dc3456dc8bcaa2104"
+      },
+      {
+        "path": "./licenses/python-packages/pip-26.2.2.tar.gz/pip-26.2.2/docs/html/copyright.rst",
+        "sha256": "4b6d610ad841d556e2ddf6636d8e2d5bf307e7e83450b12010ee075e2032c939"
+      },
+      {
+        "path": "./licenses/python-packages/pip-26.2.2.tar.gz/pip-26.2.2/src/pip/_vendor/cachecontrol/LICENSE.txt",
+        "sha256": "86eeee87be2a43f3ff1f56496f451f69243926f025fedbb033666c304c4c161b"
+      },
+      {
+        "path": "./licenses/python-packages/pip-26.2.2.tar.gz/pip-26.2.2/src/pip/_vendor/certifi/LICENSE",
+        "sha256": "e93716da6b9c0d5a4a1df60fe695b370f0695603d21f6f83f053e42cfc10caf7"
+      },
+      {
+        "path": "./licenses/python-packages/pip-26.2.2.tar.gz/pip-26.2.2/src/pip/_vendor/distlib/LICENSE.txt",
+        "sha256": "808e10c8a6ab8deb149ff9b3fb19f447a808094606d712a9ca57fead3552599d"
+      },
+      {
+        "path": "./licenses/python-packages/pip-26.2.2.tar.gz/pip-26.2.2/src/pip/_vendor/distro/LICENSE",
+        "sha256": "cb5e8e7e5f4a3988e1063c142c60dc2df75605f4c46515e776e3aca6df976e14"
+      },
+      {
+        "path": "./licenses/python-packages/pip-26.2.2.tar.gz/pip-26.2.2/src/pip/_vendor/idna/LICENSE.md",
+        "sha256": "1a9a4f0e3d479a27240ddd59a9137a66ab4a0f9dfdc8ca6188cc0bfd85187f04"
+      },
+      {
+        "path": "./licenses/python-packages/pip-26.2.2.tar.gz/pip-26.2.2/src/pip/_vendor/msgpack/COPYING",
+        "sha256": "492dedba85da5872f78e6091bcd1fea474d660d35acb4dee964b8aab3f007427"
+      },
+      {
+        "path": "./licenses/python-packages/pip-26.2.2.tar.gz/pip-26.2.2/src/pip/_vendor/packaging/LICENSE",
+        "sha256": "cad1ef5bd340d73e074ba614d26f7deaca5c7940c3d8c34852e65c4909686c48"
+      },
+      {
+        "path": "./licenses/python-packages/pip-26.2.2.tar.gz/pip-26.2.2/src/pip/_vendor/packaging/LICENSE.APACHE",
+        "sha256": "0d542e0c8804e39aa7f37eb00da5a762149dc682d7829451287e11b938e94594"
+      },
+      {
+        "path": "./licenses/python-packages/pip-26.2.2.tar.gz/pip-26.2.2/src/pip/_vendor/packaging/LICENSE.BSD",
+        "sha256": "b70e7e9b742f1cc6f948b34c16aa39ffece94196364bc88ff0d2180f0028fac5"
+      },
+      {
+        "path": "./licenses/python-packages/pip-26.2.2.tar.gz/pip-26.2.2/src/pip/_vendor/pkg_resources/LICENSE",
+        "sha256": "86da0f01aeae46348a3c3d465195dc1ceccde79f79e87769a64b8da04b2a4741"
+      },
+      {
+        "path": "./licenses/python-packages/pip-26.2.2.tar.gz/pip-26.2.2/src/pip/_vendor/platformdirs/LICENSE",
+        "sha256": "29e0fd62e929850e86eb28c3fdccf0cefdf4fa94879011cffb3d0d4bed6d4db6"
+      },
+      {
+        "path": "./licenses/python-packages/pip-26.2.2.tar.gz/pip-26.2.2/src/pip/_vendor/pygments/LICENSE",
+        "sha256": "a9d66f1d526df02e29dce73436d34e56e8632f46c275bbdffc70569e882f9f17"
+      },
+      {
+        "path": "./licenses/python-packages/pip-26.2.2.tar.gz/pip-26.2.2/src/pip/_vendor/pyproject_hooks/LICENSE",
+        "sha256": "1b22b049b5267d6dfc23a67bf4a84d8ec04b9fdfb1a51d360e42b4342c8b4154"
+      },
+      {
+        "path": "./licenses/python-packages/pip-26.2.2.tar.gz/pip-26.2.2/src/pip/_vendor/requests/LICENSE",
+        "sha256": "09e8a9bcec8067104652c168685ab0931e7868f9c8284b66f5ae6edae5f1130b"
+      },
+      {
+        "path": "./licenses/python-packages/pip-26.2.2.tar.gz/pip-26.2.2/src/pip/_vendor/resolvelib/LICENSE",
+        "sha256": "f388fd38cad13112c1dc0f669bbe80e7f84541edbafb72f3030d2ca7642c3c9d"
+      },
+      {
+        "path": "./licenses/python-packages/pip-26.2.2.tar.gz/pip-26.2.2/src/pip/_vendor/rich/LICENSE",
+        "sha256": "deed7c17a4318158190a3ea239cc879a5a50271cebb98ae7025f48fbe58dca15"
+      },
+      {
+        "path": "./licenses/python-packages/pip-26.2.2.tar.gz/pip-26.2.2/src/pip/_vendor/tomli/LICENSE",
+        "sha256": "b80816b0d530b8accb4c2211783790984a6e3b61922c2b5ee92f3372ab2742fe"
+      },
+      {
+        "path": "./licenses/python-packages/pip-26.2.2.tar.gz/pip-26.2.2/src/pip/_vendor/tomli_w/LICENSE",
+        "sha256": "b80816b0d530b8accb4c2211783790984a6e3b61922c2b5ee92f3372ab2742fe"
+      },
+      {
+        "path": "./licenses/python-packages/pip-26.2.2.tar.gz/pip-26.2.2/src/pip/_vendor/truststore/LICENSE",
+        "sha256": "33be7b7e8fa4fd19b1760e1a8ed8a668bdab852c91b692dd41424bcb725a9fca"
+      },
+      {
+        "path": "./licenses/python-packages/pip-26.2.2.tar.gz/pip-26.2.2/src/pip/_vendor/urllib3/LICENSE.txt",
+        "sha256": "130e3a64d5fdd5d096a752694634a7d9df284469de86e5732100268041e3d686"
+      },
+      {
+        "path": "./licenses/python-packages/pyasn1/0.6.5/pyasn1-0.6.5.dist-info/licenses/LICENSE.rst",
+        "sha256": "2aad5fc00f705c4a1addb83eed10a6a75d286a3779f0cf8519d87e62bc4735fd"
+      },
+      {
+        "path": "./licenses/python-packages/pyasn1-0.6.5.tar.gz/pyasn1-0.6.5/LICENSE.rst",
+        "sha256": "2aad5fc00f705c4a1addb83eed10a6a75d286a3779f0cf8519d87e62bc4735fd"
+      },
+      {
+        "path": "./licenses/python-packages/pyasn1-0.6.5.tar.gz/pyasn1-0.6.5/docs/source/license.rst",
+        "sha256": "2fd7257410c4d7d9c8d8d85cb7f9f4ef9eee34126a96a993245c71577997c345"
+      },
+      {
+        "path": "./licenses/python-packages/pycparser/3.12/pycparser-3.12.dist-info/licenses/LICENSE",
+        "sha256": "0a9e78156ae8b96caf1b4f11ac2df424b83de29736f9e757630548a6272fdf90"
+      },
+      {
+        "path": "./licenses/python-packages/pycparser-3.12.tar.gz/pycparser-3.12/LICENSE",
+        "sha256": "0a9e78156ae8b96caf1b4f11ac2df424b83de29736f9e757630548a6272fdf90"
+      },
+      {
+        "path": "./licenses/python-packages/pyinstaller/6.22.3/pyinstaller-6.22.3.dist-info/licenses/COPYING.txt",
+        "sha256": "0598064c7d2718e38d7914a7d08343b2fa008e3bea9ebba2aa7a6ffa5900dd64"
+      },
+      {
+        "path": "./licenses/python-packages/pyinstaller-6.22.3.tar.gz/pyinstaller-6.22.3/COPYING.txt",
+        "sha256": "0598064c7d2718e38d7914a7d08343b2fa008e3bea9ebba2aa7a6ffa5900dd64"
+      },
+      {
+        "path": "./licenses/python-packages/pyinstaller-6.22.3.tar.gz/pyinstaller-6.22.3/bootloader/waflib/LICENSE",
+        "sha256": "f1a08e9a6ef535799105fca437e0fb38dc64acb0f224b115ab38fdc458cede53"
+      },
+      {
+        "path": "./licenses/python-packages/pyinstaller-6.22.3.tar.gz/pyinstaller-6.22.3/bootloader/zlib/LICENSE",
+        "sha256": "e32ff4e00d9d94930537635291da39e7e612703334bf6fde8c7f1686fe8a45a2"
+      },
+      {
+        "path": "./licenses/python-packages/pyinstaller-6.22.3.tar.gz/pyinstaller-6.22.3/doc/license.rst",
+        "sha256": "98be0224c3df051092249a1b1387ef3f6fd01d6d87eb263266244a2237bb7ce3"
+      },
+      {
+        "path": "./licenses/python-packages/pyinstaller-hooks-contrib/2026.9/pyinstaller_hooks_contrib-2026.9.dist-info/licenses/LICENSE",
+        "sha256": "91d0baaff00773038e72c0a1fc9d5d2d38706b7a2b9c04f34296608f931b9cd0"
+      },
+      {
+        "path": "./licenses/python-packages/pyinstaller_hooks_contrib-2026.9.tar.gz/pyinstaller_hooks_contrib-2026.9/LICENSE",
+        "sha256": "91d0baaff00773038e72c0a1fc9d5d2d38706b7a2b9c04f34296608f931b9cd0"
+      },
+      {
+        "path": "./licenses/python-packages/setuptools/84.2.1/setuptools/_vendor/autocommand-2.2.2.dist-info/LICENSE",
+        "sha256": "ade78d04982d69972d444a8e14a94f87a2334dd3855cc80348ea8e240aa0df2d"
+      },
+      {
+        "path": "./licenses/python-packages/setuptools/84.2.1/setuptools/_vendor/backports.tarfile-1.2.0.dist-info/LICENSE",
+        "sha256": "86da0f01aeae46348a3c3d465195dc1ceccde79f79e87769a64b8da04b2a4741"
+      },
+      {
+        "path": "./licenses/python-packages/setuptools/84.2.1/setuptools/_vendor/importlib_metadata-8.7.1.dist-info/licenses/LICENSE",
+        "sha256": "458502e12d97bbf64438606a20044aa85eb05fb0a8a807bb35dbec253fd1fc04"
+      },
+      {
+        "path": "./licenses/python-packages/setuptools/84.2.1/setuptools/_vendor/jaraco.text-4.0.0.dist-info/LICENSE",
+        "sha256": "86da0f01aeae46348a3c3d465195dc1ceccde79f79e87769a64b8da04b2a4741"
+      },
+      {
+        "path": "./licenses/python-packages/setuptools/84.2.1/setuptools/_vendor/jaraco_context-6.1.0.dist-info/licenses/LICENSE",
+        "sha256": "9755a18519666e5f0f4cae3daad3d7012bcae48a600b31237d75e9fe134e6683"
+      },
+      {
+        "path": "./licenses/python-packages/setuptools/84.2.1/setuptools/_vendor/jaraco_functools-4.4.0.dist-info/licenses/LICENSE",
+        "sha256": "5a57cb4db85e2a2dd88c290628908add57e3451449e0a9a71fdfb38776fd759d"
+      },
+      {
+        "path": "./licenses/python-packages/setuptools/84.2.1/setuptools/_vendor/more_itertools-10.8.0.dist-info/licenses/LICENSE",
+        "sha256": "09f1c8c9e941af3e584d59641ea9b87d83c0cb0fd007eb5ef391a7e2643c1a46"
+      },
+      {
+        "path": "./licenses/python-packages/setuptools/84.2.1/setuptools/_vendor/packaging-26.3.dist-info/licenses/LICENSE",
+        "sha256": "cad1ef5bd340d73e074ba614d26f7deaca5c7940c3d8c34852e65c4909686c48"
+      },
+      {
+        "path": "./licenses/python-packages/setuptools/84.2.1/setuptools/_vendor/packaging-26.3.dist-info/licenses/LICENSE.APACHE",
+        "sha256": "0d542e0c8804e39aa7f37eb00da5a762149dc682d7829451287e11b938e94594"
+      },
+      {
+        "path": "./licenses/python-packages/setuptools/84.2.1/setuptools/_vendor/packaging-26.3.dist-info/licenses/LICENSE.BSD",
+        "sha256": "b70e7e9b742f1cc6f948b34c16aa39ffece94196364bc88ff0d2180f0028fac5"
+      },
+      {
+        "path": "./licenses/python-packages/setuptools/84.2.1/setuptools/_vendor/platformdirs-4.4.0.dist-info/licenses/LICENSE",
+        "sha256": "29e0fd62e929850e86eb28c3fdccf0cefdf4fa94879011cffb3d0d4bed6d4db6"
+      },
+      {
+        "path": "./licenses/python-packages/setuptools/84.2.1/setuptools/_vendor/tomli-2.4.0.dist-info/licenses/LICENSE",
+        "sha256": "b80816b0d530b8accb4c2211783790984a6e3b61922c2b5ee92f3372ab2742fe"
+      },
+      {
+        "path": "./licenses/python-packages/setuptools/84.2.1/setuptools/_vendor/wheel-0.46.3.dist-info/licenses/LICENSE.txt",
+        "sha256": "30c23618679108f3e8ea1d2a658c7ca417bdfc891c98ef1a89fa4ff0c9828654"
+      },
+      {
+        "path": "./licenses/python-packages/setuptools/84.2.1/setuptools/_vendor/zipp-3.23.0.dist-info/licenses/LICENSE",
+        "sha256": "5a57cb4db85e2a2dd88c290628908add57e3451449e0a9a71fdfb38776fd759d"
+      },
+      {
+        "path": "./licenses/python-packages/setuptools/84.2.1/setuptools/config/NOTICE",
+        "sha256": "2dddf08818297a3b89d43d95ff659d8da85741108c9136dfa3a4d856c0623bd8"
+      },
+      {
+        "path": "./licenses/python-packages/setuptools/84.2.1/setuptools/config/_validate_pyproject/NOTICE",
+        "sha256": "09c9bcea95ca086f8bc5bed174e40bc835b297d40fb5f86bbbb570fe0a5581a7"
+      },
+      {
+        "path": "./licenses/python-packages/setuptools/84.2.1/setuptools-84.2.1.dist-info/licenses/LICENSE",
+        "sha256": "86da0f01aeae46348a3c3d465195dc1ceccde79f79e87769a64b8da04b2a4741"
+      },
+      {
+        "path": "./licenses/python-packages/setuptools-84.2.1.tar.gz/setuptools-84.2.1/LICENSE",
+        "sha256": "86da0f01aeae46348a3c3d465195dc1ceccde79f79e87769a64b8da04b2a4741"
+      },
+      {
+        "path": "./licenses/python-packages/setuptools-84.2.1.tar.gz/setuptools-84.2.1/setuptools/_vendor/autocommand-2.2.2.dist-info/LICENSE",
+        "sha256": "ade78d04982d69972d444a8e14a94f87a2334dd3855cc80348ea8e240aa0df2d"
+      },
+      {
+        "path": "./licenses/python-packages/setuptools-84.2.1.tar.gz/setuptools-84.2.1/setuptools/_vendor/backports.tarfile-1.2.0.dist-info/LICENSE",
+        "sha256": "86da0f01aeae46348a3c3d465195dc1ceccde79f79e87769a64b8da04b2a4741"
+      },
+      {
+        "path": "./licenses/python-packages/setuptools-84.2.1.tar.gz/setuptools-84.2.1/setuptools/_vendor/importlib_metadata-8.7.1.dist-info/licenses/LICENSE",
+        "sha256": "458502e12d97bbf64438606a20044aa85eb05fb0a8a807bb35dbec253fd1fc04"
+      },
+      {
+        "path": "./licenses/python-packages/setuptools-84.2.1.tar.gz/setuptools-84.2.1/setuptools/_vendor/jaraco.text-4.0.0.dist-info/LICENSE",
+        "sha256": "86da0f01aeae46348a3c3d465195dc1ceccde79f79e87769a64b8da04b2a4741"
+      },
+      {
+        "path": "./licenses/python-packages/setuptools-84.2.1.tar.gz/setuptools-84.2.1/setuptools/_vendor/jaraco_context-6.1.0.dist-info/licenses/LICENSE",
+        "sha256": "9755a18519666e5f0f4cae3daad3d7012bcae48a600b31237d75e9fe134e6683"
+      },
+      {
+        "path": "./licenses/python-packages/setuptools-84.2.1.tar.gz/setuptools-84.2.1/setuptools/_vendor/jaraco_functools-4.4.0.dist-info/licenses/LICENSE",
+        "sha256": "5a57cb4db85e2a2dd88c290628908add57e3451449e0a9a71fdfb38776fd759d"
+      },
+      {
+        "path": "./licenses/python-packages/setuptools-84.2.1.tar.gz/setuptools-84.2.1/setuptools/_vendor/more_itertools-10.8.0.dist-info/licenses/LICENSE",
+        "sha256": "09f1c8c9e941af3e584d59641ea9b87d83c0cb0fd007eb5ef391a7e2643c1a46"
+      },
+      {
+        "path": "./licenses/python-packages/setuptools-84.2.1.tar.gz/setuptools-84.2.1/setuptools/_vendor/packaging-26.3.dist-info/licenses/LICENSE",
+        "sha256": "cad1ef5bd340d73e074ba614d26f7deaca5c7940c3d8c34852e65c4909686c48"
+      },
+      {
+        "path": "./licenses/python-packages/setuptools-84.2.1.tar.gz/setuptools-84.2.1/setuptools/_vendor/packaging-26.3.dist-info/licenses/LICENSE.APACHE",
+        "sha256": "0d542e0c8804e39aa7f37eb00da5a762149dc682d7829451287e11b938e94594"
+      },
+      {
+        "path": "./licenses/python-packages/setuptools-84.2.1.tar.gz/setuptools-84.2.1/setuptools/_vendor/packaging-26.3.dist-info/licenses/LICENSE.BSD",
+        "sha256": "b70e7e9b742f1cc6f948b34c16aa39ffece94196364bc88ff0d2180f0028fac5"
+      },
+      {
+        "path": "./licenses/python-packages/setuptools-84.2.1.tar.gz/setuptools-84.2.1/setuptools/_vendor/platformdirs-4.4.0.dist-info/licenses/LICENSE",
+        "sha256": "29e0fd62e929850e86eb28c3fdccf0cefdf4fa94879011cffb3d0d4bed6d4db6"
+      },
+      {
+        "path": "./licenses/python-packages/setuptools-84.2.1.tar.gz/setuptools-84.2.1/setuptools/_vendor/tomli-2.4.0.dist-info/licenses/LICENSE",
+        "sha256": "b80816b0d530b8accb4c2211783790984a6e3b61922c2b5ee92f3372ab2742fe"
+      },
+      {
+        "path": "./licenses/python-packages/setuptools-84.2.1.tar.gz/setuptools-84.2.1/setuptools/_vendor/wheel-0.46.3.dist-info/licenses/LICENSE.txt",
+        "sha256": "30c23618679108f3e8ea1d2a658c7ca417bdfc891c98ef1a89fa4ff0c9828654"
+      },
+      {
+        "path": "./licenses/python-packages/setuptools-84.2.1.tar.gz/setuptools-84.2.1/setuptools/_vendor/zipp-3.23.0.dist-info/licenses/LICENSE",
+        "sha256": "5a57cb4db85e2a2dd88c290628908add57e3451449e0a9a71fdfb38776fd759d"
+      },
+      {
+        "path": "./licenses/python-packages/setuptools-84.2.1.tar.gz/setuptools-84.2.1/setuptools/config/NOTICE",
+        "sha256": "2dddf08818297a3b89d43d95ff659d8da85741108c9136dfa3a4d856c0623bd8"
+      },
+      {
+        "path": "./licenses/python-packages/setuptools-84.2.1.tar.gz/setuptools-84.2.1/setuptools/config/_validate_pyproject/NOTICE",
+        "sha256": "09c9bcea95ca086f8bc5bed174e40bc835b297d40fb5f86bbbb570fe0a5581a7"
+      },
+      {
+        "path": "./licenses/python-packages/standard-imghdr/3.13.0/standard_imghdr-3.13.0.dist-info/LICENSE",
+        "sha256": "14949dab294d8379384238869abc035f4ef95bb1968b10f88554afa001ead28e"
+      },
+      {
+        "path": "./licenses/python-packages/standard_imghdr-3.13.0.tar.gz/standard_imghdr-3.13.0/LICENSE",
+        "sha256": "14949dab294d8379384238869abc035f4ef95bb1968b10f88554afa001ead28e"
+      },
+      {
+        "path": "./licenses/python-packages/zstandard/0.25.0/zstandard-0.25.0.dist-info/licenses/LICENSE",
+        "sha256": "788fe85e53724a40b299051c4abc9cf74d42b27e7968325b80891c25f79adb4b"
+      },
+      {
+        "path": "./licenses/python-packages/zstandard-0.25.0.tar.gz/zstandard-0.25.0/LICENSE",
+        "sha256": "788fe85e53724a40b299051c4abc9cf74d42b27e7968325b80891c25f79adb4b"
+      },
+      {
+        "path": "./licenses/python-packages/zstandard-0.25.0.tar.gz/zstandard-0.25.0/zstd/COPYING",
+        "sha256": "f9c375a1be4a41f7b70301dd83c91cb89e41567478859b77eef375a52d782505"
+      },
+      {
+        "path": "./licenses/python-packages/zstandard-0.25.0.tar.gz/zstandard-0.25.0/zstd/LICENSE",
+        "sha256": "7055266497633c9025b777c78eb7235af13922117480ed5c674677adc381c9d8"
+      },
+      {
+        "path": "./licenses/wacli/LICENSE",
+        "sha256": "14293556b79940745123d0160c71d27ed0e9fe9b8a848093f3ed78f4853caafe"
+      },
+      {
+        "path": "./licenses/wacli-dependencies/filippo.io/edwards25519/v1.2.0/LICENSE",
+        "sha256": "2d36597f7117c38b006835ae7f537487207d8ec407aa9d9980794b2030cbc067"
+      },
+      {
+        "path": "./licenses/wacli-dependencies/github.com/beeper/argo-go/v1.1.2/LICENSE",
+        "sha256": "e478e56635d93255534aaee3ebc3a72495dc8ccdf745f425ea157b4424b2fb4a"
+      },
+      {
+        "path": "./licenses/wacli-dependencies/github.com/coder/websocket/v1.8.15/LICENSE.txt",
+        "sha256": "cc0975a5f6305145bdd7b41ce9479632fdac3870e6ac4281f28017f18c767c4e"
+      },
+      {
+        "path": "./licenses/wacli-dependencies/github.com/elliotchance/orderedmap/v3/v3.1.1/LICENSE",
+        "sha256": "45245e9969777b5d9e6e09588087e985b8209117ecbf0e4d04080cfc36762e99"
+      },
+      {
+        "path": "./licenses/wacli-dependencies/github.com/google/uuid/v1.6.0/LICENSE",
+        "sha256": "0a8d61ed3cbfd5312326e8126c31ce9c627a283adc99131b56896d29ada04b2d"
+      },
+      {
+        "path": "./licenses/wacli-dependencies/github.com/mattn/go-colorable/v0.1.16/LICENSE",
+        "sha256": "88a2379b3ca34bf5c57127aff9dcb802bbb60ece0805cdbda65b3bd115f971d9"
+      },
+      {
+        "path": "./licenses/wacli-dependencies/github.com/mattn/go-isatty/v0.0.24/LICENSE",
+        "sha256": "08eab1118c80885fa1fa6a6dd7303f65a379fcb3733e063d20d1bbc2c76e6fa1"
+      },
+      {
+        "path": "./licenses/wacli-dependencies/github.com/mattn/go-sqlite3/v1.14.52/LICENSE",
+        "sha256": "afa48e5e64dc610298d80b010ae7a3450f61a79500a9f1d1697ff6dcbbfa1f72"
+      },
+      {
+        "path": "./licenses/wacli-dependencies/github.com/mdp/qrterminal/v3/v3.2.1/LICENSE",
+        "sha256": "17117a0201bf610e146fdab52b82e4fca8d35032e1facc7a13226c8e1f69878a"
+      },
+      {
+        "path": "./licenses/wacli-dependencies/github.com/petermattis/goid/v0.0.0-20260918085751-abfca077860b/LICENSE",
+        "sha256": "cb5e8e7e5f4a3988e1063c142c60dc2df75605f4c46515e776e3aca6df976e14"
+      },
+      {
+        "path": "./licenses/wacli-dependencies/github.com/rs/zerolog/v1.35.1/LICENSE",
+        "sha256": "1b8f6b05dd66f6eec835515706886cb01bf00358cb9312301ed6ad23d6b2d008"
+      },
+      {
+        "path": "./licenses/wacli-dependencies/github.com/rs/zerolog/v1.35.1/hlog/internal/mutil/LICENSE",
+        "sha256": "8f1b316d0edb822e6231eb77eda9d4135bd78105b13f834952164a0cfc8393d2"
+      },
+      {
+        "path": "./licenses/wacli-dependencies/github.com/spf13/cobra/v1.10.2/LICENSE.txt",
+        "sha256": "5e3400b93bbb099e83e52bab885e7441750673c21f97988ca3f1240639b63283"
+      },
+      {
+        "path": "./licenses/wacli-dependencies/github.com/spf13/pflag/v1.0.10/LICENSE",
+        "sha256": "b8514c577c1c4b46cee454d5a882b15fa411e72c5bd7f801f241591789fce61a"
+      },
+      {
+        "path": "./licenses/wacli-dependencies/github.com/vektah/gqlparser/v2/v2.5.64/LICENSE",
+        "sha256": "a97fb9b3f8513f978fd2efd5428937f73caf5747d0e9cc09e2190a4fd5e0a1f5"
+      },
+      {
+        "path": "./licenses/wacli-dependencies/github.com/vektah/gqlparser/v2/v2.5.64/validator/imported/LICENSE",
+        "sha256": "b7433de1a47cb43a83a1f5f6eb4317a4e119300af943bf1ce28ed271feb1efe2"
+      },
+      {
+        "path": "./licenses/wacli-dependencies/go.mau.fi/libsignal/v0.2.2/LICENSE",
+        "sha256": "09f9333d941468c9d82ac9e2bf6b0b9085c52b50382b9fbb3806f586d502b719"
+      },
+      {
+        "path": "./licenses/wacli-dependencies/go.mau.fi/util/v0.11.0/LICENSE",
+        "sha256": "1f256ecad192880510e84ad60474eab7589218784b9a50bc7ceee34c2b91f1d5"
+      },
+      {
+        "path": "./licenses/wacli-dependencies/go.mau.fi/whatsmeow/v0.0.0-20261017175727-b2b1e71d45e2/LICENSE",
+        "sha256": "32ee9dbf6196874fc9d406c54a888a6c4cbb9aa4a7f35b46befeaff43a78fe85"
+      },
+      {
+        "path": "./licenses/wacli-dependencies/golang.org/x/crypto/v0.58.0/LICENSE",
+        "sha256": "911f8f5782931320f5b8d1160a76365b83aea6447ee6c04fa6d5591467db9dad"
+      },
+      {
+        "path": "./licenses/wacli-dependencies/golang.org/x/exp/v0.0.0-20261014143641-f0251eb4aa3e/LICENSE",
+        "sha256": "911f8f5782931320f5b8d1160a76365b83aea6447ee6c04fa6d5591467db9dad"
+      },
+      {
+        "path": "./licenses/wacli-dependencies/golang.org/x/net/v0.61.0/LICENSE",
+        "sha256": "911f8f5782931320f5b8d1160a76365b83aea6447ee6c04fa6d5591467db9dad"
+      },
+      {
+        "path": "./licenses/wacli-dependencies/golang.org/x/sync/v0.24.0/LICENSE",
+        "sha256": "911f8f5782931320f5b8d1160a76365b83aea6447ee6c04fa6d5591467db9dad"
+      },
+      {
+        "path": "./licenses/wacli-dependencies/golang.org/x/sys/v0.49.0/LICENSE",
+        "sha256": "911f8f5782931320f5b8d1160a76365b83aea6447ee6c04fa6d5591467db9dad"
+      },
+      {
+        "path": "./licenses/wacli-dependencies/golang.org/x/term/v0.47.0/LICENSE",
+        "sha256": "911f8f5782931320f5b8d1160a76365b83aea6447ee6c04fa6d5591467db9dad"
+      },
+      {
+        "path": "./licenses/wacli-dependencies/golang.org/x/text/v0.43.0/LICENSE",
+        "sha256": "911f8f5782931320f5b8d1160a76365b83aea6447ee6c04fa6d5591467db9dad"
+      },
+      {
+        "path": "./licenses/wacli-dependencies/google.golang.org/protobuf/v1.36.12/LICENSE",
+        "sha256": "4835612df0098ca95f8e7d9e3bffcb02358d435dbb38057c844c99d7f725eb20"
+      },
+      {
+        "path": "./licenses/wacli-dependencies/gopkg.in/yaml.v3/v3.0.1/LICENSE",
+        "sha256": "d18f6323b71b0b768bb5e9616e36da390fbd39369a81807cca352de4e4e6aa0b"
+      },
+      {
+        "path": "./licenses/wacli-dependencies/gopkg.in/yaml.v3/v3.0.1/NOTICE",
+        "sha256": "f6c2dd3a67b576eafb89b80200b8b1627230bf3821a0c14cb99a22ac19107d00"
+      },
+      {
+        "path": "./licenses/wacli-dependencies/rsc.io/qr/v0.2.0/LICENSE",
+        "sha256": "2d36597f7117c38b006835ae7f537487207d8ec407aa9d9980794b2030cbc067"
+      },
+      {
+        "path": "./licenses/whisper.cpp/LICENSE",
+        "sha256": "94f29bbed6a22c35b992c5c6ebf0e7c92f13b836b90f36f461c9cf2f0f1d010d"
+      },
+      {
+        "path": "./licenses/whisper.cpp/bindings/go/LICENSE",
+        "sha256": "3fa8d70be1f0deb5fb971a9c36cfbdcdc904fa46646560f9ac859494b40248b6"
+      },
+      {
+        "path": "./licenses/whisper.cpp/examples/wchess/wchess.wasm/chessboardjs-1.0.0/js/chessboard-1.0.0/LICENSE.md",
+        "sha256": "d33e835c372360941e425214c06c2063f7058d850b9a0153d5a624c1cab9bf31"
+      },
+      {
+        "path": "./licenses/whisper.cpp/tests/earnings21/normalizers/LICENSE",
+        "sha256": "fff3c2ad5a861a1dedc227f08afca28a12bd6fd80a11e0095901262c4fe61d16"
+      },
+      {
+        "path": "./licenses/whisper.cpp/tests/librispeech/normalizers/LICENSE",
+        "sha256": "fff3c2ad5a861a1dedc227f08afca28a12bd6fd80a11e0095901262c4fe61d16"
+      },
+      {
+        "path": "./licenses/whisper.cpp/tests/librispeech-parakeet/normalizers/LICENSE",
+        "sha256": "fff3c2ad5a861a1dedc227f08afca28a12bd6fd80a11e0095901262c4fe61d16"
+      }
+    ]
+  },
+  "verification": {
+    "dependency_audit": "./verification/dependency-audit.json",
+    "macho_files_audited": 26,
+    "relocated_python_audit": "./verification/relocated-python-audit.json",
+    "relocated_python_macho_files_audited": 14,
+    "load_command_audits_passed": true,
+    "tool_dependencies": "Apple system libraries only; no tool LC_RPATH; no Homebrew strings in staged tool binaries",
+    "python_dependencies": "Apple system libraries and bundled relative Tcl/Tk dependencies only; no Homebrew load commands",
+    "smoke_results": "./verification/smoke-results.json",
+    "relocated_tool_checks": 25,
+    "python_relocation": "./verification/python-relocation.json",
+    "whisper_source_tree": "./verification/whisper-source-tree.json",
+    "synthetic_audio": "./verification/synthetic.aiff",
+    "expected_synthetic_transcript": "./verification/synthetic-transcript.txt",
+    "model_read_only": {
+      "path": "<user-home>/Library/Application Support/WhatsAppTranscriber/models/ggml-small.bin",
+      "size": 487601967,
+      "copied": false
+    },
+    "transcriptions": {
+      "metal": "The portable audio tools are working correctly.\nThis is a synthetic English recording for the transcription test.\n",
+      "cpu": "The portable audio tools are working correctly.\nThis is a synthetic English recording for the transcription test.\n"
+    },
+    "tested_host": {
+      "macos": "27.2",
+      "cpu": "Apple M1 Max"
+    },
+    "project_engine_frozen": false,
+    "public_helpers": "./verification/public-helper-results.json"
+  },
+  "reproduction": {
+    "environment": "./env.sh",
+    "build_scripts": [
+      "./build-pkgconf.sh",
+      "./build-audio-libs.sh",
+      "./build-whisper.sh",
+      "./build-ffmpeg.sh"
+    ],
+    "audit_command": [
+      "./venv/bin/python",
+      "./audit.py"
+    ],
+    "tool_smoke_command": [
+      "python3",
+      "verify-public-helpers.py",
+      "--tools",
+      "tools"
+    ],
+    "python_relocation_command": [
+      "./venv/bin/python",
+      "./test-python-relocation.py"
+    ],
+    "public_helper_rebuild": {
+      "command": [
+        "python3",
+        "rebuild-public-helpers.py"
+      ],
+      "working_directory": ".",
+      "build_root": "/tmp/transcriber-portable-public",
+      "requires": [
+        "Pinned archives and downloads/index.json",
+        "CMake 4.4.4 package in venv/lib/python3.13/site-packages/cmake/data",
+        "Read-only existing model via WHISPER_MODEL or default application model path",
+        "verification/synthetic.aiff",
+        "verification/public-helper-baseline.json"
+      ],
+      "scripts": [
+        "rebuild-public-helpers.py",
+        "verify-public-helpers.py",
+        "promote-public-helpers.py",
+        "env.sh",
+        "build-pkgconf.sh",
+        "build-audio-libs.sh",
+        "build-whisper.sh",
+        "build-ffmpeg.sh"
+      ],
+      "note": "Start with the generic build directory absent. Source extraction checks pinned archive SHA-256. HOME is never reassigned. Builds stage first, then privacy, architecture, dependency, capability, six-format and CPU/Metal checks must pass before promotion."
+    }
+  },
+  "limitations": [
+    "Runtime tests ran on an M1 Max with macOS 27.2. macOS 15 compatibility is supported by load-command audits, deployment settings, and baseline CPU flags; execution on an actual macOS 15 installation remains untested."
+  ],
+  "blockers": [],
+  "privacy_rebuild": {
+    "passed": true,
+    "build_root": "/tmp/transcriber-portable-public",
+    "binary_privacy_scan": "Zero /Users/<name>, /home/<name>, private workspace, or repository-author email matches in all three helpers and FFmpeg configuration output.",
+    "compiler_maps": [
+      "-ffile-prefix-map=/tmp/transcriber-portable-public=/tmp/transcriber-portable-public",
+      "-fdebug-prefix-map=/tmp/transcriber-portable-public=/tmp/transcriber-portable-public"
+    ],
+    "source_modifications": [],
+    "provenance": "build/public-helpers/source-provenance.json",
+    "verification": "verification/public-helper-results.json",
+    "relocated_checks": 29,
+    "codec_capabilities_unchanged": true,
+    "model_read_only": true,
+    "transcriptions": {
+      "metal": "The portable audio tools are working correctly.\nThis is a synthetic English recording for the transcription test.\n",
+      "cpu": "The portable audio tools are working correctly.\nThis is a synthetic English recording for the transcription test.\n"
+    },
+    "promotion": "Same-directory temporary files verified by SHA-256, then os.replace for each executable. No binary byte patches."
+  },
+  "publication_notes": [
+    "Internal build-cache paths are relative to the portable directory. Resolve them before execution. The read-only model path uses a placeholder."
+  ]
+}
