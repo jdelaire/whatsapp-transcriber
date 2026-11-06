@@ -23,6 +23,20 @@ public struct Transcript: Codable, Identifiable, Sendable, Equatable {
     public let timestamp: String
     public let text: String
     public let path: String
+    public var summary: SummaryRecord = .init()
+
+    private enum CodingKeys: String, CodingKey { case id, title, timestamp, text, path, summary }
+
+    public init(id: String, title: String, timestamp: String, text: String, path: String, summary: SummaryRecord = .init()) {
+        self.id = id; self.title = title; self.timestamp = timestamp; self.text = text; self.path = path; self.summary = summary
+    }
+
+    public init(from decoder: any Decoder) throws {
+        let values = try decoder.container(keyedBy: CodingKeys.self)
+        self.init(id: try values.decode(String.self, forKey: .id), title: try values.decode(String.self, forKey: .title),
+                  timestamp: try values.decode(String.self, forKey: .timestamp), text: try values.decode(String.self, forKey: .text),
+                  path: try values.decode(String.self, forKey: .path), summary: try values.decodeIfPresent(SummaryRecord.self, forKey: .summary) ?? .init())
+    }
 
     public var date: Date {
         (try? Date(timestamp, strategy: .iso8601)) ??
@@ -47,6 +61,42 @@ public struct EngineSnapshot: Codable, Sendable, Equatable {
     public var migrationNeeded: Bool
     public var migrationPhase: String
     public var workerPid: Int?
+    public var summarySettings = SummarySettings()
+    public var summaryCounts: [String: Int] = [:]
+
+    private enum CodingKeys: String, CodingKey {
+        case schemaVersion, configured, authenticated, authenticationError, paused, modelReady, workerAlive, connection, processing, counts, recent, modelPath, outputFolder, migrationNeeded, migrationPhase, workerPid, summarySettings, summaryCounts
+    }
+
+    public init(from decoder: any Decoder) throws {
+        self = .empty
+        let values = try decoder.container(keyedBy: CodingKeys.self)
+        schemaVersion = try values.decode(Int.self, forKey: .schemaVersion)
+        configured = try values.decode(Bool.self, forKey: .configured)
+        authenticated = try values.decode(Bool.self, forKey: .authenticated)
+        authenticationError = try values.decodeIfPresent(String.self, forKey: .authenticationError)
+        paused = try values.decode(Bool.self, forKey: .paused)
+        modelReady = try values.decode(Bool.self, forKey: .modelReady)
+        workerAlive = try values.decode(Bool.self, forKey: .workerAlive)
+        connection = try values.decode(String.self, forKey: .connection)
+        processing = try values.decode(Bool.self, forKey: .processing)
+        counts = try values.decode([String: Int].self, forKey: .counts)
+        recent = try values.decode([Transcript].self, forKey: .recent)
+        modelPath = try values.decode(String.self, forKey: .modelPath)
+        outputFolder = try values.decode(String.self, forKey: .outputFolder)
+        migrationNeeded = try values.decode(Bool.self, forKey: .migrationNeeded)
+        migrationPhase = try values.decode(String.self, forKey: .migrationPhase)
+        workerPid = try values.decodeIfPresent(Int.self, forKey: .workerPid)
+        summarySettings = try values.decodeIfPresent(SummarySettings.self, forKey: .summarySettings) ?? .init()
+        summaryCounts = try values.decodeIfPresent([String: Int].self, forKey: .summaryCounts) ?? [:]
+    }
+
+    private init(schemaVersion: Int, configured: Bool, authenticated: Bool, paused: Bool, modelReady: Bool, workerAlive: Bool, connection: String, processing: Bool, counts: [String: Int], recent: [Transcript], modelPath: String, outputFolder: String, migrationNeeded: Bool, migrationPhase: String) {
+        self.schemaVersion = schemaVersion; self.configured = configured; self.authenticated = authenticated
+        self.paused = paused; self.modelReady = modelReady; self.workerAlive = workerAlive; self.connection = connection
+        self.processing = processing; self.counts = counts; self.recent = recent; self.modelPath = modelPath
+        self.outputFolder = outputFolder; self.migrationNeeded = migrationNeeded; self.migrationPhase = migrationPhase
+    }
 
     public var phase: CapturePhase {
         if !configured || !modelReady { return .setup }
@@ -74,6 +124,10 @@ public struct EngineSnapshot: Codable, Sendable, Equatable {
             Transcript(id: "sample-english", title: "Alex", timestamp: Date.now.addingTimeInterval(-1080).ISO8601Format(), text: "The meeting is tomorrow at ten. I'll send you the address this afternoon.", path: ""),
             Transcript(id: "sample-weekend", title: "Weekend plans", timestamp: Date.now.addingTimeInterval(-2520).ISO8601Format(), text: "I've booked a table for four. See you at seven!", path: "")
         ]
+        state.recent[0].summary = .init(state: .ready, bullets: ["Camille arrive vers 18 h et propose de se retrouver devant le café."], sourceHash: "preview-french", sourceFingerprint: "preview-french")
+        state.recent[1].summary = .init(state: .ready, bullets: ["Meeting tomorrow at 10; Alex will send the address this afternoon."], sourceHash: "preview-english", sourceFingerprint: "preview-english")
+        state.recent[2].summary = .init(state: .ready, bullets: ["Table booked for four at 7."], sourceHash: "preview-weekend", sourceFingerprint: "preview-weekend")
+        state.summaryCounts = ["total": 3, "ready": 3]
         return state
     }
 }

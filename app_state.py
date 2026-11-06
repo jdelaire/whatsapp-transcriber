@@ -16,6 +16,7 @@ from datetime import datetime, timezone
 from pathlib import Path
 
 from transcriber import Queue, atomic_text, execute, start_process, stop_process
+from app_summaries import project_summary, read_settings, has_summaries, transcript_body
 
 
 MODEL_BYTES = 487601967
@@ -153,6 +154,7 @@ def snapshot(paths, auth_probe=auth_status):
              "paused": (paths.data / "PAUSED").exists(), "model_ready": False,
              "worker_alive": False, "connection": "stopped", "processing": False,
              "counts": {}, "recent": [], "model_path": "", "output_folder": "",
+             "summary_settings": {"enabled": True, "revision": 0, "first_enabled_at": None}, "summary_counts": {},
              "migration_needed": bool(paths.legacy_plist and paths.legacy_plist.exists()),
              "migration_phase": read_json(paths.data / "migration.json", {}).get("phase", "none")}
     if not config:
@@ -176,6 +178,10 @@ def snapshot(paths, auth_probe=auth_status):
     if database.exists():
         with queue_snapshot(database) as db:
             state["counts"] = dict(db.execute("SELECT state,count(*) FROM jobs GROUP BY state"))
+            state["summary_settings"] = read_settings(db)
+            state["summary_counts"] = {"total": state["counts"].get("complete", 0)}
+            if has_summaries(db):
+                state["summary_counts"].update(dict(db.execute("SELECT s.state,count(*) FROM summaries s JOIN jobs j ON j.key=s.job_key WHERE j.state='complete' GROUP BY s.state")))
             for key, raw, output in db.execute("SELECT key,message,output FROM jobs WHERE state='complete' ORDER BY rowid DESC LIMIT 10"):
                 message = json.loads(raw)
                 path = Path(output or "")
@@ -183,9 +189,10 @@ def snapshot(paths, auth_probe=auth_status):
                     continue
                 try:
                     with path.open() as handle:
-                        text = handle.read(65536).partition("\n\n")[2].strip()
+                        text = transcript_body(handle.read(65536)).strip()
                     state["recent"].append({"id": key, "title": message.get("chat_name") or "WhatsApp chat",
-                                            "timestamp": message["timestamp"], "text": text, "path": str(path)})
+                                            "timestamp": message["timestamp"], "text": text, "path": str(path),
+                                            "summary": project_summary(db, key, output, Path(config["output"]))})
                 except OSError:
                     continue
     return state

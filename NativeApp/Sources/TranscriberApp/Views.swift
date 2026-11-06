@@ -11,7 +11,7 @@ struct PanelView: View {
             case .inbox: InboxView(model: model)
             case .setup: SetupView(model: model)
             case .settings: PreferencesView(model: model)
-            case .detail(let transcript): TranscriptView(model: model, transcript: transcript)
+            case .detail(let id): TranscriptView(model: model, id: id)
             }
             if let error = model.error {
                 Divider()
@@ -94,7 +94,7 @@ struct InboxView: View {
                     Text("\(model.snapshot.counts["complete", default: model.snapshot.recent.count]) saved")
                 }.font(.caption2).foregroundStyle(.secondary).padding(.horizontal, 18).padding(.bottom, 5)
                 ForEach(Array(model.snapshot.recent.prefix(3))) { transcript in
-                    TranscriptRow(transcript: transcript, open: { model.route = .detail(transcript) }, copy: { model.copy(transcript) })
+                    TranscriptRow(transcript: transcript, open: { model.openTranscript(id: transcript.id) }, copy: { model.copy(transcript) })
                     if transcript.id != model.snapshot.recent.prefix(3).last?.id { Divider() }
                 }
             }
@@ -149,7 +149,11 @@ struct TranscriptRow: View {
                 Spacer()
                 Text(transcript.date, style: .relative).font(.caption2).foregroundStyle(.secondary)
             }
-            Text(transcript.text).font(.system(size: 12)).foregroundStyle(.secondary).lineLimit(2).frame(maxWidth: .infinity, alignment: .leading)
+            if transcript.summary.state == .ready {
+                Text("Summary").font(.caption2).foregroundStyle(.secondary)
+            }
+            Text(transcript.summary.state == .ready ? transcript.summary.bullets.joined(separator: " · ") : transcript.text)
+                .font(.system(size: 12)).foregroundStyle(.secondary).lineLimit(2).frame(maxWidth: .infinity, alignment: .leading)
             HStack(spacing: 7) {
                 Button("Open", action: open)
                 Button("Copy", action: copy)
@@ -257,23 +261,25 @@ struct PreferencesView: View {
                     Toggle(isOn: Binding(get: { model.notifications }, set: model.setNotifications)) {
                         SettingsLabel(title: "Notify when ready", subtitle: "Keep message contents private")
                     }.toggleStyle(.switch).controlSize(.small).padding(12)
-                }.background(.quaternary.opacity(0.65), in: RoundedRectangle(cornerRadius: 8))
+                }.background(.quaternary.opacity(0.65), in: RoundedRectangle(cornerRadius: 8)).disabled(model.isBusy)
                 VStack(spacing: 0) {
                     SettingsValue(title: "Language", value: "Detect automatically")
                     Divider().padding(.horizontal, 12)
                     SettingsValue(title: "Speech model", value: model.snapshot.modelReady ? "Downloaded · 488 MB" : "Not downloaded")
                     Divider().padding(.horizontal, 12)
                     HStack { Text("Transcripts folder"); Spacer(); Button("Open") { model.openFolder() }.controlSize(.mini) }.font(.system(size: 12)).padding(12)
-                }.background(.quaternary.opacity(0.65), in: RoundedRectangle(cornerRadius: 8))
+                }.background(.quaternary.opacity(0.65), in: RoundedRectangle(cornerRadius: 8)).disabled(model.isBusy)
                 HStack {
                     SettingsLabel(title: "WhatsApp", subtitle: model.snapshot.authenticated ? "Linked to this Mac" : "Link required")
                     Spacer()
                     Button(model.snapshot.authenticated ? "Connection" : "Link") { model.route = .setup }.controlSize(.small)
-                }.padding(12).background(.quaternary.opacity(0.65), in: RoundedRectangle(cornerRadius: 8))
+                }.padding(12).background(.quaternary.opacity(0.65), in: RoundedRectangle(cornerRadius: 8)).disabled(model.isBusy)
                 UpdateSettingsView(updates: model.updates)
+                    .disabled(model.isBusy)
+                SummarySettingsView(model: model)
                 Text("Closing this panel keeps transcription running. Quitting the app stops capture.")
                     .font(.caption).foregroundStyle(.secondary).frame(maxWidth: .infinity, alignment: .leading)
-            }.padding(.horizontal, 18).padding(.bottom, 20).disabled(model.isBusy)
+            }.padding(.horizontal, 18).padding(.bottom, 20)
         }
     }
 }
@@ -319,18 +325,71 @@ struct SettingsValue: View {
 
 struct TranscriptView: View {
     let model: AppModel
-    let transcript: Transcript
+    let id: String
     var body: some View {
         VStack(spacing: 0) {
-            PanelHeader(title: transcript.title, subtitle: transcript.date.formatted(date: .abbreviated, time: .shortened), back: { model.route = .inbox })
+            PanelHeader(title: model.transcriptVisit.detail?.title ?? "Transcript", subtitle: model.transcriptVisit.detail?.date.formatted(date: .abbreviated, time: .shortened) ?? "", back: { model.route = .inbox })
             ScrollView {
-                Text(transcript.text).font(.system(size: 13)).textSelection(.enabled).frame(maxWidth: .infinity, alignment: .leading).padding(.horizontal, 18).padding(.bottom, 16)
-            }.frame(maxHeight: 380)
+                VStack(alignment: .leading, spacing: 12) {
+                    if model.transcriptVisit.loading { ProgressView().controlSize(.small) }
+                    if let detail = model.transcriptVisit.detail {
+                        if detail.summary.state == .ready {
+                            HStack {
+                                Text(model.transcriptVisit.showingSummary ? "Summary" : "Original transcript").font(.caption).foregroundStyle(.secondary)
+                                Spacer()
+                                Button(model.transcriptVisit.showingSummary ? "Show original" : "Show summary") {
+                                    model.transcriptVisit.select(model.transcriptVisit.showingSummary ? .original : .summary)
+                                }.controlSize(.small)
+                            }
+                        } else if let status = detail.summary.statusMessage(enabled: model.snapshot.summarySettings.enabled, availability: model.summaryAvailability) {
+                            Text(status).font(.caption).foregroundStyle(.secondary)
+                            if detail.summary.state == .failed {
+                                Button("Retry summary") { model.retrySummary(id: id) }.controlSize(.small)
+                                    .disabled(!model.snapshot.summarySettings.enabled || model.summaryAvailability != .available)
+                            }
+                        }
+                        if let text = model.transcriptVisit.displayedText {
+                            Text(text).font(.system(size: 13)).textSelection(.enabled).frame(maxWidth: .infinity, alignment: .leading)
+                        }
+                    }
+                    if let error = model.transcriptVisit.error {
+                        Text(error).font(.caption).foregroundStyle(.secondary)
+                        Button("Retry") { model.openTranscript(id: id) }.controlSize(.small)
+                    }
+                }.padding(.horizontal, 18).padding(.bottom, 16)
+            }.frame(minHeight: 180, maxHeight: 380)
             Divider()
             HStack {
-                Button("Copy transcript") { model.copy(transcript) }.frame(maxWidth: .infinity)
+                Button("Copy transcript") { model.copyTranscript(id: id) }.frame(maxWidth: .infinity)
+                    .disabled(model.transcriptVisit.detail?.text == nil)
                 Button("Done") { model.route = .inbox }
             }.buttonStyle(.bordered).padding(16)
         }
+    }
+}
+
+struct SummarySettingsView: View {
+    let model: AppModel
+
+    var body: some View {
+        VStack(alignment: .leading, spacing: 10) {
+            Toggle(isOn: Binding(get: { model.snapshot.summarySettings.enabled }, set: model.setAutomaticSummaries)) {
+                SettingsLabel(title: "Automatic summaries", subtitle: "Includes saved voice notes")
+                    .frame(maxWidth: .infinity, alignment: .leading)
+            }.toggleStyle(.switch).controlSize(.small).disabled(model.summaryPreferenceSaving)
+            Text("Apple Intelligence summarizes on this Mac. Original transcripts stay intact.")
+                .font(.caption2).foregroundStyle(.secondary).fixedSize(horizontal: false, vertical: true)
+            if let error = model.summarySettingsError {
+                Text(error).font(.caption2).foregroundStyle(.secondary).fixedSize(horizontal: false, vertical: true)
+            } else if !model.snapshot.summarySettings.enabled {
+                Text("Summaries paused. Saved summaries remain available.").font(.caption2).foregroundStyle(.secondary).fixedSize(horizontal: false, vertical: true)
+            } else if case .unavailable(let reason) = model.summaryAvailability {
+                Text(reason.explanation).font(.caption2).foregroundStyle(.secondary).fixedSize(horizontal: false, vertical: true)
+            } else {
+                Text("\(model.snapshot.summaryCounts["ready", default: 0]) of \(model.snapshot.summaryCounts["total", default: 0]) summarized")
+                    .font(.caption2).foregroundStyle(.secondary)
+            }
+        }.padding(12).frame(maxWidth: .infinity, alignment: .leading)
+            .background(.quaternary.opacity(0.65), in: RoundedRectangle(cornerRadius: 8))
     }
 }

@@ -57,7 +57,7 @@ class AppEngineTests(unittest.TestCase):
         job = queue.pending(0)[0]
         transcript = self.paths.data / "transcripts/note.txt"
         transcript.parent.mkdir(exist_ok=True)
-        transcript.write_text("Chat: Alice\n\nBonjour John.\n")
+        transcript.write_text("Chat: Alice\nSender: Alice\nReceived: 2026-01-01T00:00:00Z\nMessage: sample\n\nBonjour John.\n")
         queue.complete(job["key"], str(transcript))
         queue.close()
         before = (self.paths.data / "jobs.sqlite").stat().st_mtime_ns

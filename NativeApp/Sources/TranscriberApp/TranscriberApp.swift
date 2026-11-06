@@ -25,6 +25,7 @@ final class AppDelegate: NSObject, NSApplicationDelegate {
 
     func applicationDidFinishLaunching(_ notification: Notification) {
         NSApplication.shared.setActivationPolicy(.accessory)
+        NSWorkspace.shared.notificationCenter.addObserver(self, selector: #selector(didWake), name: NSWorkspace.didWakeNotification, object: nil)
         if ProcessInfo.processInfo.arguments.contains("--preview"), ProcessInfo.processInfo.arguments.contains("--preview-panel") {
             let window = NSWindow(contentRect: NSRect(x: 0, y: 0, width: 360, height: 560), styleMask: [.titled, .closable], backing: .buffered, defer: false)
             window.title = "Transcriber Preview"
@@ -48,16 +49,25 @@ final class AppDelegate: NSObject, NSApplicationDelegate {
         #endif
     }
 
+    func applicationDidBecomeActive(_ notification: Notification) { model.wakeSummaries() }
+
+    @objc private func didWake(_ notification: Notification) { model.wakeSummaries() }
+
     #if DEBUG
     private func exportPreviews(to directory: URL) async throws {
         try FileManager.default.createDirectory(at: directory, withIntermediateDirectories: true)
         let states: [(String, @MainActor () -> Void)] = [
             ("inbox", { self.model.snapshot = .preview; self.model.route = .inbox }),
             ("paused", { self.model.togglePause() }),
-            ("transcript", { self.model.route = .detail(self.model.snapshot.recent[0]) }),
+            ("transcript", { self.model.openTranscript(id: self.model.snapshot.recent[0].id) }),
+            ("original", { self.model.transcriptVisit.select(.original) }),
             ("setup", { self.model.snapshot.authenticated = false; self.model.snapshot.modelReady = false; self.model.route = .setup }),
             ("linking", { self.model.snapshot.modelReady = true; self.model.linkPhone() }),
-            ("settings", { self.model.route = .settings })
+            ("settings", { self.model.snapshot = .preview; self.model.route = .settings }),
+            ("summary-pending", { self.model.snapshot.recent[0].summary = .init(); self.model.openTranscript(id: self.model.snapshot.recent[0].id) }),
+            ("summary-failed", { self.model.snapshot.recent[0].summary = .init(state: .failed, errorCode: "generation_failed"); self.model.openTranscript(id: self.model.snapshot.recent[0].id) }),
+            ("summary-unavailable", { self.model.summaryAvailability = .unavailable(.modelNotReady); self.model.route = .settings }),
+            ("summary-off", { self.model.snapshot = .preview; self.model.snapshot.summarySettings.enabled = false; self.model.summaryAvailability = .available; self.model.route = .settings })
         ]
         for (name, update) in states {
             update()

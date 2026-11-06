@@ -22,6 +22,10 @@ Closing the menu keeps capture running. Pause is saved across launches. Quit sto
 
 Starting with 1.1.0, Settings includes Sparkle update checks. Automatic checks are enabled by default and can be turned off. Installation always requires confirmation. A download icon in the menu bar indicates an available update. Checks contact GitHub for release metadata and downloads; transcription stays local. Users of 1.0.0 need to install the first Sparkle-enabled release manually.
 
+Version 1.2.0 adds automatic, on-device summaries through Apple Intelligence. New and existing completed voice notes receive up to three same-language bullets, with one for short notes. New notes take priority over historical backfill. The original transcript is published first and stays intact; summary generation never holds up transcription or notifications. Open a note and choose Show original to read its full text. Copy transcript always copies that original.
+
+Generation requires macOS 26 or later, Apple Intelligence enabled, and its downloaded model ready. There is no cloud fallback or API key. macOS 15 remains supported for transcription and viewing saved summaries. Settings shows availability and backfill progress. Turning Automatic summaries off pauses generation and retains saved summaries; turning it on resumes notes received while paused. Failed notes offer Retry. Long notes are processed in chunks, so a summary can omit details. Use the original when accuracy matters.
+
 An existing installation of the command-line receiver can be migrated without pairing again. The app preserves its model, linked account, queue, starting date and transcripts, and backs up the old startup configuration before taking over.
 
 ## Privacy and local files
@@ -40,7 +44,7 @@ The receiver uses wacli, an unofficial WhatsApp linked-device client. It retains
 - Runtime checks were performed on macOS 27.2 on Apple Silicon. macOS 15 deployment targets and dependencies were audited, but execution on macOS 15 remains untested.
 - Native views were rendered and native Quit/relaunch was verified. Automated menu interaction was unavailable during validation. A fresh incoming note after the final app migration remains a manual check.
 
-The application passed 62 Python tests and 7 Swift tests. Isolated bundle checks cover relocated tools, audio conversion, pairing shutdown, durable deduplication, parent loss, child cleanup and migration recovery. See the release verification file for the exact checks performed on each packaged build.
+The application passed 82 Python tests and 26 Swift tests. Isolated bundle checks cover relocated tools, audio conversion, pairing shutdown, durable deduplication, parent loss, child cleanup and migration recovery. See the release verification file for the exact checks performed on each packaged build.
 
 ## Source and builds
 
@@ -59,16 +63,16 @@ python3 scripts/build_app.py
 
 The builder freezes the engine, compiles the native app, audits every Mach-O dependency and deployment target, signs nested helpers before the app, and packages source materials. It rejects personal build paths in the final bundle. Notarization and stapling require an Apple Developer ID and account access.
 
-Sparkle is pinned in `NativeApp/Package.resolved`. The builder embeds its framework and signs its nested helpers before signing the app. Local builds default to version 1.1.0, build 2. Override these with `--version`, `--build-number` and `--output-dir`.
+Sparkle is pinned in `NativeApp/Package.resolved`. The builder embeds its framework and signs its nested helpers before signing the app. Local builds default to version 1.2.0, build 3. Override these with `--version`, `--build-number` and `--output-dir`. Building summaries requires a macOS 26 or later SDK; the framework is weak-linked to preserve the macOS 15 deployment target.
 
 To prepare a release locally, use an existing notarytool Keychain profile:
 
 ```sh
-python3 scripts/prepare_release.py --version 1.1.0 --build-number 2 \
-  --keychain-profile YOUR_PROFILE --output-dir dist/1.1.0
+python3 scripts/prepare_release.py --version 1.2.0 --build-number 3 \
+  --keychain-profile YOUR_PROFILE --output-dir dist/1.2.0
 ```
 
-The output directory must be empty. Each release must increase the numeric build number. This command requires Developer ID signing, notarizes and staples the app, creates the final ZIP, generates and verifies its signed appcast, then writes final SHA-256 hashes. It does not publish. Upload the app ZIP, source-material ZIP, `appcast.xml` and `SHA256SUMS.txt` together to the matching GitHub release tag, such as `v1.1.0`, and mark it as latest. The stable feed is `https://github.com/jdelaire/whatsapp-transcriber/releases/latest/download/appcast.xml`; enclosure URLs point to immutable version tags. The feed becomes available after the first such release is published.
+The output directory must be empty. Each release must increase the numeric build number. This command requires Developer ID signing, notarizes and staples the app, creates the final ZIP, generates and verifies its signed appcast, then writes final SHA-256 hashes. It does not publish. Upload the app ZIP, source-material ZIP, `appcast.xml` and `SHA256SUMS.txt` together to the matching GitHub release tag, such as `v1.2.0`, and mark it as latest. The stable feed is `https://github.com/jdelaire/whatsapp-transcriber/releases/latest/download/appcast.xml`; enclosure URLs point to immutable version tags. The feed becomes available after the first such release is published.
 
 `build-support/sparkle.json` pins the public update key and Keychain account `com.jdelaire.transcriber.sparkle`. The private Ed25519 key remains in the build machine's login Keychain. Back it up securely before moving build machines. Release preparation fails if that account's key does not match the public key. Do not generate a replacement key for an existing release line. Source materials include Sparkle's license and application integration; Swift Package Manager downloads the pinned, checksum-verified upstream binary.
 

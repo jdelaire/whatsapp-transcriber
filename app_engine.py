@@ -10,6 +10,7 @@ from pathlib import Path
 from app_state import Paths, Migration, initialize, snapshot, set_paused, verify_model, promote_model, watch_parent, supervise_parent, read_json
 from app_pairing import Pairing
 import transcriber
+from app_summaries import SummaryStore
 
 
 OUTPUT_LOCK = threading.Lock()
@@ -96,7 +97,7 @@ def main():
     for sig in (signal.SIGTERM, signal.SIGINT):
         signal.signal(sig, lambda *_: transcriber.STOP.set())
     parser = argparse.ArgumentParser()
-    parser.add_argument("command", choices=["initialize", "status", "run", "pair", "pause", "resume", "migrate", "commit-migration", "restore", "restore-stopped", "verify-model", "transcribe"])
+    parser.add_argument("command", choices=["initialize", "status", "run", "pair", "pause", "resume", "migrate", "commit-migration", "restore", "restore-stopped", "verify-model", "transcribe", "transcript", "summary-status", "summary-settings", "summary-owner", "summary-reconcile", "summary-claim", "summary-check", "summary-finish", "summary-retry"])
     parser.add_argument("--tools", required=True)
     parser.add_argument("--data-root")
     parser.add_argument("--input")
@@ -116,6 +117,15 @@ def main():
             result = snapshot(paths)
         elif args.command == "status":
             result = snapshot(paths)
+        elif args.command == "transcript" or args.command.startswith("summary-"):
+            config = read_json(paths.config)
+            if not config:
+                raise ValueError("Complete app setup first.")
+            request = json.load(sys.stdin)
+            if not isinstance(request, dict):
+                raise ValueError("Invalid summary request.")
+            store = SummaryStore(paths.data / "jobs.sqlite", Path(config["output"]))
+            result = store.handle(args.command, request)
         elif args.command == "run":
             run(paths)
             return

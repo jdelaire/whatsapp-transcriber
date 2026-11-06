@@ -87,7 +87,7 @@ def sources(log, destination=DIST):
         shutil.copy2(path, staging / path.name)
     app_source = staging / "TranscriberAppSource"
     app_source.mkdir()
-    for name in ("app_engine.py", "app_state.py", "app_pairing.py", "transcriber.py", "manage.py", "README.md", "THIRD_PARTY.md", ".gitignore"):
+    for name in ("app_engine.py", "app_state.py", "app_pairing.py", "app_summaries.py", "transcriber.py", "manage.py", "README.md", "THIRD_PARTY.md", ".gitignore"):
         shutil.copy2(ROOT / name, app_source / name)
     shutil.copytree(ROOT / "NativeApp", app_source / "NativeApp", ignore=shutil.ignore_patterns(".build", ".swiftpm"))
     shutil.copytree(ROOT / "scripts", app_source / "scripts", ignore=shutil.ignore_patterns("__pycache__"))
@@ -106,7 +106,7 @@ def sources(log, destination=DIST):
     zip_tree(staging, archive)
 
 
-def build(sign=True, package_sources=True, version="1.1.0", build_number="2", output_dir=DIST, require_developer_id=False):
+def build(sign=True, package_sources=True, version="1.2.0", build_number="3", output_dir=DIST, require_developer_id=False):
     validate_version(version, build_number)
     config = settings()
     signing_identity = identity() if sign else "-"
@@ -196,8 +196,8 @@ if __name__ == "__main__":
     parser = argparse.ArgumentParser()
     parser.add_argument("--no-sign", action="store_true")
     parser.add_argument("--no-sources", action="store_true")
-    parser.add_argument("--version", default="1.1.0")
-    parser.add_argument("--build-number", default="2")
+    parser.add_argument("--version", default="1.2.0")
+    parser.add_argument("--build-number", default="3")
     parser.add_argument("--output-dir", type=Path, default=DIST)
     args = parser.parse_args()
     build(sign=not args.no_sign, package_sources=not args.no_sources, version=args.version, build_number=args.build_number, output_dir=args.output_dir)

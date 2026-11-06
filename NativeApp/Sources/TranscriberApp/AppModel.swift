@@ -5,7 +5,7 @@ import UserNotifications
 import TranscriberCore
 
 enum PanelRoute: Equatable {
-    case inbox, setup, settings, detail(Transcript)
+    case inbox, setup, settings, detail(String)
 }
 
 @MainActor @Observable
@@ -23,6 +23,10 @@ final class AppModel {
     var launchAtLogin = false
     var notifications = UserDefaults.standard.bool(forKey: "notifyWhenReady")
     var panelVisible = false
+    var summaryAvailability: SummaryAvailability = .unavailable(.unknown)
+    var transcriptVisit = TranscriptVisit()
+    var summaryPreferenceSaving = false
+    var summarySettingsError: String?
     private(set) var shuttingDown = false
     private let preview: Bool
     private let isolated: Bool
@@ -38,6 +42,12 @@ final class AppModel {
     private var operation: Task<Void, Never>?
     private var downloader: ModelDownload?
     private var refreshing = false
+    private var summaryWorker: SummaryWorker?
+    private var copyToken = UUID()
+
+    private var summaryDataRoot: URL {
+        location.dataRoot ?? FileManager.default.homeDirectoryForCurrentUser.appendingPathComponent("Library/Application Support/WhatsAppTranscriber")
+    }
 
     init() {
         preview = ProcessInfo.processInfo.arguments.contains("--preview")
@@ -47,6 +57,7 @@ final class AppModel {
         client = EngineClient(location: location)
         if preview {
             snapshot = .preview
+            summaryAvailability = .available
             if ProcessInfo.processInfo.arguments.contains("--preview-setup") {
                 snapshot.authenticated = false
                 snapshot.modelReady = false
@@ -72,6 +83,11 @@ final class AppModel {
             snapshot = try await client.snapshot(command: "initialize")
             try Task.checkCancellation()
             guard !shuttingDown else { return }
+            let summaryWorker = SummaryWorker(store: client, model: makeSummaryModel(), dataRoot: summaryDataRoot) { [weak self] update in
+                await self?.summaryUpdated(update)
+            }
+            self.summaryWorker = summaryWorker
+            await summaryWorker.start()
             launchAtLogin = !isolated && SMAppService.mainApp.status == .enabled
             if canCapture && !snapshot.paused { try await startCapture() }
             else if !canCapture { route = .setup }
@@ -91,7 +107,12 @@ final class AppModel {
         guard !preview, !refreshing, !shuttingDown else { return }
         refreshing = true
         defer { refreshing = false }
-        do { snapshot = try await client.snapshot() }
+        do {
+            snapshot = try await client.snapshot()
+            await summaryWorker?.refreshAvailability()
+            await summaryWorker?.wake()
+            await refreshTranscriptStatus()
+        }
         catch { self.error = error.localizedDescription }
     }
 
@@ -192,6 +213,23 @@ final class AppModel {
         }
         if ["ready", "connection", "processing", "transcript"].contains(event.event ?? "") {
             Task { await refresh() }
+        }
+        if event.event == "transcript" { Task { await summaryWorker?.wake(transcriptID: event.id) } }
+    }
+
+    private func summaryUpdated(_ update: SummaryWorkerUpdate) async {
+        guard !shuttingDown else { return }
+        switch update {
+        case .availability(let availability): summaryAvailability = availability
+        case .completed: await refresh()
+        }
+    }
+
+    func wakeSummaries() {
+        guard !preview, !shuttingDown else { return }
+        Task {
+            await summaryWorker?.refreshAvailability()
+            await summaryWorker?.wake()
         }
     }
 
@@ -315,13 +353,98 @@ final class AppModel {
     }
 
     func copy(_ transcript: Transcript) {
-        NSPasteboard.general.clearContents()
-        NSPasteboard.general.setString(transcript.text, forType: .string)
-        notice = "Transcript copied."
+        copyTranscript(id: transcript.id)
+    }
+
+    func openTranscript(id: String) {
+        let token = transcriptVisit.open(id: id)
+        route = .detail(id)
+        Task { await loadTranscript(id: id, token: token) }
+        if !preview { Task { await summaryWorker?.wake(transcriptID: id) } }
+    }
+
+    private func previewTranscript(id: String) -> TranscriptDetail? {
+        guard let transcript = snapshot.recent.first(where: { $0.id == id }) else { return nil }
+        return .init(id: id, title: transcript.title, timestamp: transcript.timestamp, path: transcript.path, text: transcript.text,
+                     sourceHash: transcript.summary.sourceHash, sourceFingerprint: transcript.summary.sourceFingerprint, summary: transcript.summary)
+    }
+
+    private func loadTranscript(id: String, token: UUID) async {
+        do {
+            let detail: TranscriptDetail
+            if preview {
+                guard let sample = previewTranscript(id: id) else { return }
+                detail = sample
+            } else { detail = try await client.transcript(id: id) }
+            guard !shuttingDown else { return }
+            transcriptVisit.receive(detail, requestedID: id, token: token)
+        } catch {
+            transcriptVisit.fail("Original text is unavailable. Please retry.", requestedID: id, token: token)
+        }
+    }
+
+    private func refreshTranscriptStatus() async {
+        guard case .detail(let id) = route, !preview, !shuttingDown else { return }
+        let token = transcriptVisit.token
+        if let summary = try? await client.summaryStatus(id: id) {
+            if transcriptVisit.update(summary, requestedID: id, token: token) { await loadTranscript(id: id, token: token) }
+        }
+    }
+
+    func copyTranscript(id: String) {
+        let token = UUID()
+        copyToken = token
+        Task {
+            do {
+                let detail: TranscriptDetail
+                if preview {
+                    guard let sample = previewTranscript(id: id) else { return }
+                    detail = sample
+                } else { detail = try await client.transcript(id: id) }
+                guard !shuttingDown, copyToken == token else { return }
+                guard let text = detail.text else { notice = "Original text could not be copied."; return }
+                NSPasteboard.general.clearContents()
+                NSPasteboard.general.setString(text, forType: .string)
+                notice = "Transcript copied."
+            } catch {
+                if !shuttingDown && copyToken == token { notice = "Original text could not be copied." }
+            }
+        }
+    }
+
+    func setAutomaticSummaries(_ enabled: Bool) {
+        guard !summaryPreferenceSaving, !shuttingDown else { return }
+        let previous = snapshot.summarySettings
+        snapshot.summarySettings.enabled = enabled
+        summarySettingsError = nil
+        if preview { return }
+        summaryPreferenceSaving = true
+        Task {
+            defer { summaryPreferenceSaving = false }
+            do {
+                snapshot.summarySettings = try await client.summarySettings(enabled: enabled)
+                SummaryWorker.notifySettingsChanged(dataRoot: summaryDataRoot)
+                await summaryWorker?.settingsChanged()
+                await summaryWorker?.wake()
+            } catch {
+                snapshot.summarySettings = previous
+                summarySettingsError = "Summary setting could not be saved. Please retry."
+            }
+        }
+    }
+
+    func retrySummary(id: String) {
+        guard snapshot.summarySettings.enabled, summaryAvailability == .available, !preview, !shuttingDown else { return }
+        Task {
+            _ = try? await client.summaryRetry(id: id)
+            await summaryWorker?.wake(transcriptID: id)
+            await refresh()
+        }
     }
 
     func shutdown() async {
         shuttingDown = true
+        let summariesStopping = Task { await summaryWorker?.stop() }
         monitor?.cancel()
         let starting = startup
         starting?.cancel()
@@ -332,10 +455,11 @@ final class AppModel {
         pairing = nil
         pairingToken = nil
         if let linking { await Task.detached(priority: .utility) { linking.stop() }.value }
-        await client.cancelAll()
         await stopWorker()
         await pending?.value
         await starting?.value
+        await summariesStopping.value
+        await client.cancelAll()
     }
 }
 

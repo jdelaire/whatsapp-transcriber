@@ -17,6 +17,8 @@ import time
 from datetime import datetime, timezone
 from pathlib import Path
 
+from app_summaries import migrate_summaries
+
 
 def timestamp(value):
     return datetime.fromisoformat(value.replace("Z", "+00:00")).timestamp()
@@ -89,6 +91,7 @@ class Queue:
             self.connection.execute(
                 "INSERT OR IGNORE INTO metadata VALUES ('start_time', ?)", (start_time,)
             )
+        migrate_summaries(self.connection, time.time())
 
     def close(self):
         self.connection.close()
@@ -172,6 +175,7 @@ class Queue:
                 message.update(chat_jid=new_chat, msg_id=new_msg)
                 self.connection.execute("UPDATE jobs SET message=? WHERE key=?", (json.dumps(message), target))
                 for duplicate in rows[1:]:
+                    self.connection.execute("DELETE FROM summaries WHERE job_key=?", (duplicate[0],))
                     self.connection.execute("DELETE FROM jobs WHERE key=?", (duplicate[0],))
             self.connection.execute("UPDATE aliases SET target=? WHERE target IN (?, ?)", (target, old_target, new_target))
             self.connection.executemany("INSERT OR REPLACE INTO aliases VALUES (?, ?)", [(old, target), (new, target)])
@@ -193,7 +197,7 @@ class Queue:
     def complete(self, key, path):
         with self.connection:
             self.connection.execute(
-                "UPDATE jobs SET state='complete', output=?, error=NULL WHERE key=?", (path, key)
+                "UPDATE jobs SET state='complete', output=?, error=NULL, completed_at=COALESCE(completed_at,?) WHERE key=?", (path, time.time(), key)
             )
 
     def cancel(self, chat_jid, msg_id):
@@ -211,7 +215,7 @@ class Queue:
             if text is not None:
                 atomic_text(destination, text)
             self.connection.execute(
-                "UPDATE jobs SET state='complete', output=?, error=NULL WHERE key=?", (str(destination), key)
+                "UPDATE jobs SET state='complete', output=?, error=NULL, completed_at=? WHERE key=?", (str(destination), time.time(), key)
             )
         return True
 

@@ -235,3 +235,21 @@ Remaining external risks: actual model availability and cancellation responsiven
 ## Review rulings
 
 Sol 6.1 high plan review completed before implementation. Reversed new-note hints now preserve completion order. AppModel-owned visit UUIDs reject stale A/B/A detail responses and retain original selection through view recreation. Targeted SQLite probes confirmed ordinary mode=ro reads can update shared-memory coordination; new commands permit those sidecars while forbidding SQL mutations and DB/WAL content changes. Existing app-status snapshot purity stays unchanged. Strict no-sidecar concurrent reads would require copying or a custom VFS and is not part of this feature.
+
+Implementation ruling: SummaryRecord and TranscriptDetail also carry optional source_fingerprint strings. This lets selected pending notes detect changed originals without repeatedly loading full bodies. Older payloads decode nil. All six tasks are implemented; final validation is recorded below.
+
+Final review fixes: retain unresolved claim identity after failed finish/cleanup and retry interruption persistence before another claim. Metadata-only source changes preserve cached ready/failed state when hash/prompt match. Performance fixes add a bounded-upper completion cursor, orphan cleanup at sweep wrap, indexed empty-queue detection, and a changed flag so cached pages are paced rather than burst-scanned. Regressions verify all these cases. Settings explanations wrap fully; final generation instructions request distinct, nonrepeating bullets.
+
+## Execution results
+
+All six implementation tasks are complete. The checklist above records the original scope; the evidence and external limits below describe the delivered validation.
+
+- Final suites passed: 82 Python tests and 26 Swift tests. Debug and signed release builds passed. The final visual-only adjustment added a minimum detail viewport height; both builds and native preview export passed afterward.
+- Sol 6.1 high independently reviewed the plan before implementation and the finished code for bugs and performance. Both actionable code findings were fixed with regression tests. Its performance recheck found no remaining material issue in the affected cached paths. At 10,000 cached notes, median empty-claim handler time was 0.182 ms and a persistent cached page was 1.838 ms. These exclude subprocess startup. Idle repair pages are paced every 20 seconds; an unhinted edit behind the completion cursor can wait a full sweep.
+- Terra 6.1 xhigh verified native previews with fictional data. Settings descriptions wrap fully; pending, failed, summary, original and inbox states passed the final export. A collapsing pending viewport was fixed. Owned preview and probe processes exited, and the installed 1.1.0 app stayed untouched.
+- The actual on-device model was available. English and French probes preserved names, dates and amounts; Thai returned unsupported_language. Cancellation returned interrupted in about 0.30 seconds. The final long-input probe exceeded a single model context and retained Nora, 83 dollars, 24 September and the greenhouse key in three bullets, completing in 39.6 seconds.
+- Final packaged-engine checks used an isolated temporary store. A 1,664,021-byte original body survived full-detail transport, claim/check/finish, cached access while Off and snapshot projection unchanged. Both the app and the ZIP-extracted app passed strict signature verification. Sparkle symlinks, source module and license were present. Info.plist reports 1.2.0, build 3, minimum macOS 15.0; FoundationModels is weak-linked.
+
+Raw logs, model outputs, package verification and before/after previews are local ignored artifacts under `.build/summary-qa`. The signed QA bundle is `dist/qa-1.2.0/Transcriber.app`.
+
+External checks remain: actual macOS 15 execution, click-through UI/video capture, generation with networking explicitly disabled, a real incoming-note flow and a published Sparkle upgrade. Native automation timed out and recording was unavailable, so still exports do not establish click behavior. This work does not notarize, install or publish 1.2.0. Next release step is notarization and publication followed by a 1.1.0-to-1.2.0 update test.
