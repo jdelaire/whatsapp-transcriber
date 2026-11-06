@@ -12,7 +12,7 @@ The screenshot uses sample data.
 
 ## Get started
 
-1. Download `Transcriber-1.0.0-arm64.zip` from Releases, extract it and move `Transcriber.app` to Applications.
+1. Download `Transcriber-1.1.0-arm64.zip` from Releases, extract it and move `Transcriber.app` to Applications.
 2. Open the app, then click the waveform in the menu bar.
 3. Download the 488 MB speech model. The app checks its size and SHA-256 before using it.
 4. Enter your WhatsApp number with its country code and request a linking code. On your phone, open WhatsApp, Settings, Linked devices, Link a device, Link with phone number. Enter the code shown by Transcriber.
