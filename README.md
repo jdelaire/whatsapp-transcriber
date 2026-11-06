@@ -20,6 +20,8 @@ The screenshot uses sample data.
 
 Closing the menu keeps capture running. Pause is saved across launches. Quit stops capture and owned helper processes. Settings includes optional launch at login and notifications. Notification bodies do not contain message text or contact names.
 
+Starting with 1.1.0, Settings includes Sparkle update checks. Automatic checks are enabled by default and can be turned off. Installation always requires confirmation. A download icon in the menu bar indicates an available update. Checks contact GitHub for release metadata and downloads; transcription stays local. Users of 1.0.0 need to install the first Sparkle-enabled release manually.
+
 An existing installation of the command-line receiver can be migrated without pairing again. The app preserves its model, linked account, queue, starting date and transcripts, and backs up the old startup configuration before taking over.
 
 ## Privacy and local files
@@ -38,7 +40,7 @@ The receiver uses wacli, an unofficial WhatsApp linked-device client. It retains
 - Runtime checks were performed on macOS 27.2 on Apple Silicon. macOS 15 deployment targets and dependencies were audited, but execution on macOS 15 remains untested.
 - Native views were rendered and native Quit/relaunch was verified. Automated menu interaction was unavailable during validation. A fresh incoming note after the final app migration remains a manual check.
 
-The application passed 58 Python tests and 7 Swift tests. Isolated bundle checks cover relocated tools, audio conversion, pairing shutdown, durable deduplication, parent loss, child cleanup and migration recovery. See the release verification file for the exact checks performed on each packaged build.
+The application passed 62 Python tests and 7 Swift tests. Isolated bundle checks cover relocated tools, audio conversion, pairing shutdown, durable deduplication, parent loss, child cleanup and migration recovery. See the release verification file for the exact checks performed on each packaged build.
 
 ## Source and builds
 
@@ -56,5 +58,18 @@ python3 scripts/build_app.py
 ```
 
 The builder freezes the engine, compiles the native app, audits every Mach-O dependency and deployment target, signs nested helpers before the app, and packages source materials. It rejects personal build paths in the final bundle. Notarization and stapling require an Apple Developer ID and account access.
+
+Sparkle is pinned in `NativeApp/Package.resolved`. The builder embeds its framework and signs its nested helpers before signing the app. Local builds default to version 1.1.0, build 2. Override these with `--version`, `--build-number` and `--output-dir`.
+
+To prepare a release locally, use an existing notarytool Keychain profile:
+
+```sh
+python3 scripts/prepare_release.py --version 1.1.0 --build-number 2 \
+  --keychain-profile YOUR_PROFILE --output-dir dist/1.1.0
+```
+
+The output directory must be empty. Each release must increase the numeric build number. This command requires Developer ID signing, notarizes and staples the app, creates the final ZIP, generates and verifies its signed appcast, then writes final SHA-256 hashes. It does not publish. Upload the app ZIP, source-material ZIP, `appcast.xml` and `SHA256SUMS.txt` together to the matching GitHub release tag, such as `v1.1.0`, and mark it as latest. The stable feed is `https://github.com/jdelaire/whatsapp-transcriber/releases/latest/download/appcast.xml`; enclosure URLs point to immutable version tags. The feed becomes available after the first such release is published.
+
+`build-support/sparkle.json` pins the public update key and Keychain account `com.jdelaire.transcriber.sparkle`. The private Ed25519 key remains in the build machine's login Keychain. Back it up securely before moving build machines. Release preparation fails if that account's key does not match the public key. Do not generate a replacement key for an existing release line. Source materials include Sparkle's license and application integration; Swift Package Manager downloads the pinned, checksum-verified upstream binary.
 
 Bundled tools retain their upstream licenses. See [third-party materials](THIRD_PARTY.md). Keep the corresponding-source archive with the app when redistributing the bundled tools.

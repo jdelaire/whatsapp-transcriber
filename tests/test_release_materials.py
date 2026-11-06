@@ -5,10 +5,14 @@ import unittest
 import zipfile
 from pathlib import Path
 
-from scripts.release_materials import sanitize_tree, zip_tree, reject_private_paths, load_manifest
+from scripts.release_materials import sanitize_tree, zip_tree, reject_private_paths, load_manifest, macho_libraries
 
 
 class ReleaseMaterialsTests(unittest.TestCase):
+    def test_universal_binary_headers_are_not_library_dependencies(self):
+        output = '/tmp/Autoupdate (architecture x86_64):\n\t/usr/lib/libobjc.A.dylib (compatibility version 1.0.0, current version 228.0.0)\n/tmp/Autoupdate (architecture arm64):\n\t/usr/lib/libobjc.A.dylib (compatibility version 1.0.0, current version 228.0.0)\n'
+        self.assertEqual(macho_libraries(output), ["/usr/lib/libobjc.A.dylib"])
+
     def test_portable_manifest_resolves_relative_tools_and_public_placeholders(self):
         with tempfile.TemporaryDirectory() as folder:
             root = Path(folder)

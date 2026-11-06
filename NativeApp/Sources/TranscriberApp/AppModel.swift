@@ -10,6 +10,7 @@ enum PanelRoute: Equatable {
 
 @MainActor @Observable
 final class AppModel {
+    let updates = UpdateController()
     var snapshot = EngineSnapshot.empty
     var route: PanelRoute = .inbox
     var isBusy = false
@@ -59,6 +60,7 @@ final class AppModel {
     var canCapture: Bool { snapshot.modelReady && snapshot.authenticated && snapshot.authenticationError == nil }
 
     func start() {
+        updates.start()
         startup = Task { [weak self] in await self?.bootstrap() }
     }
 

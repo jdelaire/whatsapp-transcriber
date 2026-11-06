@@ -270,10 +270,31 @@ struct PreferencesView: View {
                     Spacer()
                     Button(model.snapshot.authenticated ? "Connection" : "Link") { model.route = .setup }.controlSize(.small)
                 }.padding(12).background(.quaternary.opacity(0.65), in: RoundedRectangle(cornerRadius: 8))
+                UpdateSettingsView(updates: model.updates)
                 Text("Closing this panel keeps transcription running. Quitting the app stops capture.")
                     .font(.caption).foregroundStyle(.secondary).frame(maxWidth: .infinity, alignment: .leading)
             }.padding(.horizontal, 18).padding(.bottom, 20).disabled(model.isBusy)
         }
+    }
+}
+
+struct UpdateSettingsView: View {
+    let updates: UpdateController
+
+    var body: some View {
+        VStack(spacing: 0) {
+            Toggle(isOn: Binding(get: { updates.automaticChecks }, set: updates.setAutomaticChecks)) {
+                SettingsLabel(title: "Check for updates automatically", subtitle: "Ask before installing")
+            }.toggleStyle(.switch).controlSize(.small).padding(12)
+            Divider().padding(.horizontal, 12)
+            HStack {
+                Text("Version \(Bundle.main.object(forInfoDictionaryKey: "CFBundleShortVersionString") as? String ?? "Development")")
+                    .foregroundStyle(.secondary)
+                Spacer()
+                Button(updates.updateAvailable ? "Update available…" : "Check for Updates…", action: updates.checkForUpdates)
+                    .controlSize(.small).disabled(!updates.canCheckForUpdates)
+            }.font(.system(size: 12)).padding(12)
+        }.background(.quaternary.opacity(0.65), in: RoundedRectangle(cornerRadius: 8))
     }
 }
 

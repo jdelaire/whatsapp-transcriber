@@ -5,6 +5,10 @@ import zipfile
 from pathlib import Path
 
 
+def macho_libraries(output):
+    return list(dict.fromkeys(line.strip().split(" (compatibility version")[0] for line in output.splitlines() if " (compatibility version" in line))
+
+
 def load_manifest(path, portable, project):
     def expand(value):
         if isinstance(value, dict):

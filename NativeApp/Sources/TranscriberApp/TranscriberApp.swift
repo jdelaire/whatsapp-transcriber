@@ -9,8 +9,8 @@ struct TranscriberApp: App {
         MenuBarExtra {
             PanelView(model: delegate.model)
         } label: {
-            Image(systemName: delegate.model.snapshot.paused ? "pause.circle" : "waveform")
-                .accessibilityLabel("Transcriber")
+            Image(systemName: delegate.model.updates.updateAvailable ? "arrow.down.circle.fill" : delegate.model.snapshot.paused ? "pause.circle" : "waveform")
+                .accessibilityLabel(delegate.model.updates.updateAvailable ? "Transcriber update available" : "Transcriber")
         }
         .menuBarExtraStyle(.window)
     }

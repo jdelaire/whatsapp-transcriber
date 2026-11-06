@@ -1,6 +1,6 @@
 # Third-party materials
 
-Release bundles include wacli, Whisper.cpp, FFmpeg/ffprobe, a Python runtime and their dependencies. Each component retains its upstream license. License texts are included in `Transcriber.app/Contents/Resources/Licenses`.
+Release bundles include Sparkle, wacli, Whisper.cpp, FFmpeg/ffprobe, a Python runtime and their dependencies. Each component retains its upstream license. License texts are included in `Transcriber.app/Contents/Resources/Licenses`. Sparkle 2.10.1 uses the MIT license and its upstream third-party notices, included as `Sparkle-LICENSE`.
 
 `Transcriber-SourceMaterials.zip` accompanies each release with pinned upstream source, dependency inventories, build scripts, source locations and checksums. It also includes the application and engine source matching that release.
 
