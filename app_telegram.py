@@ -140,15 +140,36 @@ def update_settings(data, request, validate=validate_chat, now=time.time):
             return {"chat_id": chat_id}
 
 
-def message_parts(heading, body):
-    prefix = f"{heading}\n\n"
+def sender_label(raw_message):
+    message = json.loads(raw_message)
+    sender = (message.get("sender") or "").strip()
+    name = (message.get("sender_name") or "").strip()
+    chat = message.get("chat_jid") or ""
+    direct_ids = (chat, message.get("output_chat_jid"))
+    if chat.endswith(("@s.whatsapp.net", "@lid")) and (not sender or sender in direct_ids):
+        sender = sender or chat
+        chat_name = (message.get("chat_name") or "").strip()
+        if not name and chat_name not in direct_ids:
+            name = chat_name
+    if name == sender:
+        name = ""
+    if not name and sender.endswith("@s.whatsapp.net"):
+        number = sender.split("@", 1)[0].split(":", 1)[0]
+        if number.isascii() and number.isdigit():
+            name = f"+{number}"
+    return " ".join((name or sender or "Unknown sender").split())[:200]
+
+
+def message_parts(heading, sender, body):
+    sender_line = f"\nFrom: {sender}\n\n"
+    prefix = heading + sender_line
     limit = 4096 - len(prefix.encode("utf-16-le")) // 2
     start = size = 0
     for index, character in enumerate(body):
         units = 2 if ord(character) > 0xFFFF else 1
         if size + units > limit:
             yield prefix + body[start:index]
-            prefix = f"{heading} (continued)\n\n"
+            prefix = f"{heading} (continued){sender_line}"
             limit = 4096 - len(prefix.encode("utf-16-le")) // 2
             start, size = index, 0
         size += units
@@ -174,7 +195,7 @@ class DeliveryQueue:
 
     def prepare_next(self, generation, active_since, now):
         summary = self.db.execute("""
-            SELECT j.key, s.bullets, original.source_hash, original.reply_to
+            SELECT j.key, j.message, s.bullets, original.source_hash, original.reply_to
             FROM jobs j JOIN summaries s ON s.job_key=j.key AND s.state='ready'
             JOIN telegram_delivery original ON original.generation=? AND original.job_key=j.key AND original.kind='full'
                 AND original.parts IS NULL AND original.source_hash=s.source_hash
@@ -183,18 +204,18 @@ class DeliveryQueue:
             ORDER BY j.completed_at, j.key LIMIT 1
         """, (generation, active_since)).fetchone()
         if summary:
-            key, bullets, digest, reply_to = summary
+            key, message, bullets, digest, reply_to = summary
             body = "\n".join(f"• {bullet}" for bullet in json.loads(bullets))
-            return self.prepare(generation, key, "summary", digest, "WhatsApp summary", body, reply_to)
+            return self.prepare(generation, key, "summary", digest, message, body, reply_to)
         full = self.db.execute("""
-            SELECT j.key, j.output FROM jobs j
+            SELECT j.key, j.message, j.output FROM jobs j
             LEFT JOIN telegram_delivery done ON done.generation=? AND done.job_key=j.key AND done.kind='full'
             WHERE j.state='complete' AND j.completed_at>=? AND (done.job_key IS NULL OR (done.retry_at>0 AND done.retry_at<=?))
             ORDER BY j.completed_at, j.key LIMIT 1
         """, (generation, active_since, now)).fetchone()
         if full is None:
             return None
-        key, path = full
+        key, message, path = full
         try:
             body, digest, _ = read_transcript_body(path, self.output)
         except ValueError:
@@ -202,10 +223,11 @@ class DeliveryQueue:
                 self.db.execute("INSERT OR REPLACE INTO telegram_delivery (generation,job_key,kind,retry_at) VALUES (?,?,'full',?)",
                                 (generation, key, now + 300))
             raise TelegramError("A transcript could not be read. Telegram delivery will retry.") from None
-        return self.prepare(generation, key, "full", digest, "WhatsApp transcript", body, None)
+        return self.prepare(generation, key, "full", digest, message, body, None)
 
-    def prepare(self, generation, key, kind, digest, heading, body, reply_to):
-        parts = json.dumps(list(message_parts(heading, body)), ensure_ascii=False) if body.strip() else None
+    def prepare(self, generation, key, kind, digest, message, body, reply_to):
+        heading = "WhatsApp transcript" if kind == "full" else "WhatsApp summary"
+        parts = json.dumps(list(message_parts(heading, sender_label(message), body)), ensure_ascii=False) if body.strip() else None
         with self.db:
             self.db.execute("INSERT OR REPLACE INTO telegram_delivery (generation,job_key,kind,source_hash,parts,reply_to) VALUES (?,?,?,?,?,?)",
                             (generation, key, kind, digest if parts else None, parts, reply_to))

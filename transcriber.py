@@ -224,6 +224,7 @@ def normalize(message):
     return {
         "chat_jid": message["ChatJID"], "msg_id": message["MsgID"],
         "chat_name": message.get("ChatName", ""), "sender": message.get("SenderJID", ""),
+        "sender_name": message.get("SenderName", ""),
         "timestamp": message["Timestamp"], "from_me": message.get("FromMe"),
         "media_type": message.get("MediaType"),
         "deleted": bool(message.get("deleted_at") or message.get("payload_purged_at")),

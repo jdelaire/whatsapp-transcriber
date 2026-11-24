@@ -106,7 +106,7 @@ def sources(log, destination=DIST):
     zip_tree(staging, archive)
 
 
-def build(sign=True, package_sources=True, version="1.2.0", build_number="3", output_dir=DIST, require_developer_id=False):
+def build(sign=True, package_sources=True, version="1.3.0", build_number="4", output_dir=DIST, require_developer_id=False):
     validate_version(version, build_number)
     config = settings()
     signing_identity = identity() if sign else "-"
@@ -196,8 +196,8 @@ if __name__ == "__main__":
     parser = argparse.ArgumentParser()
     parser.add_argument("--no-sign", action="store_true")
     parser.add_argument("--no-sources", action="store_true")
-    parser.add_argument("--version", default="1.2.0")
-    parser.add_argument("--build-number", default="3")
+    parser.add_argument("--version", default="1.3.0")
+    parser.add_argument("--build-number", default="4")
     parser.add_argument("--output-dir", type=Path, default=DIST)
     args = parser.parse_args()
     build(sign=not args.no_sign, package_sources=not args.no_sources, version=args.version, build_number=args.build_number, output_dir=args.output_dir)

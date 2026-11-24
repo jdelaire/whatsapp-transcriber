@@ -6,7 +6,7 @@ from pathlib import Path
 
 from app_summaries import read_transcript_body
 from app_telegram import DeliveryQueue, TelegramError, update_settings, validate_chat
-from transcriber import Queue
+from transcriber import Queue, normalize
 
 
 class TelegramDeliveryTests(unittest.TestCase):
@@ -22,12 +22,12 @@ class TelegramDeliveryTests(unittest.TestCase):
     def settings(self, chat_id="123456", **kwargs):
         return update_settings(self.data, {"token": self.token, "chat_id": chat_id}, validate=lambda token, _: int(token.split(":")[0]), **kwargs)
 
-    def transcript(self, key, body, completed):
+    def transcript(self, key, body, completed, message=None):
         path = self.data / f"{key}.txt"
         path.write_text(body, encoding="utf-8")
         with sqlite3.connect(self.database) as db:
             db.execute("INSERT INTO jobs(key,message,state,output,completed_at) VALUES (?,?,'complete',?,?)",
-                       (key, '{}', str(path), completed))
+                       (key, json.dumps(message or {}), str(path), completed))
         return path
 
     def summary(self, key, path, bullets):
@@ -49,17 +49,32 @@ class TelegramDeliveryTests(unittest.TestCase):
         old = self.transcript("old", "Historical text", 1)
         self.summary("old", old, ["Historical summary"])
         self.settings(now=lambda: 2)
-        path = self.transcript("new", "Chat: Example\nSender: 123\nReceived: today\nMessage: 1\n\nFull text", 3)
+        message = normalize({"ChatJID": "123@g.us", "ChatName": "Example group", "MsgID": "1",
+                             "SenderJID": "123@lid", "SenderName": "Marie \n Dupont", "Timestamp": "2026-11-25T00:00:00Z"})
+        path = self.transcript("new", "Chat: Example group\nSender: 123@lid\nReceived: today\nMessage: 1\n\nFull text", 3, message)
         queue = self.delivery()
         self.assertTrue(queue.send_next())
         self.assertFalse(queue.send_next())
-        self.assertIn("Full text", self.sent[0][2])
-        self.assertNotIn("Sender:", self.sent[0][2])
+        self.assertEqual(self.sent[0][2], "WhatsApp transcript\nFrom: Marie Dupont\n\nFull text")
         self.summary("new", path, ["Summary text"])
         self.assertTrue(self.delivery().send_next())
         self.assertFalse(queue.send_next())
-        self.assertIn("• Summary text", self.sent[1][2])
+        self.assertEqual(self.sent[1][2], "WhatsApp summary\nFrom: Marie Dupont\n\n• Summary text")
         self.assertEqual(self.sent[1][3], 1)
+
+    def test_older_jobs_use_direct_chat_name_or_sender_identifier(self):
+        self.settings(now=lambda: 2)
+        personal = "12345@s.whatsapp.net"
+        self.transcript("direct", "Direct text", 3, {"chat_jid": personal, "chat_name": "Marie", "sender": personal})
+        self.transcript("group", "Group text", 4, {"chat_jid": "123@g.us", "chat_name": "Example group", "sender": "12345:2@s.whatsapp.net"})
+        self.transcript("unnamed", "Unnamed direct text", 5, {"chat_jid": personal, "chat_name": personal})
+        queue = self.delivery()
+        self.assertTrue(queue.send_next())
+        self.assertTrue(queue.send_next())
+        self.assertTrue(queue.send_next())
+        self.assertIn("\nFrom: Marie\n", self.sent[0][2])
+        self.assertIn("\nFrom: +12345\n", self.sent[1][2])
+        self.assertIn("\nFrom: +12345\n", self.sent[2][2])
 
     def test_failed_chunk_restarts_at_first_unsent_chunk_using_saved_text(self):
         self.settings(now=lambda: 2)

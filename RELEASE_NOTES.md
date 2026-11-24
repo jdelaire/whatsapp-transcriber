@@ -1,5 +1,15 @@
 # Transcriber releases
 
+## 1.3.0, build 4
+
+Transcriber can now forward new WhatsApp voice notes to a Telegram chat through your bot. You'll get the full transcript first, then the on-device summary as a reply when it's ready. Both messages include the WhatsApp sender's name when available, or their number or WhatsApp ID.
+
+Forwarding is off by default. To turn it on, open **Settings → Telegram → Set up** and enter your BotFather token and numeric chat ID. For a private chat, open the bot in Telegram and press **Start** first. Once configured, forwarding applies to newly completed transcripts while Transcriber is open.
+
+Requires an Apple Silicon Mac running macOS 15 or later. Automatic summaries require macOS 26 or later with Apple Intelligence ready.
+
+If you already use a Sparkle-enabled release, choose **Settings → Check for Updates**. The release also includes a direct download, source materials, and verification hashes.
+
 ## 1.2.0, build 3
 
 Published on 2026-11-06. [Release](https://github.com/jdelaire/whatsapp-transcriber/releases/tag/v1.2.0) · [Download Transcriber-1.2.0-arm64.zip](https://github.com/jdelaire/whatsapp-transcriber/releases/download/v1.2.0/Transcriber-1.2.0-arm64.zip).
