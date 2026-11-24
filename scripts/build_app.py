@@ -87,7 +87,7 @@ def sources(log, destination=DIST):
         shutil.copy2(path, staging / path.name)
     app_source = staging / "TranscriberAppSource"
     app_source.mkdir()
-    for name in ("app_engine.py", "app_state.py", "app_pairing.py", "app_summaries.py", "transcriber.py", "manage.py", "README.md", "THIRD_PARTY.md", ".gitignore"):
+    for name in ("app_engine.py", "app_state.py", "app_pairing.py", "app_summaries.py", "app_telegram.py", "transcriber.py", "manage.py", "README.md", "THIRD_PARTY.md", ".gitignore"):
         shutil.copy2(ROOT / name, app_source / name)
     shutil.copytree(ROOT / "NativeApp", app_source / "NativeApp", ignore=shutil.ignore_patterns(".build", ".swiftpm"))
     shutil.copytree(ROOT / "scripts", app_source / "scripts", ignore=shutil.ignore_patterns("__pycache__"))

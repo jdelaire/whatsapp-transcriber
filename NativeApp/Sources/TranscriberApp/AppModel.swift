@@ -5,7 +5,7 @@ import UserNotifications
 import TranscriberCore
 
 enum PanelRoute: Equatable {
-    case inbox, setup, settings, detail(String)
+    case inbox, setup, settings, telegram, detail(String)
 }
 
 @MainActor @Observable
@@ -27,6 +27,11 @@ final class AppModel {
     var transcriptVisit = TranscriptVisit()
     var summaryPreferenceSaving = false
     var summarySettingsError: String?
+    var telegramChatID: String?
+    var telegramSaving = false
+    var telegramSettingsError: String?
+    var telegramWorkerStatus: String?
+    var telegramDeliveryStatus: String? { telegramSettingsError ?? telegramWorkerStatus }
     private(set) var shuttingDown = false
     private let preview: Bool
     private let isolated: Bool
@@ -44,6 +49,10 @@ final class AppModel {
     private var refreshing = false
     private var summaryWorker: SummaryWorker?
     private var copyToken = UUID()
+    private var telegramSettingsRevision = 0
+    private var telegramChange: Task<Void, Never>?
+    private var telegramDelivery: Task<Void, Never>?
+    private var telegramWorker: EngineProcess?
 
     private var summaryDataRoot: URL {
         location.dataRoot ?? FileManager.default.homeDirectoryForCurrentUser.appendingPathComponent("Library/Application Support/WhatsAppTranscriber")
@@ -83,6 +92,8 @@ final class AppModel {
             snapshot = try await client.snapshot(command: "initialize")
             try Task.checkCancellation()
             guard !shuttingDown else { return }
+            telegramChatID = snapshot.telegramChatId
+            startTelegramDelivery()
             let summaryWorker = SummaryWorker(store: client, model: makeSummaryModel(), dataRoot: summaryDataRoot) { [weak self] update in
                 await self?.summaryUpdated(update)
             }
@@ -107,8 +118,13 @@ final class AppModel {
         guard !preview, !refreshing, !shuttingDown else { return }
         refreshing = true
         defer { refreshing = false }
+        let telegramRevision = telegramSettingsRevision
         do {
             snapshot = try await client.snapshot()
+            if !telegramSaving && telegramRevision == telegramSettingsRevision {
+                telegramChatID = snapshot.telegramChatId
+                startTelegramDelivery()
+            }
             await summaryWorker?.refreshAvailability()
             await summaryWorker?.wake()
             await refreshTranscriptStatus()
@@ -445,6 +461,9 @@ final class AppModel {
     func shutdown() async {
         shuttingDown = true
         let summariesStopping = Task { await summaryWorker?.stop() }
+        let telegramChanging = telegramChange
+        telegramChanging?.cancel()
+        let telegramStopping = Task { await stopTelegramDelivery() }
         monitor?.cancel()
         let starting = startup
         starting?.cancel()
@@ -459,7 +478,75 @@ final class AppModel {
         await pending?.value
         await starting?.value
         await summariesStopping.value
+        await telegramStopping.value
+        await telegramChanging?.value
         await client.cancelAll()
+    }
+
+    func configureTelegram(token: String, chatID: String) {
+        changeTelegram(token: token, chatID: chatID)
+    }
+
+    func disconnectTelegram() {
+        changeTelegram(token: nil, chatID: nil)
+    }
+
+    private func changeTelegram(token: String?, chatID: String?) {
+        guard !telegramSaving, !shuttingDown else { return }
+        telegramSettingsError = nil
+        if preview { telegramChatID = chatID; return }
+        telegramSaving = true
+        telegramSettingsRevision += 1
+        telegramChange = Task { [weak self] in
+            guard let self else { return }
+            defer { telegramSaving = false; telegramChange = nil }
+            do {
+                let saved = try await client.setTelegram(token: token, chatID: chatID)
+                guard !shuttingDown else { return }
+                await stopTelegramDelivery()
+                telegramChatID = saved
+                telegramWorkerStatus = nil
+                startTelegramDelivery()
+            } catch is CancellationError {} catch {
+                telegramSettingsError = error.localizedDescription
+            }
+        }
+    }
+
+    private func startTelegramDelivery() {
+        guard telegramChatID != nil, telegramDelivery == nil, !shuttingDown else { return }
+        telegramDelivery = Task { [weak self] in
+            guard let self else { return }
+            defer { telegramDelivery = nil }
+            while !Task.isCancelled && !shuttingDown && telegramChatID != nil {
+                let process = EngineProcess(location: location, command: "telegram-run")
+                telegramWorker = process
+                _ = await Task.detached(priority: .utility) { [weak self] in
+                    try? process.stream { [weak self] event in
+                        Task { @MainActor in
+                            guard let self, self.telegramWorker === process else { return }
+                            if event.event == "telegram-status" || event.event == "error" {
+                                self.telegramWorkerStatus = event.message
+                            }
+                        }
+                    }
+                }.value
+                telegramWorker = nil
+                guard !Task.isCancelled, !shuttingDown, telegramChatID != nil else { return }
+                if telegramWorkerStatus == nil { telegramWorkerStatus = "Telegram delivery stopped. The app will retry." }
+                try? await Task.sleep(for: .seconds(15))
+            }
+        }
+    }
+
+    private func stopTelegramDelivery() async {
+        let task = telegramDelivery
+        task?.cancel()
+        if let process = telegramWorker {
+            telegramWorker = nil
+            await Task.detached(priority: .utility) { process.stop() }.value
+        }
+        await task?.value
     }
 }
 

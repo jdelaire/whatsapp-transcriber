@@ -11,6 +11,7 @@ from app_state import Paths, Migration, initialize, snapshot, set_paused, verify
 from app_pairing import Pairing
 import transcriber
 from app_summaries import SummaryStore
+from app_telegram import TelegramError, run_delivery, update_settings
 
 
 OUTPUT_LOCK = threading.Lock()
@@ -97,7 +98,7 @@ def main():
     for sig in (signal.SIGTERM, signal.SIGINT):
         signal.signal(sig, lambda *_: transcriber.STOP.set())
     parser = argparse.ArgumentParser()
-    parser.add_argument("command", choices=["initialize", "status", "run", "pair", "pause", "resume", "migrate", "commit-migration", "restore", "restore-stopped", "verify-model", "transcribe", "transcript", "summary-status", "summary-settings", "summary-owner", "summary-reconcile", "summary-claim", "summary-check", "summary-finish", "summary-retry"])
+    parser.add_argument("command", choices=["initialize", "status", "run", "pair", "pause", "resume", "migrate", "commit-migration", "restore", "restore-stopped", "verify-model", "transcribe", "transcript", "summary-status", "summary-settings", "summary-owner", "summary-reconcile", "summary-claim", "summary-check", "summary-finish", "summary-retry", "telegram-settings", "telegram-run"])
     parser.add_argument("--tools", required=True)
     parser.add_argument("--data-root")
     parser.add_argument("--input")
@@ -129,6 +130,25 @@ def main():
         elif args.command == "run":
             run(paths)
             return
+        elif args.command in ("telegram-settings", "telegram-run"):
+            config = read_json(paths.config)
+            if not config or not (paths.data / "jobs.sqlite").is_file():
+                raise ValueError("Complete app setup first.")
+            try:
+                if args.command == "telegram-settings":
+                    request = json.load(sys.stdin)
+                    if not isinstance(request, dict):
+                        raise TelegramError("Invalid Telegram settings.")
+                    result = update_settings(paths.data, request)
+                else:
+                    with supervise_parent(sys.stdin.buffer, transcriber.STOP.set):
+                        run_delivery(paths.data, Path(config["output"]), transcriber.STOP,
+                                     lambda message: emit({"event": "telegram-status", "message": message}))
+                    return
+            except TelegramError:
+                raise
+            except Exception:
+                raise TelegramError("The local engine could not complete the Telegram operation. Please retry.") from None
         elif args.command == "pair":
             config = read_json(paths.config)
             request = json.loads(sys.stdin.buffer.readline())

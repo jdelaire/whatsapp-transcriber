@@ -64,6 +64,8 @@ final class AppDelegate: NSObject, NSApplicationDelegate {
             ("setup", { self.model.snapshot.authenticated = false; self.model.snapshot.modelReady = false; self.model.route = .setup }),
             ("linking", { self.model.snapshot.modelReady = true; self.model.linkPhone() }),
             ("settings", { self.model.snapshot = .preview; self.model.route = .settings }),
+            ("telegram-setup", { self.model.route = .telegram }),
+            ("telegram-connected", { self.model.telegramChatID = "-100123456789" }),
             ("summary-pending", { self.model.snapshot.recent[0].summary = .init(); self.model.openTranscript(id: self.model.snapshot.recent[0].id) }),
             ("summary-failed", { self.model.snapshot.recent[0].summary = .init(state: .failed, errorCode: "generation_failed"); self.model.openTranscript(id: self.model.snapshot.recent[0].id) }),
             ("summary-unavailable", { self.model.summaryAvailability = .unavailable(.modelNotReady); self.model.route = .settings }),

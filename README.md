@@ -26,11 +26,21 @@ Version 1.2.0 adds automatic, on-device summaries through Apple Intelligence. Ne
 
 Generation requires macOS 26 or later, Apple Intelligence enabled, and its downloaded model ready. There is no cloud fallback or API key. macOS 15 remains supported for transcription and viewing saved summaries. Settings shows availability and backfill progress. Turning Automatic summaries off pauses generation and retains saved summaries; turning it on resumes notes received while paused. Failed notes offer Retry. Long notes are processed in chunks, so a summary can omit details. Use the original when accuracy matters.
 
+### Forward to Telegram
+
+Open **Settings → Telegram → Set up** and enter your BotFather token and the numeric chat ID. For a private chat, open the bot in Telegram and press **Start** first. For a group or channel, add the bot and give it permission to post. If you need the chat ID, look for `message.chat.id` or `channel_post.chat.id` in a corresponding [Telegram bot update](https://core.telegram.org/bots/api#getting-updates).
+
+Transcriber forwards newly completed voice notes while the app is open. It sends the full text first and the on-device summary as a reply when ready. Long messages arrive in parts. If summaries are disabled or unavailable, full transcripts still go through. Delivery retries after connection failures. An interrupted request that Telegram already accepted can occasionally deliver a duplicate.
+
+Use **Manage → Disconnect** to stop forwarding. Changing the chat or bot starts forwarding only newly completed voice notes to the new destination.
+
 An existing installation of the command-line receiver can be migrated without pairing again. The app preserves its model, linked account, queue, starting date and transcripts, and backs up the old startup configuration before taking over.
 
 ## Privacy and local files
 
 WhatsApp linking and receiving messages require an internet connection. Speech processing stays on your Mac. No OpenAI API key or other paid transcription service is used.
+
+Telegram forwarding is off by default. When enabled, the app sends transcript and summary text to Telegram and stores the bot token in an owner-only file in the app's local data folder. Disconnecting removes the local bot settings.
 
 Linked-device credentials, downloaded audio, the queue, model and rotating logs live in `~/Library/Application Support/WhatsAppTranscriber`. New standalone installations save transcripts in `~/WhatsApp Transcripts`. Personal runtime data is not included in the app or this repository. Linking codes are temporary and are not written to diagnostic logs.
 

@@ -17,6 +17,7 @@ dist/
 *.mobileprovision
 config.json
 app-config.json
+telegram-config.json
 runtime.json
 migration.json
 pairing*.png

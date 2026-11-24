@@ -11,6 +11,7 @@ struct PanelView: View {
             case .inbox: InboxView(model: model)
             case .setup: SetupView(model: model)
             case .settings: PreferencesView(model: model)
+            case .telegram: TelegramView(model: model)
             case .detail(let id): TranscriptView(model: model, id: id)
             }
             if let error = model.error {
@@ -34,13 +35,14 @@ struct PanelHeader: View {
     let title: String
     let subtitle: String
     var back: (() -> Void)?
+    var backLabel = "Back to inbox"
     var settings: (() -> Void)?
 
     var body: some View {
         HStack(spacing: 11) {
             if let back {
                 Button(action: back) { Image(systemName: "chevron.left").frame(width: 24, height: 28) }
-                    .buttonStyle(.plain).accessibilityLabel("Back to inbox")
+                    .buttonStyle(.plain).accessibilityLabel(backLabel)
             } else {
                 Image(systemName: "waveform").font(.system(size: 19, weight: .medium))
                     .foregroundStyle(.green).frame(width: 34, height: 34)
@@ -168,7 +170,7 @@ struct SetupView: View {
 
     var body: some View {
         VStack(spacing: 0) {
-            PanelHeader(title: "Set up Transcriber", subtitle: "Everything stays on your Mac", back: { model.route = .inbox })
+            PanelHeader(title: "Set up Transcriber", subtitle: "On-device transcription", back: { model.route = .inbox })
             VStack(alignment: .leading, spacing: 18) {
                 ModelSetupView(ready: model.snapshot.modelReady, downloading: model.downloading, progress: model.downloadProgress,
                                download: model.downloadModel, cancel: model.cancelDownload)
@@ -252,35 +254,48 @@ struct PreferencesView: View {
     var body: some View {
         VStack(spacing: 0) {
             PanelHeader(title: "Settings", subtitle: "Transcriber", back: { model.route = .inbox })
-            VStack(spacing: 14) {
-                VStack(spacing: 0) {
-                    Toggle(isOn: Binding(get: { model.launchAtLogin }, set: model.setLogin)) {
-                        SettingsLabel(title: "Launch at login", subtitle: "Ready when you start your Mac")
-                    }.toggleStyle(.switch).controlSize(.small).padding(12)
-                    Divider().padding(.horizontal, 12)
-                    Toggle(isOn: Binding(get: { model.notifications }, set: model.setNotifications)) {
-                        SettingsLabel(title: "Notify when ready", subtitle: "Keep message contents private")
-                    }.toggleStyle(.switch).controlSize(.small).padding(12)
-                }.background(.quaternary.opacity(0.65), in: RoundedRectangle(cornerRadius: 8)).disabled(model.isBusy)
-                VStack(spacing: 0) {
-                    SettingsValue(title: "Language", value: "Detect automatically")
-                    Divider().padding(.horizontal, 12)
-                    SettingsValue(title: "Speech model", value: model.snapshot.modelReady ? "Downloaded · 488 MB" : "Not downloaded")
-                    Divider().padding(.horizontal, 12)
-                    HStack { Text("Transcripts folder"); Spacer(); Button("Open") { model.openFolder() }.controlSize(.mini) }.font(.system(size: 12)).padding(12)
-                }.background(.quaternary.opacity(0.65), in: RoundedRectangle(cornerRadius: 8)).disabled(model.isBusy)
-                HStack {
-                    SettingsLabel(title: "WhatsApp", subtitle: model.snapshot.authenticated ? "Linked to this Mac" : "Link required")
-                    Spacer()
-                    Button(model.snapshot.authenticated ? "Connection" : "Link") { model.route = .setup }.controlSize(.small)
-                }.padding(12).background(.quaternary.opacity(0.65), in: RoundedRectangle(cornerRadius: 8)).disabled(model.isBusy)
-                UpdateSettingsView(updates: model.updates)
-                    .disabled(model.isBusy)
-                SummarySettingsView(model: model)
-                Text("Closing this panel keeps transcription running. Quitting the app stops capture.")
-                    .font(.caption).foregroundStyle(.secondary).frame(maxWidth: .infinity, alignment: .leading)
-            }.padding(.horizontal, 18).padding(.bottom, 20)
+            ViewThatFits(in: .vertical) {
+                PreferencesContent(model: model).fixedSize(horizontal: false, vertical: true)
+                ScrollView { PreferencesContent(model: model) }
+            }.frame(maxHeight: 600)
         }
+    }
+}
+
+struct PreferencesContent: View {
+    let model: AppModel
+
+    var body: some View {
+        VStack(spacing: 14) {
+            VStack(spacing: 0) {
+                Toggle(isOn: Binding(get: { model.launchAtLogin }, set: model.setLogin)) {
+                    SettingsLabel(title: "Launch at login", subtitle: "Ready when you start your Mac")
+                }.toggleStyle(.switch).controlSize(.small).padding(12)
+                Divider().padding(.horizontal, 12)
+                Toggle(isOn: Binding(get: { model.notifications }, set: model.setNotifications)) {
+                    SettingsLabel(title: "Notify when ready", subtitle: "Keep message contents private")
+                }.toggleStyle(.switch).controlSize(.small).padding(12)
+            }.background(.quaternary.opacity(0.65), in: RoundedRectangle(cornerRadius: 8)).disabled(model.isBusy)
+            VStack(spacing: 0) {
+                SettingsValue(title: "Language", value: "Detect automatically")
+                Divider().padding(.horizontal, 12)
+                SettingsValue(title: "Speech model", value: model.snapshot.modelReady ? "Downloaded · 488 MB" : "Not downloaded")
+                Divider().padding(.horizontal, 12)
+                HStack { Text("Transcripts folder"); Spacer(); Button("Open") { model.openFolder() }.controlSize(.mini) }.font(.system(size: 12)).padding(12)
+            }.background(.quaternary.opacity(0.65), in: RoundedRectangle(cornerRadius: 8)).disabled(model.isBusy)
+            HStack {
+                SettingsLabel(title: "WhatsApp", subtitle: model.snapshot.authenticated ? "Linked to this Mac" : "Link required")
+                Spacer()
+                Button(model.snapshot.authenticated ? "Connection" : "Link") { model.route = .setup }.controlSize(.small)
+            }.padding(12).background(.quaternary.opacity(0.65), in: RoundedRectangle(cornerRadius: 8)).disabled(model.isBusy)
+            TelegramSettingsRow(chatID: model.telegramChatID, open: { model.route = .telegram })
+                .disabled(model.isBusy)
+            UpdateSettingsView(updates: model.updates)
+                .disabled(model.isBusy)
+            SummarySettingsView(model: model)
+            Text("Closing this panel keeps transcription running. Quitting the app stops capture.")
+                .font(.caption).foregroundStyle(.secondary).frame(maxWidth: .infinity, alignment: .leading)
+        }.padding(.horizontal, 18).padding(.bottom, 20)
     }
 }
 

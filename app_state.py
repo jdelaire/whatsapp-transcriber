@@ -17,6 +17,7 @@ from pathlib import Path
 
 from transcriber import Queue, atomic_text, execute, start_process, stop_process
 from app_summaries import project_summary, read_settings, has_summaries, transcript_body
+from app_telegram import telegram_chat_id
 
 
 MODEL_BYTES = 487601967
@@ -160,6 +161,7 @@ def snapshot(paths, auth_probe=auth_status):
     if not config:
         return state
     state.update(model_ready=model_ready(paths, config), model_path=config["model"], output_folder=config["output"])
+    state["telegram_chat_id"] = telegram_chat_id(paths.data)
     try:
         state["authenticated"] = bool(auth_probe(config))
     except (OSError, RuntimeError, ValueError, TimeoutError):

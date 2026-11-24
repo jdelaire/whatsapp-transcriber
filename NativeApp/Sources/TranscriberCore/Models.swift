@@ -63,9 +63,10 @@ public struct EngineSnapshot: Codable, Sendable, Equatable {
     public var workerPid: Int?
     public var summarySettings = SummarySettings()
     public var summaryCounts: [String: Int] = [:]
+    public var telegramChatId: String?
 
     private enum CodingKeys: String, CodingKey {
-        case schemaVersion, configured, authenticated, authenticationError, paused, modelReady, workerAlive, connection, processing, counts, recent, modelPath, outputFolder, migrationNeeded, migrationPhase, workerPid, summarySettings, summaryCounts
+        case schemaVersion, configured, authenticated, authenticationError, paused, modelReady, workerAlive, connection, processing, counts, recent, modelPath, outputFolder, migrationNeeded, migrationPhase, workerPid, summarySettings, summaryCounts, telegramChatId
     }
 
     public init(from decoder: any Decoder) throws {
@@ -89,6 +90,7 @@ public struct EngineSnapshot: Codable, Sendable, Equatable {
         workerPid = try values.decodeIfPresent(Int.self, forKey: .workerPid)
         summarySettings = try values.decodeIfPresent(SummarySettings.self, forKey: .summarySettings) ?? .init()
         summaryCounts = try values.decodeIfPresent([String: Int].self, forKey: .summaryCounts) ?? [:]
+        telegramChatId = try values.decodeIfPresent(String.self, forKey: .telegramChatId)
     }
 
     private init(schemaVersion: Int, configured: Bool, authenticated: Bool, paused: Bool, modelReady: Bool, workerAlive: Bool, connection: String, processing: Bool, counts: [String: Int], recent: [Transcript], modelPath: String, outputFolder: String, migrationNeeded: Bool, migrationPhase: String) {

@@ -39,7 +39,7 @@ public final class EngineProcess: @unchecked Sendable {
     private var groups: Set<Int32> = []
 
     public init(location: EngineLocation, command: String, extra: [String] = []) {
-        supervised = ["run", "pair", "migrate"].contains(command)
+        supervised = ["run", "pair", "migrate", "telegram-run"].contains(command)
         process.executableURL = location.executable
         process.arguments = location.arguments(command, extra: extra)
         process.environment = ["PATH": "/usr/bin:/bin:/usr/sbin:/sbin", "HOME": NSHomeDirectory(), "PYTHONUNBUFFERED": "1"]
@@ -206,6 +206,16 @@ private struct Envelope<Value: Decodable>: Decodable {
 
 private struct Acknowledgement: Decodable, Sendable {}
 
+private struct TelegramRequest: Encodable {
+    var token: String?
+    var chatId: String?
+    var disconnect: Bool
+}
+
+private struct TelegramSettings: Decodable, Sendable {
+    let chatId: String?
+}
+
 public actor EngineClient: SummaryStoreClient {
     public let location: EngineLocation
     private var active: [UUID: EngineProcess] = [:]
@@ -237,6 +247,13 @@ public actor EngineClient: SummaryStoreClient {
 
     public func action(_ command: String, extra: [String] = []) async throws {
         let _: Acknowledgement = try await request(command, extra: extra, type: Acknowledgement.self)
+    }
+
+    public func setTelegram(token: String? = nil, chatID: String? = nil) async throws -> String? {
+        let encoder = JSONEncoder()
+        encoder.keyEncodingStrategy = .convertToSnakeCase
+        let payload = try encoder.encode(TelegramRequest(token: token, chatId: chatID, disconnect: token == nil))
+        return try await request("telegram-settings", payload: payload, type: TelegramSettings.self).chatId
     }
 
     private func summaryRequest<Value: Decodable & Sendable>(_ command: String, payload: SummaryRequest, type: Value.Type) async throws -> Value {
